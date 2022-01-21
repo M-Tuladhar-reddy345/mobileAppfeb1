@@ -57,7 +57,7 @@ class _UpdatePaymentsState extends State<UpdatePayments> {
       setState(() {
         widget.message = response.body;
         print(widget.message);
-        if (widget.message.toString().contains('Success')) {
+        if (widget.message.toString().contains('sucessfully')) {
           print(widget.recNo);
           // widget.dropdownValue = '';
           Navigator.push(
