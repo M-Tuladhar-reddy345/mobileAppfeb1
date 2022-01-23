@@ -48,6 +48,7 @@ class _ReceiptpageState extends State<Receiptpage> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.receiptNo);
     return Scaffold(
         appBar: AppBar(
           title: Text('Raithanna Dairy'),
@@ -72,31 +73,27 @@ class _ReceiptpageState extends State<Receiptpage> {
                   if (snapshot.data == null) {
                     return Text('Chooose user...');
                   } else
-                    return SingleChildScrollView(
+                    return Container(
+                      width: MediaQuery.of(context).size.width * 0.95,
                       child: Row(children: [
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          verticalDirection: VerticalDirection.down,
+                          textBaseline: TextBaseline.alphabetic,
+                          textDirection: TextDirection.ltr,
+                          mainAxisSize: MainAxisSize.max,
                           children: [
                             Text(
-                              'Reciept No ',
+                              'Recpt No ',
                               style: TextStyle(fontSize: 20),
                             ),
                             Text(
-                              'Reciept date ',
+                              'date ',
                               style: TextStyle(fontSize: 20),
                             ),
                             Text(
-                              'Customer',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Text(
-                                '',
-                                style: TextStyle(fontSize: 15),
-                              ),
-                            ),
-                            Text(
-                              'RecType ',
+                              'Type ',
                               style: TextStyle(fontSize: 20),
                             ),
                             Text(
@@ -107,20 +104,49 @@ class _ReceiptpageState extends State<Receiptpage> {
                               'Remarks ',
                               style: TextStyle(fontSize: 20),
                             ),
+                            Text(
+                              'Customer',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                '',
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            ),
                           ],
                         ),
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          verticalDirection: VerticalDirection.down,
+                          textBaseline: TextBaseline.alphabetic,
+                          textDirection: TextDirection.ltr,
+                          mainAxisSize: MainAxisSize.max,
                           children: [
                             Text(
-                              ':',
+                              ' : ',
                               style: TextStyle(fontSize: 20),
                             ),
                             Text(
-                              ': ',
+                              ' : ',
                               style: TextStyle(fontSize: 20),
                             ),
                             Text(
-                              ': ',
+                              ' : ',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Text(
+                              ' : ',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Text(
+                              ' : ',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Text(
+                              ' : ',
                               style: TextStyle(fontSize: 20),
                             ),
                             Align(
@@ -130,21 +156,15 @@ class _ReceiptpageState extends State<Receiptpage> {
                                 style: TextStyle(fontSize: 15),
                               ),
                             ),
-                            Text(
-                              ': ',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Text(
-                              ': ',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Text(
-                              ': ',
-                              style: TextStyle(fontSize: 20),
-                            ),
                           ],
                         ),
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          verticalDirection: VerticalDirection.down,
+                          textBaseline: TextBaseline.alphabetic,
+                          textDirection: TextDirection.ltr,
+                          mainAxisSize: MainAxisSize.max,
                           children: [
                             Text(
                               snapshot.data['RecieptNo'].toString(),
@@ -153,17 +173,6 @@ class _ReceiptpageState extends State<Receiptpage> {
                             Text(
                               snapshot.data['RecieptDate'].toString(),
                               style: TextStyle(fontSize: 20),
-                            ),
-                            Text(
-                              '',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Text(
-                                snapshot.data['custName'].toString(),
-                                style: TextStyle(fontSize: 15),
-                              ),
                             ),
                             Text(
                               snapshot.data['RecType'].toString(),
@@ -176,6 +185,15 @@ class _ReceiptpageState extends State<Receiptpage> {
                             Text(
                               snapshot.data['Remarks'].toString(),
                               style: TextStyle(fontSize: 20),
+                            ),
+                            Text(
+                              '',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Text(
+                              snapshot.data['custName'].toString(),
+                              // maxLines: 3,
+                              style: TextStyle(fontSize: 15),
                             ),
                           ],
                         ),

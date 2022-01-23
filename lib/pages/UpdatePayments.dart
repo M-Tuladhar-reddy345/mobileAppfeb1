@@ -65,7 +65,7 @@ class _UpdatePaymentsState extends State<UpdatePayments> {
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    receipt.Receiptpage(widget.message, widget.recNo)),
+                    receipt.Receiptpage(widget.message, data['RecNo'])),
           );
         }
       });
