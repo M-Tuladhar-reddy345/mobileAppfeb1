@@ -24,6 +24,7 @@ class UpdatePayments extends StatefulWidget {
   var payRefNo_controller = TextEditingController();
   var remarks_controller = TextEditingController();
   var Waiver_controller = TextEditingController();
+
   String recType;
   DateTime dateTime = DateTime.now();
 
@@ -121,6 +122,9 @@ class _UpdatePaymentsState extends State<UpdatePayments> {
 
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      widget.Waiver_controller.text = '0';
+    });
     return Scaffold(
         appBar: AppBar(
           title: Text('Raithanna Dairy'),
