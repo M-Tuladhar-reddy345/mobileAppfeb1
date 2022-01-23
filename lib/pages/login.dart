@@ -14,7 +14,7 @@ class Loginpage extends StatefulWidget {
   String message;
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
-  String branch;
+  String branch = '';
   bool obsureText = true;
 
   Loginpage(this.message);
@@ -50,7 +50,10 @@ class _LoginpageState extends State<Loginpage> {
               builder: (context) => home.Homepage(data['message'])),
         );
       } else {
-        widget.message = data['message'];
+        print(data);
+        setState(() {
+          widget.message = data['message'];
+        });
       }
     }
   }
@@ -105,43 +108,43 @@ class _LoginpageState extends State<Loginpage> {
                             });
                           },
                         ))),
-                FutureBuilder(
-                    future: get_branch(),
-                    builder: (context, snapshot) {
-                      if (snapshot.data == null) {
-                        return Container(
-                          child: Text('loading'),
-                        );
-                      } else
-                        return Container(
-                          child: DropdownButton(
-                            isExpanded: true,
-                            value: widget.branch,
+                // FutureBuilder(
+                //     future: get_branch(),
+                //     builder: (context, snapshot) {
+                //       if (snapshot.data == null) {
+                //         return Container(
+                //           child: Text('loading'),
+                //         );
+                //       } else
+                //         return Container(
+                //           child: DropdownButton(
+                //             isExpanded: true,
+                //             value: widget.branch,
 
-                            // icon: const Icon(Icons.arrow_downward),
-                            elevation: 16,
-                            style: const TextStyle(color: Colors.deepPurple),
-                            underline: Container(
-                              height: 2,
-                              width: 300,
-                              color: Colors.deepPurpleAccent,
-                            ),
-                            onChanged: (newValue) {
-                              setState(() {
-                                widget.branch = newValue;
-                              });
-                            },
-                            items: snapshot.data
-                                .map<DropdownMenuItem<String>>((v) {
-                              return DropdownMenuItem<String>(
-                                  value: v.code.toString(),
-                                  child: Text(v.branch.toString() +
-                                      '-' +
-                                      v.address.toString()));
-                            }).toList(),
-                          ),
-                        );
-                    }),
+                //             // icon: const Icon(Icons.arrow_downward),
+                //             elevation: 16,
+                //             style: const TextStyle(color: Colors.deepPurple),
+                //             underline: Container(
+                //               height: 2,
+                //               width: 300,
+                //               color: Colors.deepPurpleAccent,
+                //             ),
+                //             onChanged: (newValue) {
+                //               setState(() {
+                //                 widget.branch = newValue;
+                //               });
+                //             },
+                //             items: snapshot.data
+                //                 .map<DropdownMenuItem<String>>((v) {
+                //               return DropdownMenuItem<String>(
+                //                   value: v.code.toString(),
+                //                   child: Text(v.branch.toString() +
+                //                       '-' +
+                //                       v.address.toString()));
+                //             }).toList(),
+                //           ),
+                //         );
+                //     }),
                 FlatButton(
                   color: Colors.purple,
                   onPressed: () => submit(),

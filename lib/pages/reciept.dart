@@ -73,66 +73,113 @@ class _ReceiptpageState extends State<Receiptpage> {
                     return Text('Chooose user...');
                   } else
                     return SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          Text(
-                            'Reciept No: ',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          Text(
-                            snapshot.data['RecieptNo'].toString(),
-                            style: TextStyle(fontSize: 15),
-                          ),
-                          Text(
-                            'Customer: ',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          Text(
-                            snapshot.data['custName'].toString(),
-                            style: TextStyle(fontSize: 15),
-                          ),
-                          Text(
-                            'RecType: ',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          Text(
-                            snapshot.data['RecType'].toString(),
-                            style: TextStyle(fontSize: 15),
-                          ),
-                          Text(
-                            'Amount: ',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          Text(
-                            snapshot.data['RecAmt'].toString(),
-                            style: TextStyle(fontSize: 15),
-                          ),
-                          Text(
-                            'Waiver: ',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          Text(
-                            snapshot.data['Waiver'].toString(),
-                            style: TextStyle(fontSize: 15),
-                          ),
-                          Text(
-                            'Pay Ref no: ',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          Text(
-                            snapshot.data['payRefNo'].toString(),
-                            style: TextStyle(fontSize: 15),
-                          ),
-                          Text(
-                            'Remarks: ',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          Text(
-                            snapshot.data['Remarks'].toString(),
-                            style: TextStyle(fontSize: 15),
-                          ),
-                        ],
-                      ),
+                      child: Row(children: [
+                        Column(
+                          children: [
+                            Text(
+                              'Reciept No ',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Text(
+                              'Reciept date ',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Text(
+                              'Customer',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                '',
+                                style: TextStyle(fontSize: 15),
+                              ),
+                            ),
+                            Text(
+                              'RecType ',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Text(
+                              'Amount ',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Text(
+                              'Remarks ',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Text(
+                              ':',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Text(
+                              ': ',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Text(
+                              ': ',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                '',
+                                style: TextStyle(fontSize: 15),
+                              ),
+                            ),
+                            Text(
+                              ': ',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Text(
+                              ': ',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Text(
+                              ': ',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Text(
+                              snapshot.data['RecieptNo'].toString(),
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Text(
+                              snapshot.data['RecieptDate'].toString(),
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Text(
+                              '',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: Text(
+                                snapshot.data['custName'].toString(),
+                                style: TextStyle(fontSize: 15),
+                              ),
+                            ),
+                            Text(
+                              snapshot.data['RecType'].toString(),
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Text(
+                              snapshot.data['RecAmt'].toString(),
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Text(
+                              snapshot.data['Remarks'].toString(),
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
+                      ]),
                     );
                 })
           ]),

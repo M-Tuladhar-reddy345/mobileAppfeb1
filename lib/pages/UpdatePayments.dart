@@ -55,7 +55,8 @@ class _UpdatePaymentsState extends State<UpdatePayments> {
 
     if (response.statusCode == 200) {
       setState(() {
-        widget.message = response.body;
+        var data = json.decode(response.body) as Map;
+        widget.message = data['message'].toString();
         print(widget.message);
         if (widget.message.toString().contains('sucessfully')) {
           print(widget.recNo);
