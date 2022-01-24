@@ -23,7 +23,7 @@ class UpdatePayments extends StatefulWidget {
   var amt_controller = TextEditingController();
   var payRefNo_controller = TextEditingController();
   var remarks_controller = TextEditingController();
-  var Waiver_controller = TextEditingController();
+  var Waiver_controller = TextEditingController()..text = '0';
 
   String recType;
   DateTime dateTime = DateTime.now();
@@ -112,7 +112,7 @@ class _UpdatePaymentsState extends State<UpdatePayments> {
         //  print(data);
         setState(() {
           widget.recNo = data['RecieptNo'].toString();
-          widget.Waiver_controller.text = '0';
+          // widget.Waiver_controller.text = '0';
         });
         return data;
       }
