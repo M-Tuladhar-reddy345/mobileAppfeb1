@@ -112,6 +112,7 @@ class _UpdatePaymentsState extends State<UpdatePayments> {
         //  print(data);
         setState(() {
           widget.recNo = data['RecieptNo'].toString();
+          widget.Waiver_controller.text = '0';
         });
         return data;
       }
@@ -122,9 +123,6 @@ class _UpdatePaymentsState extends State<UpdatePayments> {
 
   @override
   Widget build(BuildContext context) {
-    setState(() {
-      widget.Waiver_controller.text = '0';
-    });
     return Scaffold(
         appBar: AppBar(
           title: Text('Raithanna Dairy'),
