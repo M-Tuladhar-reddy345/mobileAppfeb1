@@ -1,138 +1,247 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/pages/dailySalesEntry.dart';
 import '../main.dart' as main;
 import '../pages/home.dart' as home;
 import '../pages/UpdatePayments.dart' as UpdatePayments;
 import '../pages/login.dart' as login;
 
-class Navbar extends StatefulWidget {
-  String message;
-  int messageNumber = 0;
-
-  //String user = main.storage.getItem('User_item');
-
-  Navbar(this.message);
-
-  @override
-  State<Navbar> createState() => _NavbarState();
-}
-
-class _NavbarState extends State<Navbar> {
+class Navbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // print(main.storage.getItem('salesName'));
-    return Column(children: [
-      Container(
-          color: Theme.of(context).primaryColorDark,
-          child: Row(children: [
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                  //crossAxisAlignment: CrossAxisAlignment.stretch,
+    return Drawer(
+        // Add a ListView to the drawer. This ensures the user can scroll
+        // through the options in the drawer if there isn't enough vertical
+        // space to fit everything.
+        child: main.storage.getItem('salesName') == null
+            ? ListView(
+                // Important: Remove any padding from the ListView.
+                padding: EdgeInsets.zero,
+                children: [
+                  const DrawerHeader(
+                      decoration: BoxDecoration(
+                        color: Colors.purple,
+                      ),
+                      child: Image(
+                          image:
+                              AssetImage('assets/images/RaithannaOLogo.jpg'))),
+                  ListTile(
+                    title: const Text('Home'),
+                    onTap: () {
+                      // Update the state of the app.
+                      // ...
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => home.Homepage('')),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('Login'),
+                    onTap: () {
+                      // Update the state of the app.
+                      // ...
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => login.Loginpage('')),
+                      );
+                    },
+                  ),
+                ],
+              )
+            : ListView(
+                // Important: Remove any padding from the ListView.
+                padding: EdgeInsets.zero,
+                children: [
+                  const DrawerHeader(
+                      decoration: BoxDecoration(
+                        color: Colors.purple,
+                      ),
+                      child: Image(
+                          image:
+                              AssetImage('assets/images/RaithannaOLogo.jpg'))),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(main.storage.getItem('salesName').toString() +
+                        '@' +
+                        main.storage.getItem('branch').toString()),
+                  ),
+                  ListTile(
+                    title: const Text('Home'),
+                    onTap: () {
+                      // Update the state of the app.
+                      // ...
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => home.Homepage('')),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('Update Payments'),
+                    onTap: () {
+                      // Update the state of the app.
+                      // ...
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                UpdatePayments.UpdatePayments('')),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('DailySalesEntry'),
+                    onTap: () {
+                      // Update the state of the app.
+                      // ...
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DailySalesEntrypage('')),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('Logout'),
+                    onTap: () {
+                      // Update the state of the app.
+                      // ...
+                      main.storage.setItem('salesName', null);
 
-                  children: main.storage.getItem('salesName') != null
-                      ? [
-                          Container(
-                            // width: MediaQuery.of(context).size.width / 2,
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: [
-                                  FlatButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                home.Homepage('')),
-                                      );
-                                    },
-                                    child: Text(
-                                      'Home',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  ),
-                                  FlatButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                UpdatePayments.UpdatePayments(
-                                                    '')),
-                                      );
-                                    },
-                                    child: Text(
-                                      'Update payments',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  ),
-                                  FlatButton(
-                                    onPressed: () {
-                                      main.storage.setItem('salesName', null);
-
-                                      main.storage.setItem('branch', null);
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => home.Homepage(
-                                                'logged out successfully')),
-                                      );
-                                    },
-                                    child: Text(
-                                      'Logout',
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ]
-                      : [
-                          FlatButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => home.Homepage('')),
-                              );
-                            },
-                            child: Text(
-                              'Home',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                          FlatButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => login.Loginpage('')),
-                              );
-                            },
-                            child: Text(
-                              'Login',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ]),
-            ),
-          ])),
-      widget.message != '' || widget.messageNumber == 1
-          ? Container(
-              width: MediaQuery.of(context).size.width,
-              alignment: Alignment.center,
-              child: Text(
-                widget.message,
-                style: TextStyle(color: Colors.green, fontSize: 20),
-              ),
-              color: Colors.lightGreenAccent)
-          : Container()
-    ]);
+                      main.storage.setItem('branch', null);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                home.Homepage('logged out successfully')),
+                      );
+                    },
+                  ),
+                ],
+              ));
   }
 }
+// class _NavbarState extends State<Navbar> {
+//   @override
+//   Widget build(BuildContext context) {
+//     // print(main.storage.getItem('salesName'));
+//     return Column(children: [
+//       Container(
+//           color: Theme.of(context).primaryColorDark,
+//           child: Row(children: [
+//             SingleChildScrollView(
+//               scrollDirection: Axis.horizontal,
+//               child: Row(
+//                   //crossAxisAlignment: CrossAxisAlignment.stretch,
+
+//                   children: main.storage.getItem('salesName') != null
+//                       ? [
+//                           Container(
+//                             // width: MediaQuery.of(context).size.width / 2,
+//                             child: SingleChildScrollView(
+//                               scrollDirection: Axis.horizontal,
+//                               child: Row(
+//                                 children: [
+//                                   FlatButton(
+//                                     onPressed: () {
+//                                       Navigator.push(
+//                                         context,
+//                                         MaterialPageRoute(
+//                                             builder: (context) =>
+//                                                 home.Homepage('')),
+//                                       );
+//                                     },
+//                                     child: Text(
+//                                       'Home',
+//                                       style: TextStyle(color: Colors.white),
+//                                     ),
+//                                   ),
+//                                   FlatButton(
+//                                     onPressed: () {
+//                                       Navigator.push(
+//                                         context,
+//                                         MaterialPageRoute(
+//                                             builder: (context) =>
+//                                                 UpdatePayments.UpdatePayments(
+//                                                     '')),
+//                                       );
+//                                     },
+//                                     child: Text(
+//                                       'Update payments',
+//                                       style: TextStyle(color: Colors.white),
+//                                     ),
+//                                   ),
+//                                   FlatButton(
+//                                     onPressed: () {
+//                                       main.storage.setItem('salesName', null);
+
+//                                       main.storage.setItem('branch', null);
+//                                       Navigator.push(
+//                                         context,
+//                                         MaterialPageRoute(
+//                                             builder: (context) => home.Homepage(
+//                                                 'logged out successfully')),
+//                                       );
+//                                     },
+//                                     child: Text(
+//                                       'Logout',
+//                                       style: TextStyle(color: Colors.white),
+//                                     ),
+//                                   ),
+//                                 ],
+//                               ),
+//                             ),
+//                           ),
+//                         ]
+//                       : [
+//                           FlatButton(
+//                             onPressed: () {
+//                               Navigator.push(
+//                                 context,
+//                                 MaterialPageRoute(
+//                                     builder: (context) => home.Homepage('')),
+//                               );
+//                             },
+//                             child: Text(
+//                               'Home',
+//                               style: TextStyle(color: Colors.white),
+//                             ),
+//                           ),
+//                           FlatButton(
+//                             onPressed: () {
+//                               Navigator.push(
+//                                 context,
+//                                 MaterialPageRoute(
+//                                     builder: (context) => login.Loginpage('')),
+//                               );
+//                             },
+//                             child: Text(
+//                               'Login',
+//                               style: TextStyle(color: Colors.white),
+//                             ),
+//                           ),
+//                         ]),
+//             ),
+//           ])),
+//       widget.message != '' || widget.messageNumber == 1
+//           ? Container(
+//               width: MediaQuery.of(context).size.width,
+//               alignment: Alignment.center,
+//               child: Text(
+//                 widget.message,
+//                 style: TextStyle(color: Colors.green, fontSize: 20),
+//               ),
+//               color: Colors.lightGreenAccent)
+//           : Container()
+//     ]);
+//   }
+// }
 
 // class _NavbarState extends State<Navbar> {
 //   @override

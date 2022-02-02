@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import '../widgets/navbar.dart' as navbar;
 import '../widgets/form.dart' as form;
 import 'package:provider/provider.dart' as provider;
+import '../widgets/message.dart' as message;
 
 class Homepage extends StatefulWidget {
   String message;
@@ -18,12 +19,13 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        drawer: navbar.Navbar(),
         appBar: AppBar(
-          title: Text('Raithanna Dairy'),
+          title: Text('Home'),
         ),
         body: SingleChildScrollView(
           child: Column(children: [
-            navbar.Navbar(widget.message),
+            message.Message(widget.message),
           ]),
         ));
   }
@@ -38,7 +40,7 @@ class _HomepageState extends State<Homepage> {
 //     with SingleTickerProviderStateMixin {
 
 //   AnimationController _animationController;
-  
+
 //   @override
 //   void initState() {
 //      super.initState();
@@ -48,10 +50,10 @@ class _HomepageState extends State<Homepage> {
 // 	  });
 //     _animationController.forward();
 //   }
-  
+
 //   @override
 //   void dispose() {
 //      super.dispose();
 //     _animationController.dispose();
-//   } 
+//   }
 // }

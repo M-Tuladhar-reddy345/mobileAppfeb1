@@ -7,6 +7,7 @@ import '../widgets/form.dart' as form;
 import 'package:provider/provider.dart' as provider;
 import '../main.dart' as main;
 import 'dart:convert';
+import '../widgets/message.dart' as message;
 
 import 'package:http/http.dart' as http;
 
@@ -21,6 +22,7 @@ class Receiptpage extends StatefulWidget {
 }
 
 class _ReceiptpageState extends State<Receiptpage> {
+  Future getReceipt;
   get_Reciept(recNo) async {
     if (recNo != '') {
       final url = Uri.parse(main.url_start +
@@ -47,16 +49,24 @@ class _ReceiptpageState extends State<Receiptpage> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getReceipt = get_Reciept(widget.receiptNo);
+  }
+
+  @override
   Widget build(BuildContext context) {
     print(widget.receiptNo);
     return Scaffold(
+        drawer: navbar.Navbar(),
         appBar: AppBar(
-          title: Text('Raithanna Dairy'),
+          title: Text('Reciept'),
         ),
         body: SingleChildScrollView(
           // scrollDirection: Axis.horizontal,
           child: Column(children: [
-            navbar.Navbar(widget.message),
+            message.Message(widget.message),
             Text(
               'Reciept',
               style: TextStyle(
@@ -67,7 +77,7 @@ class _ReceiptpageState extends State<Receiptpage> {
               ),
             ),
             FutureBuilder(
-                future: get_Reciept(widget.receiptNo),
+                future: getReceipt,
                 builder: (context, snapshot) {
                   //  print(snapshot.data);
                   if (snapshot.data == null) {

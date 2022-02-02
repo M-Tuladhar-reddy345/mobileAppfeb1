@@ -9,18 +9,53 @@ import 'api.dart' as api;
 final localstorage.LocalStorage storage =
     localstorage.LocalStorage('RaithannaDairy_local');
 
-final String url_start = 'http://www.jacknjill.solutions/';
-// final String url_start = 'http://localhost:8000/';
+// final String url_start = 'http://www.jacknjill.solutions/';
+final String url_start = 'http://localhost:8002/';
 main() {
-  FlutterError.onError = (FlutterErrorDetails details) {
-    FlutterError.presentError(details);
-    if (kReleaseMode) exit(1);
-  };
-  WidgetsFlutterBinding.ensureInitialized();
+  storage.clear();
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   WidgetsBinding.instance.addObserver(this);
+  // }
+
+  // @override
+  // void didChangeAppLifecycleState(AppLifecycleState state) {
+  //   // TODO: implement didChangeAppLifecycleState
+  //   super.didChangeAppLifecycleState(state);
+
+  //   if (state == AppLifecycleState.detached) {
+  //     print('ditached');
+  //     storage.clear();
+  //   } else if (state == AppLifecycleState.inactive) {
+  //     print('inactive');
+  //     storage.clear();
+  //   } else if (state == AppLifecycleState.paused) {
+  //     print('paused');
+  //     storage.clear();
+  //   } else if (state == AppLifecycleState.resumed) {
+  //     print('resumed');
+  //     storage.clear();
+  //   }
+  // }
+
+  // @override
+  // void dispose() {
+  //   // TODO: implement dispose
+  //   super.dispose();
+  //   WidgetsBinding.instance.removeObserver(this);
+  // }
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/main.dart' as main;
+import 'package:flutter_complete_guide/widgets/message.dart';
 import 'package:provider/provider.dart';
 import '../models.dart' as models;
 import '../widgets/navbar.dart' as navbar;
@@ -80,12 +81,13 @@ class _LoginpageState extends State<Loginpage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        drawer: navbar.Navbar(),
         appBar: AppBar(
-          title: Text('Raithanna Dairy'),
+          title: Text('Login'),
         ),
         body: SingleChildScrollView(
           child: Column(children: [
-            navbar.Navbar(widget.message),
+            Message(widget.message),
             Container(
                 child: Padding(
               padding: const EdgeInsets.all(8.0),
