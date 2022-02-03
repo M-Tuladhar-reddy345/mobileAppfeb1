@@ -291,7 +291,7 @@ class _DailySalesEntrypageState extends State<DailySalesEntrypage> {
     return Scaffold(
         drawer: navbar.Navbar(),
         appBar: AppBar(
-          title: Text('DailySalesEntry'),
+          title: Text('Daily Sales Entry'),
         ),
         body: Align(
             alignment: Alignment.topCenter,
@@ -428,7 +428,8 @@ class _DailySalesEntrypageState extends State<DailySalesEntrypage> {
                                   color: Theme.of(context).primaryColor,
                                   child: Text(
                                     'Pick Date',
-                                    style: TextStyle(color: Colors.white),
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 20),
                                   ),
                                   onPressed: () {
                                     showDatePicker(
@@ -453,7 +454,9 @@ class _DailySalesEntrypageState extends State<DailySalesEntrypage> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                  DateFormat("d-M-y").format(widget.dateTime)),
+                                DateFormat("d-M-y").format(widget.dateTime),
+                                style: TextStyle(fontSize: 20),
+                              ),
                             )
                           ],
                         ),

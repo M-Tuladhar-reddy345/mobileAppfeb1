@@ -1,11 +1,13 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/pages/Edit_updatePayements.dart';
 import 'package:flutter_complete_guide/pages/dailySalesEntry.dart';
 import '../main.dart' as main;
 import '../pages/home.dart' as home;
 import '../pages/UpdatePayments.dart' as UpdatePayments;
 import '../pages/login.dart' as login;
+import 'package:http/http.dart' as http;
 
 class Navbar extends StatelessWidget {
   @override
@@ -28,7 +30,7 @@ class Navbar extends StatelessWidget {
                           width: 200,
                           height: 60,
                           image:
-                              AssetImage('assets/images/RaithannaOLogo.jpg'))),
+                              AssetImage('assets/images/RaithannaOLogo.png'))),
                   //  Image(
 
                   //     image:
@@ -71,7 +73,7 @@ class Navbar extends StatelessWidget {
                           width: 200,
                           height: 60,
                           image:
-                              AssetImage('assets/images/RaithannaOLogo.jpg'))),
+                              AssetImage('assets/images/RaithannaOLogo.png'))),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
@@ -107,7 +109,19 @@ class Navbar extends StatelessWidget {
                     },
                   ),
                   ListTile(
-                    title: const Text('DailySalesEntry'),
+                    title: const Text('Edit Update Payments'),
+                    onTap: () {
+                      // Update the state of the app.
+                      // ...
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => editUpdatePayements('')),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('Daily Sales Entry'),
                     onTap: () {
                       // Update the state of the app.
                       // ...
@@ -120,18 +134,25 @@ class Navbar extends StatelessWidget {
                   ),
                   ListTile(
                     title: const Text('Logout'),
-                    onTap: () {
+                    onTap: () async {
                       // Update the state of the app.
                       // ...
-                      main.storage.setItem('salesName', null);
+                      final url =
+                          Uri.parse(main.url_start + 'mobileApp/logout/');
+                      final response = await http.get(url);
+                      //  print(response.statusCode);
 
-                      main.storage.setItem('branch', null);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                home.Homepage('logged out successfully')),
-                      );
+                      if (response.statusCode == 200) {
+                        main.storage.setItem('salesName', null);
+
+                        main.storage.setItem('branch', null);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  home.Homepage('logged out successfully')),
+                        );
+                      }
                     },
                   ),
                 ],
