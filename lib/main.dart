@@ -10,8 +10,8 @@ final localstorage.LocalStorage storage =
     localstorage.LocalStorage('RaithannaDairy_local');
 
 // final String url_start = 'http://www.jacknjill.solutions/';
-// final String url_start = 'http://localhost:8000/';
-final String url_start = 'http://192.168.1.10:8000/';
+final String url_start = 'http://localhost:8000/';
+// final String url_start = 'http://192.168.1.10:8000/';
 main() {
   storage.clear();
   runApp(MyApp());
