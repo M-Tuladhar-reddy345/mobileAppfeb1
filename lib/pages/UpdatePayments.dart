@@ -159,6 +159,7 @@ class _UpdatePaymentsState extends State<UpdatePayments>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     getCustomer = get_customers();
+    getReciept = get_Reciept('');
   }
 
   @override
@@ -241,6 +242,7 @@ class _UpdatePaymentsState extends State<UpdatePayments>
                                       setState(() {
                                         widget.dropdownValue = newValue;
                                         widget.dropdownValue2.value = newValue;
+                                        getReciept = get_Reciept(newValue);
                                       });
                                     },
                                     items: snapshot.data
@@ -249,7 +251,9 @@ class _UpdatePaymentsState extends State<UpdatePayments>
                                           value: v.custCode.toString(),
                                           child: Text(v.custName.toString() +
                                               '-' +
-                                              v.custCode.toString()));
+                                              v.custCode.toString() +
+                                              '-' +
+                                              v.Osamt.toString()));
                                     }).toList(),
                                   ),
                                 );
@@ -278,178 +282,152 @@ class _UpdatePaymentsState extends State<UpdatePayments>
                     // color: Theme.of(context).primaryColor,
                     width: 300,
                     child: SingleChildScrollView(
-                      child: ValueListenableBuilder<String>(
-                        builder:
-                            (BuildContext context, String value, Widget child) {
-                          //  print(value);
-                          return SingleChildScrollView(
-                            child: FutureBuilder(
-                                future: get_Reciept(value),
-                                builder: (context, snapshot) {
-                                  //  print(snapshot.data);
-                                  switch (snapshot.connectionState) {
-                                    case ConnectionState.none:
-                                      return Center(
-                                          child: Text('Chooose user...'));
-                                    case ConnectionState.waiting:
-                                      return Center(
-                                        child: CircularProgressIndicator(),
-                                      );
-                                    case ConnectionState.done:
-                                      if (snapshot.data == null) {
-                                        return Text('Chooose user...');
-                                      } else
-                                        return SingleChildScrollView(
-                                          child: Column(
-                                            children: [
-                                              Text(
-                                                'Reciept No: ' +
-                                                    snapshot.data['RecieptNo']
-                                                        .toString(),
-                                                style: TextStyle(fontSize: 20),
-                                              ),
-                                              Text(
-                                                'Amount: ' +
-                                                    snapshot.data['RecAmt']
-                                                        .toString(),
-                                                style: TextStyle(fontSize: 20),
-                                              ),
-                                              Row(
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: RaisedButton(
-                                                        color: Theme.of(context)
-                                                            .primaryColor,
-                                                        child: Text(
-                                                          'Pick Date',
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.white),
-                                                        ),
-                                                        onPressed: () {
-                                                          showDatePicker(
-                                                                  context:
-                                                                      context,
-                                                                  initialDate:
-                                                                      DateTime
-                                                                          .now(),
-                                                                  firstDate:
-                                                                      DateTime(
-                                                                          2001),
-                                                                  lastDate:
-                                                                      DateTime
-                                                                          .now())
-                                                              .then((value) {
-                                                            if (value != null) {
-                                                              setState(() {
-                                                                widget.dateTime =
-                                                                    value;
-                                                              });
-                                                            }
-                                                          });
-                                                        }),
+                      child: FutureBuilder(
+                          future: getReciept,
+                          builder: (context, snapshot) {
+                            //  print(snapshot.data);
+                            switch (snapshot.connectionState) {
+                              case ConnectionState.none:
+                                return Center(child: Text('Chooose user...'));
+                              case ConnectionState.waiting:
+                                return Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              case ConnectionState.done:
+                                if (snapshot.data == null) {
+                                  return Text('Chooose user...');
+                                } else
+                                  return SingleChildScrollView(
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          'Reciept No: ' +
+                                              snapshot.data['RecieptNo']
+                                                  .toString(),
+                                          style: TextStyle(fontSize: 20),
+                                        ),
+                                        Text(
+                                          'Amount: ' +
+                                              snapshot.data['RecAmt']
+                                                  .toString(),
+                                          style: TextStyle(fontSize: 20),
+                                        ),
+                                        Row(
+                                          children: [
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: RaisedButton(
+                                                  color: Theme.of(context)
+                                                      .primaryColor,
+                                                  child: Text(
+                                                    'Pick Date',
+                                                    style: TextStyle(
+                                                        color: Colors.white),
                                                   ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    child: Text(DateFormat(
-                                                            "d-M-y")
-                                                        .format(
-                                                            widget.dateTime)),
-                                                  )
-                                                ],
-                                              ),
-                                              DropdownButton(
-                                                isExpanded: true,
-                                                value: widget.recType,
+                                                  onPressed: () {
+                                                    showDatePicker(
+                                                            context: context,
+                                                            initialDate:
+                                                                DateTime.now(),
+                                                            firstDate:
+                                                                DateTime(2001),
+                                                            lastDate:
+                                                                DateTime.now())
+                                                        .then((value) {
+                                                      if (value != null) {
+                                                        setState(() {
+                                                          widget.dateTime =
+                                                              value;
+                                                        });
+                                                      }
+                                                    });
+                                                  }),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Text(DateFormat("d-M-y")
+                                                  .format(widget.dateTime)),
+                                            )
+                                          ],
+                                        ),
+                                        DropdownButton(
+                                          isExpanded: true,
+                                          value: widget.recType,
 
-                                                // icon: const Icon(Icons.arrow_downward),
-                                                elevation: 16,
-                                                style: const TextStyle(
-                                                    color: Colors.deepPurple),
-                                                underline: Container(
-                                                  height: 2,
-                                                  width: 300,
-                                                  color:
-                                                      Colors.deepPurpleAccent,
-                                                ),
-                                                onChanged: (String newValue) {
-                                                  setState(() {
-                                                    widget.recType = newValue;
-                                                    // widget.dropdownValue2.value = newValue;
-                                                  });
-                                                },
-                                                items: snapshot.data['Rectypes']
-                                                    .map<
-                                                        DropdownMenuItem<
-                                                            String>>((v) {
-                                                  return DropdownMenuItem<
-                                                      String>(
-                                                    value: v.toString(),
-                                                    child: Text(v.toString()),
-                                                  );
-                                                }).toList(),
-                                              ),
-                                              TextFormField(
-                                                  controller:
-                                                      widget.amt_controller,
-                                                  keyboardType:
-                                                      TextInputType.number,
-                                                  decoration: InputDecoration(
-                                                    labelText: "Rec Amt",
-                                                    hintText: "Rec Amt",
-                                                  )),
-                                              TextFormField(
-                                                  controller:
-                                                      widget.Waiver_controller,
-                                                  keyboardType:
-                                                      TextInputType.number,
-                                                  decoration: InputDecoration(
-                                                    labelText: "Waiver",
-                                                    hintText: "Waiver",
-                                                  )),
-                                              TextFormField(
-                                                  controller: widget
-                                                      .payRefNo_controller,
-                                                  // keyboardType: TextInputType.number,
-                                                  decoration: InputDecoration(
-                                                    labelText:
-                                                        "Payment Reference No",
-                                                    hintText: "pay Ref No",
-                                                  )),
-                                              TextFormField(
-                                                  controller:
-                                                      widget.remarks_controller,
-                                                  decoration: InputDecoration(
-                                                    labelText: "Remarks",
-                                                    hintText: "Remarks",
-                                                  )),
-                                              FlatButton(
-                                                color: Colors.purple,
-                                                onPressed: () => submit(),
-                                                child: Text(
-                                                  'Submit',
-                                                  style: TextStyle(
-                                                      color: Colors.white),
-                                                ),
-                                              )
-                                            ],
+                                          // icon: const Icon(Icons.arrow_downward),
+                                          elevation: 16,
+                                          style: const TextStyle(
+                                              color: Colors.deepPurple),
+                                          underline: Container(
+                                            height: 2,
+                                            width: 300,
+                                            color: Colors.deepPurpleAccent,
                                           ),
-                                        );
-                                      break;
-                                    case ConnectionState.active:
-                                      // TODO: Handle this case.
-                                      break;
-                                  }
-                                }),
-                          );
-                        },
-                        valueListenable: widget.dropdownValue2,
-                      ),
+                                          onChanged: (String newValue) {
+                                            setState(() {
+                                              widget.recType = newValue;
+                                              // widget.dropdownValue2.value = newValue;
+                                            });
+                                          },
+                                          items: snapshot.data['Rectypes']
+                                              .map<DropdownMenuItem<String>>(
+                                                  (v) {
+                                            return DropdownMenuItem<String>(
+                                              value: v.toString(),
+                                              child: Text(v.toString()),
+                                            );
+                                          }).toList(),
+                                        ),
+                                        TextFormField(
+                                            controller: widget.amt_controller,
+                                            keyboardType: TextInputType.number,
+                                            decoration: InputDecoration(
+                                              labelText: "Rec Amt",
+                                              hintText: "Rec Amt",
+                                            )),
+                                        TextFormField(
+                                            controller:
+                                                widget.Waiver_controller,
+                                            keyboardType: TextInputType.number,
+                                            decoration: InputDecoration(
+                                              labelText: "Waiver",
+                                              hintText: "Waiver",
+                                            )),
+                                        TextFormField(
+                                            controller:
+                                                widget.payRefNo_controller,
+                                            // keyboardType: TextInputType.number,
+                                            decoration: InputDecoration(
+                                              labelText: "Payment Reference No",
+                                              hintText: "pay Ref No",
+                                            )),
+                                        TextFormField(
+                                            controller:
+                                                widget.remarks_controller,
+                                            decoration: InputDecoration(
+                                              labelText: "Remarks",
+                                              hintText: "Remarks",
+                                            )),
+                                        FlatButton(
+                                          color: Colors.purple,
+                                          onPressed: () => submit(),
+                                          child: Text(
+                                            'Submit',
+                                            style:
+                                                TextStyle(color: Colors.white),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                break;
+                              case ConnectionState.active:
+                                // TODO: Handle this case.
+                                break;
+                            }
+                          }),
                     ))
               ])
             ]),

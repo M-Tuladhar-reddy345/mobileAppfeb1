@@ -25,8 +25,14 @@ class Navbar extends StatelessWidget {
                         color: Colors.purple,
                       ),
                       child: Image(
+                          width: 200,
+                          height: 60,
                           image:
                               AssetImage('assets/images/RaithannaOLogo.jpg'))),
+                  //  Image(
+
+                  //     image:
+                  //         AssetImage('assets/images/RaithannaOLogo.jpg'))),
                   ListTile(
                     title: const Text('Home'),
                     onTap: () {
@@ -62,13 +68,18 @@ class Navbar extends StatelessWidget {
                         color: Colors.purple,
                       ),
                       child: Image(
+                          width: 200,
+                          height: 60,
                           image:
                               AssetImage('assets/images/RaithannaOLogo.jpg'))),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(main.storage.getItem('salesName').toString() +
-                        '@' +
-                        main.storage.getItem('branch').toString()),
+                    child: Text(
+                      main.storage.getItem('salesName').toString() +
+                          '@' +
+                          main.storage.getItem('branch').toString(),
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
                   ),
                   ListTile(
                     title: const Text('Home'),

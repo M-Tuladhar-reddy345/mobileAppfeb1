@@ -99,7 +99,10 @@ class order_product_indent {
   }
 
   void update_orderNo(orderno) {
-    print(orderno);
     this.orderNo = orderno;
+  }
+
+  void update_date(date) {
+    this.date = date;
   }
 }

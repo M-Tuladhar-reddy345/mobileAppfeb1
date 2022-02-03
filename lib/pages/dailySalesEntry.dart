@@ -440,6 +440,11 @@ class _DailySalesEntrypageState extends State<DailySalesEntrypage> {
                                       if (value != null) {
                                         setState(() {
                                           widget.dateTime = value;
+                                          widget.listofProduct =
+                                              widget.listofProduct.map((e) {
+                                            e.update_date(value);
+                                            return e;
+                                          }).toList();
                                         });
                                       }
                                     });

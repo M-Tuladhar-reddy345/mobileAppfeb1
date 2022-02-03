@@ -151,6 +151,18 @@ class _OrderpageState extends State<Orderpage> {
                               padding: const EdgeInsets.all(8.0),
                               child: Row(children: [
                                 Text(
+                                  'Date: ',
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                                Text(
+                                  snapshot.data['Date'].toString(),
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                              ])),
+                          Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(children: [
+                                Text(
                                   'Custcode: ',
                                   style: TextStyle(fontSize: 20),
                                 ),
