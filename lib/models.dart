@@ -18,6 +18,22 @@ class Customer {
   }
 }
 
+class Reciepts {
+  String recNo;
+  String custName;
+  // String label = custName.toString() +
+  //     '-' +
+  //     custCode.toString() +
+  //     '-' +
+  //     Osamt.toString();
+  Reciepts(this.recNo, this.custName);
+
+  factory Reciepts.fromjson(Map<String, dynamic> json) {
+    print(json);
+    return Reciepts(json['recNo'], json['custName']);
+  }
+}
+
 class Branch {
   String branch;
   String code;
