@@ -28,6 +28,8 @@ class editUpdatePayements extends StatefulWidget {
   var payRefNo_controller = TextEditingController();
   var remarks_controller = TextEditingController();
   var Waiver_controller = TextEditingController()..text = '0';
+  String prevAmt;
+  String prevWaiver;
 
   String recType;
 
@@ -40,6 +42,20 @@ class _editUpdatePayementsState extends State<editUpdatePayements> {
   Future getReceipts;
   Future getReceiptbyrecNo;
   submit() async {
+    String remarks = widget.remarks_controller.text +
+        ' Amt ' +
+        widget.prevAmt +
+        ' to ' +
+        widget.amt_controller.text +
+        ' Waiver ' +
+        widget.prevWaiver +
+        ' to ' +
+        widget.Waiver_controller.text +
+        widget.prevWaiver +
+        ' Date ' +
+        DateFormat("d-M-y").format(widget.dateTime) +
+        ' to ' +
+        DateFormat("d-M-y").format(widget.dateTime2);
     final body = {
       'RecieptNo': widget.recNo,
       'Date': DateFormat("y-M-d").format(widget.dateTime),
@@ -47,7 +63,7 @@ class _editUpdatePayementsState extends State<editUpdatePayements> {
       'payRefNo': widget.payRefNo_controller.text,
       'RecAmt': widget.amt_controller.text,
       'Waiver': widget.Waiver_controller.text,
-      'Remarks': widget.remarks_controller.text,
+      'Remarks': remarks,
       'Custcode': widget.custcode,
       'entryUser': main.storage.getItem('salesName'),
     };
@@ -95,6 +111,8 @@ class _editUpdatePayementsState extends State<editUpdatePayements> {
           widget.dateTime2 = DateFormat('d/M/y').parse(data['RecieptDate']);
           widget.recType = data['RecType'];
           widget.custcode = data['custCode'];
+          widget.prevAmt = data['RecAmt'].toString();
+          widget.prevWaiver = data['Waiver'].toString();
         });
 
         return data;

@@ -44,7 +44,7 @@ class _DailySalesEntrypageState extends State<DailySalesEntrypage> {
   Future getProducts;
   get_customers() async {
     final url = Uri.parse(main.url_start +
-        'mobileApp/CustomerDetails/' +
+        'mobileApp/CustomerDetailsDS/' +
         main.storage.getItem('branch') +
         '/');
     final response = await http.get(url);

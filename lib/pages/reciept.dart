@@ -84,131 +84,31 @@ class _ReceiptpageState extends State<Receiptpage> {
                     return Text('Chooose user...');
                   } else
                     return Container(
-                      width: MediaQuery.of(context).size.width * 0.95,
-                      child: Row(children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          verticalDirection: VerticalDirection.down,
-                          textBaseline: TextBaseline.alphabetic,
-                          textDirection: TextDirection.ltr,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Text(
-                              'Recpt No ',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Text(
-                              'date ',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Text(
-                              'Type ',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Text(
-                              'Amount ',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Text(
-                              'Remarks ',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Text(
-                              'Customer',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Text(
-                                '',
-                                style: TextStyle(fontSize: 20),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          verticalDirection: VerticalDirection.down,
-                          textBaseline: TextBaseline.alphabetic,
-                          textDirection: TextDirection.ltr,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Text(
-                              ' : ',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Text(
-                              ' : ',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Text(
-                              ' : ',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Text(
-                              ' : ',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Text(
-                              ' : ',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Text(
-                              ' : ',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                '',
-                                style: TextStyle(fontSize: 15),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          verticalDirection: VerticalDirection.down,
-                          textBaseline: TextBaseline.alphabetic,
-                          textDirection: TextDirection.ltr,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Text(
-                              snapshot.data['RecieptNo'].toString(),
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Text(
-                              snapshot.data['RecieptDate'].toString(),
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Text(
-                              snapshot.data['RecType'].toString(),
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Text(
-                              snapshot.data['RecAmt'].toString(),
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Text(
-                              snapshot.data['Remarks'].toString(),
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Text(
-                              '',
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            Text(
-                              snapshot.data['custName'].toString(),
-                              // maxLines: 3,
-                              style: TextStyle(fontSize: 15),
-                            ),
-                          ],
-                        ),
-                      ]),
-                    );
+                        width: MediaQuery.of(context).size.width * 0.95,
+                        child: Wrap(children: [
+                          Text(
+                            'CustName:  ' +
+                                snapshot.data['custName'].toString() +
+                                '\n' +
+                                'Recpt No:  ' +
+                                snapshot.data['RecieptNo'].toString() +
+                                '\n' +
+                                'Recpt date:  ' +
+                                snapshot.data['RecieptDate'].toString() +
+                                '\n' +
+                                'Rec Type:  ' +
+                                snapshot.data['RecType'].toString() +
+                                '\n' +
+                                'RecAmt:  ' +
+                                snapshot.data['RecAmt'].toString() +
+                                '\n' +
+                                'Remarks:  ' +
+                                snapshot.data['Remarks'].toString() +
+                                '\n',
+                            // snapshot.data['Remarks'].toString(),
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ]));
                 })
           ]),
         ));
