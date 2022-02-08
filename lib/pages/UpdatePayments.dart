@@ -51,7 +51,7 @@ class _UpdatePaymentsState extends State<UpdatePayments>
       'payRefNo': widget.payRefNo_controller.text,
       'RecAmt': widget.amt_controller.text,
       'Waiver': widget.Waiver_controller.text,
-      'Remarks': widget.remarks_controller.text,
+      'Remarks': widget.remarks_controller.text.toString() + '-Upd Thru App',
       'Custcode': widget.dropdownValue,
       'entryUser': main.storage.getItem('salesName'),
     };

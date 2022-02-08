@@ -87,27 +87,39 @@ class _ReceiptpageState extends State<Receiptpage> {
                         width: MediaQuery.of(context).size.width * 0.95,
                         child: Wrap(children: [
                           Text(
-                            'CustName:  ' +
-                                snapshot.data['custName'].toString() +
-                                '\n' +
-                                'Recpt No:  ' +
-                                snapshot.data['RecieptNo'].toString() +
-                                '\n' +
-                                'Recpt date:  ' +
-                                snapshot.data['RecieptDate'].toString() +
-                                '\n' +
-                                'Rec Type:  ' +
-                                snapshot.data['RecType'].toString() +
-                                '\n' +
-                                'RecAmt:  ' +
-                                snapshot.data['RecAmt'].toString() +
-                                '\n' +
-                                'Remarks:  ' +
-                                snapshot.data['Remarks'].toString() +
-                                '\n',
-                            // snapshot.data['Remarks'].toString(),
-                            style: TextStyle(fontSize: 20),
+                            'CustName:  ',
+                            style: TextStyle(fontWeight: FontWeight.bold),
                           ),
+                          Text(snapshot.data['custName'].toString() + '  \n'),
+                          Text(
+                            'RecieptNo:  ',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text(snapshot.data['RecieptNo'].toString() + '  \n'),
+                          Text(
+                            'RecieptDate:  ',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                              snapshot.data['RecieptDate'].toString() + '  \n'),
+                          Text(
+                            'RecType:  ',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text(snapshot.data['RecType'].toString() + '  \n'),
+                          Text(
+                            'RecAmt:  ',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text(snapshot.data['RecAmt'].toString() + '  \n'),
+                          Text(
+                            '\nRemarks:  ',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            snapshot.data['Remarks'].toString() + '  \n',
+                          )
+                          // snapshot.data['Remarks'].toString(),
                         ]));
                 })
           ]),

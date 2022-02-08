@@ -32,7 +32,7 @@ class _OrderpageState extends State<Orderpage> {
       final response = await http.get(url);
       //  print(response.statusCode);
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 150) {
         //  print(response.body);
         var data = json.decode(response.body) as Map;
         print('@38 ' + data.toString());
@@ -140,7 +140,7 @@ class _OrderpageState extends State<Orderpage> {
                               child: Row(children: [
                                 Text(
                                   'Customer: ',
-                                  style: TextStyle(fontSize: 20),
+                                  style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                                 Text(
                                   snapshot.data['custName'].toString(),
@@ -152,7 +152,7 @@ class _OrderpageState extends State<Orderpage> {
                               child: Row(children: [
                                 Text(
                                   'Date: ',
-                                  style: TextStyle(fontSize: 20),
+                                  style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                                 Text(
                                   snapshot.data['Date'].toString(),
@@ -164,11 +164,11 @@ class _OrderpageState extends State<Orderpage> {
                               child: Row(children: [
                                 Text(
                                   'Custcode: ',
-                                  style: TextStyle(fontSize: 20),
+                                  style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                                 Text(
                                   snapshot.data['custCode'].toString(),
-                                  style: TextStyle(fontSize: 20),
+                                  style: TextStyle(fontSize: 15),
                                 ),
                               ])),
                           Padding(
@@ -176,11 +176,11 @@ class _OrderpageState extends State<Orderpage> {
                               child: Row(children: [
                                 Text(
                                   'Order No: ',
-                                  style: TextStyle(fontSize: 20),
+                                  style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                                 Text(
                                   widget.orderNo.toString(),
-                                  style: TextStyle(fontSize: 20),
+                                  style: TextStyle(fontSize: 15),
                                 ),
                               ])),
                           Padding(
@@ -188,11 +188,11 @@ class _OrderpageState extends State<Orderpage> {
                               child: Row(children: [
                                 Text(
                                   'Total Amount: ',
-                                  style: TextStyle(fontSize: 20),
+                                  style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                                 Text(
                                   snapshot.data['Amount'].toString(),
-                                  style: TextStyle(fontSize: 20),
+                                  style: TextStyle(fontSize: 15),
                                 ),
                               ])),
                           Padding(
@@ -200,11 +200,11 @@ class _OrderpageState extends State<Orderpage> {
                               child: Row(children: [
                                 Text(
                                   'Total Discount: ',
-                                  style: TextStyle(fontSize: 20),
+                                  style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                                 Text(
                                   snapshot.data['Discount'].toString(),
-                                  style: TextStyle(fontSize: 20),
+                                  style: TextStyle(fontSize: 15),
                                 ),
                               ])),
                           Center(
@@ -213,7 +213,7 @@ class _OrderpageState extends State<Orderpage> {
                               child: Center(
                                   child: Container(
                                 width: MediaQuery.of(context).size.width,
-                                height: 200,
+                                height: 300,
                                 child: SingleChildScrollView(
                                   child: Table(
                                     defaultColumnWidth: FixedColumnWidth(60.0),
@@ -247,7 +247,7 @@ class _OrderpageState extends State<Orderpage> {
                                             ]),
 
                                             // Column(children: [
-                                            //   Text('Amt', style: TextStyle(fontSize: 20.0))
+                                            //   Text('Amt', style: TextStyle(fontSize: 15.0))
                                             // ]),
                                           ]),
                                         ] +

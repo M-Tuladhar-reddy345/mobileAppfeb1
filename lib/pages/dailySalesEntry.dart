@@ -163,7 +163,7 @@ class _DailySalesEntrypageState extends State<DailySalesEntrypage> {
             widget.quantity_controller.text,
             widget.discount_controller.text,
             widget.pamt,
-            widget.remarks_controller.text,
+            widget.remarks_controller.text + '-Upd Thru App',
             widget.dropdownValue,
             widget.prodNo.toString()));
         widget.prodNo = widget.prodNo + 1;

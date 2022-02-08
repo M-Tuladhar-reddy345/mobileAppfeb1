@@ -42,20 +42,35 @@ class _editUpdatePayementsState extends State<editUpdatePayements> {
   Future getReceipts;
   Future getReceiptbyrecNo;
   submit() async {
-    String remarks = widget.remarks_controller.text +
-        ' Amt ' +
-        widget.prevAmt +
-        ' to ' +
-        widget.amt_controller.text +
-        ' Waiver ' +
-        widget.prevWaiver +
-        ' to ' +
-        widget.Waiver_controller.text +
-        widget.prevWaiver +
-        ' Date ' +
-        DateFormat("d-M-y").format(widget.dateTime) +
-        ' to ' +
-        DateFormat("d-M-y").format(widget.dateTime2);
+    String remarks = widget.remarks_controller.text;
+    if (widget.remarks_controller.text.contains('Upd thru app') != false) {
+      remarks = ' Amt ' +
+          widget.prevAmt +
+          ' to ' +
+          widget.amt_controller.text +
+          ' Waiver ' +
+          widget.prevWaiver +
+          ' to ' +
+          widget.Waiver_controller.text +
+          ' Date ' +
+          DateFormat("d-M-y").format(widget.dateTime) +
+          ' to ' +
+          DateFormat("d-M-y").format(widget.dateTime2) +
+          '-Upd Thru app';
+    } else {
+      remarks = ' Amt ' +
+          widget.prevAmt +
+          ' to ' +
+          widget.amt_controller.text +
+          ' Waiver ' +
+          widget.prevWaiver +
+          ' to ' +
+          widget.Waiver_controller.text +
+          ' Date ' +
+          DateFormat("d-M-y").format(widget.dateTime) +
+          ' to ' +
+          DateFormat("d-M-y").format(widget.dateTime2);
+    }
     final body = {
       'RecieptNo': widget.recNo,
       'Date': DateFormat("y-M-d").format(widget.dateTime),
@@ -113,6 +128,14 @@ class _editUpdatePayementsState extends State<editUpdatePayements> {
           widget.custcode = data['custCode'];
           widget.prevAmt = data['RecAmt'].toString();
           widget.prevWaiver = data['Waiver'].toString();
+          widget.amt_controller.value =
+              TextEditingValue(text: data['RecAmt'].toString());
+          widget.Waiver_controller.value =
+              TextEditingValue(text: data['Waiver'].toString());
+          widget.payRefNo_controller.value =
+              TextEditingValue(text: data['payRefNo'].toString());
+          widget.remarks_controller.value =
+              TextEditingValue(text: data['Remarks'].toString());
         });
 
         return data;
