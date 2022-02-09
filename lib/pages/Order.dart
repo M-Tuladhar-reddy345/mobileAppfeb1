@@ -27,15 +27,19 @@ class _OrderpageState extends State<Orderpage> {
   Future getOrder;
   get_Order(orderNo) async {
     if (orderNo != '') {
-      final url =
-          Uri.parse(main.url_start + 'mobileApp/orderDetails/' + orderNo);
+      final url = Uri.parse(main.url_start +
+          'mobileApp/orderDetails/' +
+          orderNo +
+          '/' +
+          main.storage.getItem('branch') +
+          '/');
+      print(url.toString());
       final response = await http.get(url);
       //  print(response.statusCode);
 
-      if (response.statusCode == 150) {
+      if (response.statusCode == 200) {
         //  print(response.body);
         var data = json.decode(response.body) as Map;
-        print('@38 ' + data.toString());
         return data;
       }
     } else {
@@ -128,6 +132,7 @@ class _OrderpageState extends State<Orderpage> {
                       );
 
                     case ConnectionState.done:
+                      print('@135' + snapshot.data.toString());
                       if (snapshot.data != null) {
                         widget.listofProduct = snapshot.data['Products']
                             .map<models.order_product_indent>((json) =>

@@ -117,7 +117,7 @@ class _ReceiptpageState extends State<Receiptpage> {
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            snapshot.data['Remarks'].toString() + '  \n',
+                            "\n" + snapshot.data['Remarks'].toString() + '  \n',
                           )
                           // snapshot.data['Remarks'].toString(),
                         ]));

@@ -151,7 +151,8 @@ class _editUpdatePayementsState extends State<editUpdatePayements> {
         DateFormat("y-M-d").format(date).toString() +
         '/' +
         main.storage.getItem('salesName').toString() +
-        '/');
+        '/'+
+          main.storage.getItem('branch'));
     final response = await http.get(url);
 
     //  print(response.statusCode);

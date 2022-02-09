@@ -132,7 +132,10 @@ class _DailySalesEntrypageState extends State<DailySalesEntrypage> {
       };
     }
     // print(body);
-    final url = Uri.parse(main.url_start + 'mobileApp/getAmtRate/');
+    final url = Uri.parse(main.url_start +
+        'mobileApp/getAmtRate/' +
+        main.storage.getItem('branch') +
+        '/');
     final response = await http.post(url, body: body);
     print(url);
 
@@ -184,7 +187,10 @@ class _DailySalesEntrypageState extends State<DailySalesEntrypage> {
           widget.listofProduct[i].get_dict();
     }
     print(json.encode(body));
-    final url = Uri.parse(main.url_start + 'mobileApp/DailySale_receive/');
+    final url = Uri.parse(main.url_start +
+        'mobileApp/DailySale_receive/' +
+        main.storage.getItem('branch') +
+        '/');
     final response = await http.post(url,
         headers: {"Content-Type": "application/json"},
         encoding: Encoding.getByName("utf-8"),
