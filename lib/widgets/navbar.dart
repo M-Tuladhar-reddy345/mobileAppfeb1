@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/pages/DownloadPdfIndent.dart';
 import 'package:flutter_complete_guide/pages/Edit_updatePayements.dart';
 import 'package:flutter_complete_guide/pages/dailySalesEntry.dart';
 import '../main.dart' as main;
@@ -129,6 +130,18 @@ class Navbar extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) => DailySalesEntrypage('')),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('Pdf Daily Indent Report'),
+                    onTap: () {
+                      // Update the state of the app.
+                      // ...
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PdfIndentpage('')),
                       );
                     },
                   ),
