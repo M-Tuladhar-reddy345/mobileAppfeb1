@@ -8,6 +8,7 @@ import 'package:provider/provider.dart' as provider;
 import '../widgets/message.dart' as message;
 import 'package:path/path.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class PDFViewerPage extends StatefulWidget {
   String message;
@@ -22,6 +23,7 @@ class PDFViewerPage extends StatefulWidget {
 class _PDFViewerPageState extends State<PDFViewerPage> {
   @override
   Widget build(BuildContext context) {
+    // print(widget.pdf.path);
     return Scaffold(
         drawer: navbar.Navbar(),
         appBar: AppBar(

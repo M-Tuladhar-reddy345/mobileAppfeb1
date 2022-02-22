@@ -22,6 +22,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 
+// ignore: must_be_immutable
 class PdfIndentpage extends StatefulWidget {
   String message;
 
@@ -38,22 +39,17 @@ class _PdfIndentpageState extends State<PdfIndentpage> {
 
   var progress;
 
-  // static Future<File> loadFirebase(String url) async {
-  //   try {
-  //     final refPDF = FirebaseStorage.instance.ref().child(url);
-  //     final bytes = await refPDF.getData();
+  Future<File> _storeFile(String url, List<int> bytes) async {
+    var datefrom = DateFormat("y-M-d").format(widget.dateTimefrom);
+    var dateto = DateFormat("y-M-d").format(widget.dateTimeto);
+    String fileName = datefrom + 'to' + dateto + '.pdf';
 
-  //     return _storeFile(url, bytes);
-  //   } catch (e) {
-  //     return null;
-  //   }
-  // }
+    Directory dir = Directory('/storage/emulated/0/Download');
 
-  static Future<File> _storeFile(String url, List<int> bytes) async {
-    final filename = basename(url);
-    final dir = await getApplicationDocumentsDirectory();
+    print(dir);
+    await Permission.storage.request();
 
-    final File file = File('${dir.path}/$filename');
+    final File file = File('${dir.path}/$fileName');
     await file.writeAsBytes(bytes, flush: true);
     return file;
   }
@@ -171,20 +167,22 @@ class _PdfIndentpageState extends State<PdfIndentpage> {
                     isLoading = true;
                   });
                   final File pdf = await fetchPDF();
+                  // print(pdf);
                   openPDF(context, pdf);
                   setState(() {
                     isLoading = false;
                   });
                 },
-                child: Text('Show PDF',
+                child: Text('Download PDF',
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 20))),
-            isLoading == true ? CircularProgressIndicator() : Text('Show pdf')
+            isLoading == true ? CircularProgressIndicator() : Text('')
           ]),
         ));
   }
 
   openPDF(BuildContext context, File pdf) {
+    // print(pdf.path);
     Navigator.push(context,
         MaterialPageRoute(builder: (context) => PDFViewerPage('', pdf)));
   }
