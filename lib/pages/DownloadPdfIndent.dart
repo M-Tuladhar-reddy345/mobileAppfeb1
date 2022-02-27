@@ -21,6 +21,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
+import 'package:open_file/open_file.dart';
 
 // ignore: must_be_immutable
 class PdfIndentpage extends StatefulWidget {
@@ -46,7 +47,6 @@ class _PdfIndentpageState extends State<PdfIndentpage> {
 
     Directory dir = Directory('/storage/emulated/0/Download');
 
-    print(dir);
     await Permission.storage.request();
 
     final File file = File('${dir.path}/$fileName');
@@ -66,10 +66,60 @@ class _PdfIndentpageState extends State<PdfIndentpage> {
         dateto.toString() +
         '/' +
         brch.toString()));
-    print(response.body);
-    print(response.statusCode);
     if (response.statusCode == 200) {
       return _storeFile(response.body, response.bodyBytes);
+    } else {
+      return null;
+    }
+  }
+
+  Future<File> _storeFileCSV(String url, List<int> bytes) async {
+    var datefrom = DateFormat("y-M-d").format(widget.dateTimefrom);
+    var dateto = DateFormat("y-M-d").format(widget.dateTimeto);
+    String fileName = datefrom + 'to' + dateto + '.xlsx';
+
+    Directory dir = Directory('/storage/emulated/0/Download');
+
+    await Permission.storage.request();
+
+    final File file = File('${dir.path}/$fileName');
+    await file.writeAsBytes(bytes, flush: true);
+    return file;
+  }
+
+  Future<File> fetchCSV() async {
+    var datefrom = DateFormat("y-M-d").format(widget.dateTimefrom);
+    var dateto = DateFormat("y-M-d").format(widget.dateTimeto);
+    var brch = main.storage.getItem('branch');
+
+    final response = await http.get(Uri.parse(main.url_start +
+        'dailyindentCSV/' +
+        datefrom.toString() +
+        '/' +
+        dateto.toString() +
+        '/' +
+        brch.toString()));
+    if (response.statusCode == 200) {
+      return _storeFileCSV(response.body, response.bodyBytes);
+    } else {
+      return null;
+    }
+  }
+
+  Future<File> fetchCSVExtraction() async {
+    var datefrom = DateFormat("y-M-d").format(widget.dateTimefrom);
+    var dateto = DateFormat("y-M-d").format(widget.dateTimeto);
+    var brch = main.storage.getItem('branch');
+
+    final response = await http.get(Uri.parse(main.url_start +
+        'mobileApp/dailyindentExtractCSV/' +
+        datefrom.toString() +
+        '/' +
+        dateto.toString() +
+        '/' +
+        brch.toString()));
+    if (response.statusCode == 200) {
+      return _storeFileCSV(response.body, response.bodyBytes);
     } else {
       return null;
     }
@@ -80,7 +130,7 @@ class _PdfIndentpageState extends State<PdfIndentpage> {
     return Scaffold(
         drawer: navbar.Navbar(),
         appBar: AppBar(
-          title: Text('PdfIndent'),
+          title: Text('Download Indent'),
         ),
         body: SingleChildScrollView(
           child: Column(children: [
@@ -167,8 +217,9 @@ class _PdfIndentpageState extends State<PdfIndentpage> {
                     isLoading = true;
                   });
                   final File pdf = await fetchPDF();
+                  OpenFile.open(pdf.path);
                   // print(pdf);
-                  openPDF(context, pdf);
+                  // openPDF(context, pdf);
                   setState(() {
                     isLoading = false;
                   });
@@ -176,6 +227,49 @@ class _PdfIndentpageState extends State<PdfIndentpage> {
                 child: Text('Download PDF',
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 20))),
+            ElevatedButton(
+                onPressed: () async {
+                  setState(() {
+                    isLoading = true;
+                  });
+                  final File csv = await fetchCSV();
+                  OpenFile.open(csv.path);
+                  // print(pdf);
+                  // openPDF(context, pdf);
+                  setState(() {
+                    isLoading = false;
+                  });
+                },
+                child: Text('Download CSV',
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 20))),
+            Container(
+              color: Theme.of(context).primaryColorLight,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    ElevatedButton(
+                        onPressed: () async {
+                          setState(() {
+                            isLoading = true;
+                          });
+                          final File csv = await fetchCSVExtraction();
+                          OpenFile.open(csv.path);
+                          // print(pdf);
+                          // openPDF(context, pdf);
+                          setState(() {
+                            isLoading = false;
+                          });
+                        },
+                        child: Text('Download Extract CSV',
+                            style:
+                                TextStyle(fontWeight: FontWeight.bold, fontSize: 20))),
+                    Text('Only one day accepted', style: TextStyle(fontSize: 15),),
+                  ],
+                ),
+              ),
+            ),
             isLoading == true ? CircularProgressIndicator() : Text('')
           ]),
         ));

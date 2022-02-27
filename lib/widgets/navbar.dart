@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/pages/DownloadPdfIndent.dart';
 import 'package:flutter_complete_guide/pages/Edit_updatePayements.dart';
 import 'package:flutter_complete_guide/pages/dailySalesEntry.dart';
+
+import 'package:flutter_complete_guide/pages/ExtractdailyIndent.dart';
 import '../main.dart' as main;
 import '../pages/home.dart' as home;
 import '../pages/UpdatePayments.dart' as UpdatePayments;
@@ -134,7 +136,7 @@ class Navbar extends StatelessWidget {
                     },
                   ),
                   ListTile(
-                    title: const Text('Pdf Daily Indent Report'),
+                    title: const Text('Download Daily Indent Report'),
                     onTap: () {
                       // Update the state of the app.
                       // ...
@@ -142,6 +144,18 @@ class Navbar extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) => PdfIndentpage('')),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('Extract Daily Indent'),
+                    onTap: () {
+                      // Update the state of the app.
+                      // ...
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ExtractdailyIndentpage('')),
                       );
                     },
                   ),

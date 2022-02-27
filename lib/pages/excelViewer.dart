@@ -10,7 +10,6 @@ import 'package:path/path.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-
 class PDFViewerPage extends StatefulWidget {
   String message;
   File pdf;

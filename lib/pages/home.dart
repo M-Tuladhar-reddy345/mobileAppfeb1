@@ -31,29 +31,3 @@ class _HomepageState extends State<Homepage> {
   }
 }
 
-// class HomeScreen extends StatefulWidget {
-//   @override
-//   _HomeScreenState createState() => _HomeScreenState();
-// }
-
-// class _HomeScreenState extends State<HomeScreen>
-//     with SingleTickerProviderStateMixin {
-
-//   AnimationController _animationController;
-
-//   @override
-//   void initState() {
-//      super.initState();
-//     _animationController = AnimationController(vsync: this, duration: Duration(seconds: 1));
-//     _animationController.addListener((){
-// 		  setState((){});
-// 	  });
-//     _animationController.forward();
-//   }
-
-//   @override
-//   void dispose() {
-//      super.dispose();
-//     _animationController.dispose();
-//   }
-// }
