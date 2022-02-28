@@ -189,6 +189,10 @@ class _editUpdatePayementsState extends State<editUpdatePayements> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
+                    child: Text('Entry Date'),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: RaisedButton(
                         color: Theme.of(context).primaryColor,
                         child: Text(
