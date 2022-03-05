@@ -348,11 +348,11 @@ class _DailySalesEntrypageState extends State<DailySalesEntrypage> {
                                             // icon: const Icon(Icons.arrow_downward),
                                             elevation: 16,
                                             style: const TextStyle(
-                                                color: Colors.deepPurple),
+                                                color: Colors.lightBlue),
                                             underline: Container(
                                               height: 2,
                                               width: 300,
-                                              color: Colors.deepPurpleAccent,
+                                              color: Colors.lightBlueAccent,
                                             ),
                                             onChanged: (String newValue) {
                                               setState(() {
@@ -495,11 +495,11 @@ class _DailySalesEntrypageState extends State<DailySalesEntrypage> {
                                             // icon: const Icon(Icons.arrow_downward),
                                             elevation: 16,
                                             style: const TextStyle(
-                                                color: Colors.deepPurple),
+                                                color: Colors.lightBlue),
                                             underline: Container(
                                               height: 2,
                                               width: 300,
-                                              color: Colors.deepPurpleAccent,
+                                              color: Colors.lightBlueAccent,
                                             ),
                                             onChanged: (String newValue) {
                                               setState(() {
@@ -618,7 +618,7 @@ class _DailySalesEntrypageState extends State<DailySalesEntrypage> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: FlatButton(
-                          color: Colors.purple,
+                          color: Theme.of(context).primaryColor,
                           onPressed: () => add(),
                           child: Text(
                             'Add',
@@ -629,7 +629,7 @@ class _DailySalesEntrypageState extends State<DailySalesEntrypage> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: FlatButton(
-                          color: Colors.purple,
+                          color: Theme.of(context).primaryColor,
                           onPressed: () => submit(),
                           child: Text(
                             'Submit',

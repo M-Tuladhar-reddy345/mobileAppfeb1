@@ -189,7 +189,7 @@ class _editUpdatePayementsState extends State<editUpdatePayements> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text('Entry Date'),
+                    child: Text('Rec Date'),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -253,11 +253,11 @@ class _editUpdatePayementsState extends State<editUpdatePayements> {
                                   // icon: const Icon(Icons.arrow_downward),
                                   elevation: 16,
                                   style:
-                                      const TextStyle(color: Colors.deepPurple),
+                                      const TextStyle(color: Colors.lightBlue),
                                   underline: Container(
                                     height: 2,
                                     width: 300,
-                                    color: Colors.deepPurpleAccent,
+                                    color: Colors.lightBlueAccent,
                                   ),
                                   onChanged: (String newValue) {
                                     setState(() {
@@ -367,11 +367,11 @@ class _editUpdatePayementsState extends State<editUpdatePayements> {
                                         // icon: const Icon(Icons.arrow_downward),
                                         elevation: 16,
                                         style: const TextStyle(
-                                            color: Colors.deepPurple),
+                                            color: Colors.lightBlue),
                                         underline: Container(
                                           height: 2,
                                           width: 300,
-                                          color: Colors.deepPurpleAccent,
+                                          color: Colors.lightBlueAccent,
                                         ),
                                         onChanged: (String newValue) {
                                           setState(() {
@@ -416,7 +416,7 @@ class _editUpdatePayementsState extends State<editUpdatePayements> {
                                             hintText: "Remarks",
                                           )),
                                       FlatButton(
-                                        color: Colors.purple,
+                                        color: Theme.of(context).primaryColor,
                                         onPressed: () => submit(),
                                         child: Text(
                                           'Submit',

@@ -50,8 +50,32 @@ class _ExtractdailyIndentpageState extends State<ExtractdailyIndentpage> {
         widget.message = 'success';
         isLoading = false;
       });
-    }
+    }else if(response.statusCode == 104){
+       setState(() {
+        widget.message = 'wrong file extenstion';
+        isLoading = false;
+      });
+    }else if(response.statusCode == 106){
+       setState(() {
+        widget.message = 'Naming convention not satisfied it should be in the format "RMDLyyyyMMdd000" 000 stands for code';
+        isLoading = false;
+      });
+      
+    }else if(response.statusCode == 108){
+       setState(() {
+        widget.message = 'Date in name is not same as date selected';
+        isLoading = false;
+      });
 
+    }
+    else if(response.statusCode == 110){
+       setState(() {
+        widget.message = 'aldready extracted with this file';
+        isLoading = false;
+      });
+
+    }
+    
   } 
 
   @override
@@ -92,8 +116,8 @@ class _ExtractdailyIndentpageState extends State<ExtractdailyIndentpage> {
                             showDatePicker(
                                     context: context,
                                     initialDate: DateTime.now(),
-                                    firstDate: DateTime(2001),
-                                    lastDate: DateTime.now())
+                                    firstDate: DateTime.now(),
+                                    lastDate: DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day + 7))
                                 .then((value) {
                               if (value != null) {
                                 setState(() {

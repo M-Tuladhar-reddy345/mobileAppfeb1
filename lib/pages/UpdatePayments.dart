@@ -232,11 +232,11 @@ class _UpdatePaymentsState extends State<UpdatePayments>
                                     // icon: const Icon(Icons.arrow_downward),
                                     elevation: 16,
                                     style: const TextStyle(
-                                        color: Colors.deepPurple),
+                                        color: Colors.lightBlue),
                                     underline: Container(
                                       height: 2,
                                       width: 300,
-                                      color: Colors.deepPurpleAccent,
+                                      color: Colors.lightBlueAccent,
                                     ),
                                     onChanged: (String newValue) {
                                       setState(() {
@@ -359,11 +359,11 @@ class _UpdatePaymentsState extends State<UpdatePayments>
                                           // icon: const Icon(Icons.arrow_downward),
                                           elevation: 16,
                                           style: const TextStyle(
-                                              color: Colors.deepPurple),
+                                              color: Colors.lightBlue),
                                           underline: Container(
                                             height: 2,
                                             width: 300,
-                                            color: Colors.deepPurpleAccent,
+                                            color: Colors.lightBlueAccent,
                                           ),
                                           onChanged: (String newValue) {
                                             setState(() {
@@ -411,7 +411,7 @@ class _UpdatePaymentsState extends State<UpdatePayments>
                                               hintText: "Remarks",
                                             )),
                                         FlatButton(
-                                          color: Colors.purple,
+                                          color: Colors.blue,
                                           onPressed: () => submit(),
                                           child: Text(
                                             'Submit',
