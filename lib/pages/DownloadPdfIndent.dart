@@ -134,6 +134,13 @@ class _PdfIndentpageState extends State<PdfIndentpage> {
         dateto.toString() +
         '/' +
         brch.toString()));
+    print(main.url_start +
+        'mobileApp/dailyindentExtractCSV/' +
+        datefrom.toString() +
+        '/' +
+        dateto.toString() +
+        '/' +
+        brch.toString());
     if (response.statusCode == 200) {
       setState(() {
         widget.message='Sucessfully downloaded Extract CSV';
