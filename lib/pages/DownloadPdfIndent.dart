@@ -79,15 +79,15 @@ class _PdfIndentpageState extends State<PdfIndentpage> {
   }
 
   Future<File> _storeFileCSV(String filename, List<int> bytes) async {
-    var datefrom = DateFormat("yMMdd").format(widget.dateTimefrom);
-    var dateto = DateFormat("yMMdd").format(widget.dateTimeto);
-    // String fileName = 'RMDL'+dateto+'.xlsx';
+    var datefrom = DateFormat("dd-MM-y").format(widget.dateTimefrom);
+    var dateto = DateFormat("dd-MM-y").format(widget.dateTimeto);
+    String fileName = 'Indent'+datefrom+'to'+dateto+'.xlsx';
 
     Directory dir = Directory('/storage/emulated/0/Download');
 
     await Permission.storage.request();
 
-    final File file = File('${dir.path}/$filename');
+    final File file = File('${dir.path}/$fileName');
     await file.writeAsBytes(bytes, flush: true);
     return file;
   }
@@ -108,6 +108,7 @@ class _PdfIndentpageState extends State<PdfIndentpage> {
     if (response.statusCode == 200) {
       setState(() {
         widget.message = 'Success Fully Downloaded CSV';
+        isLoading =false;
       });
       return _storeFileCSV(response.body, response.bodyBytes);
     } else {
