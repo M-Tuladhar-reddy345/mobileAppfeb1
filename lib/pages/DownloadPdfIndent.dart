@@ -81,7 +81,7 @@ class _PdfIndentpageState extends State<PdfIndentpage> {
   Future<File> _storeFileCSV(String filename, List<int> bytes) async {
     var datefrom = DateFormat("dd-MM-y").format(widget.dateTimefrom);
     var dateto = DateFormat("dd-MM-y").format(widget.dateTimeto);
-    String fileName = 'Indent'+datefrom+'to'+dateto+'.xlsx';
+    String fileName = 'Indent'+datefrom+'to'+dateto+'.xls';
 
     Directory dir = Directory('/storage/emulated/0/Download');
 
@@ -122,6 +122,18 @@ class _PdfIndentpageState extends State<PdfIndentpage> {
       return null;
     }
   }
+  Future<File> _storeFileExtractionCSV(String filename, List<int> bytes) async {
+    var datefrom = DateFormat("dd-MM-y").format(widget.dateTimefrom);
+    var dateto = DateFormat("dd-MM-y").format(widget.dateTimeto);
+
+    Directory dir = Directory('/storage/emulated/0/Download');
+
+    await Permission.storage.request();
+
+    final File file = File('${dir.path}/$filename');
+    await file.writeAsBytes(bytes, flush: true);
+    return file;
+  }
 
   Future<File> fetchCSVExtraction() async {
     var datefrom = DateFormat("y-M-d").format(widget.dateTimeExExtract);
@@ -147,8 +159,7 @@ class _PdfIndentpageState extends State<PdfIndentpage> {
         widget.message='Sucessfully downloaded Extract CSV';
 
       });
-      print(response.headers);
-      return _storeFileCSV(response.headers['content-disposition'].toString(), response.bodyBytes);
+      return _storeFileExtractionCSV('RMDL'+DateFormat('yMMdd').format(DateTime.now())+'.xls', response.bodyBytes);
     } else {
       return null;
     }

@@ -53,7 +53,7 @@ class _UpdatePaymentsState extends State<UpdatePayments>
       'Waiver': widget.Waiver_controller.text,
       'Remarks': widget.remarks_controller.text.toString() + '-Upd Thru App',
       'Custcode': widget.dropdownValue,
-      'entryUser': main.storage.getItem('salesName'),
+      'entryUser': main.storage.getItem('username'),
     };
     print(body);
     final url = Uri.parse(main.url_start +

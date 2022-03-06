@@ -80,7 +80,7 @@ class _editUpdatePayementsState extends State<editUpdatePayements> {
       'Waiver': widget.Waiver_controller.text,
       'Remarks': remarks,
       'Custcode': widget.custcode,
-      'entryUser': main.storage.getItem('salesName'),
+      'entryUser': main.storage.getItem('username'),
     };
     print(body);
     final url = Uri.parse(main.url_start +
@@ -150,7 +150,7 @@ class _editUpdatePayementsState extends State<editUpdatePayements> {
         'mobileApp/Receipts/' +
         DateFormat("y-M-d").format(date).toString() +
         '/' +
-        main.storage.getItem('salesName').toString() +
+        main.storage.getItem('username').toString() +
         '/'+
           main.storage.getItem('branch'));
     final response = await http.get(url);

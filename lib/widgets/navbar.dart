@@ -15,12 +15,12 @@ import 'package:http/http.dart' as http;
 class Navbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // print(main.storage.getItem('salesName'));
+    // print(main.storage.getItem('username'));
     return Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
         // through the options in the drawer if there isn't enough vertical
         // space to fit everything.
-        child: main.storage.getItem('salesName') == null
+        child: main.storage.getItem('username') == null
             ? ListView(
                 // Important: Remove any padding from the ListView.
                 padding: EdgeInsets.zero,
@@ -64,7 +64,7 @@ class Navbar extends StatelessWidget {
                   ),
                 ],
               )
-            : ListView(
+            :main.storage.getItem('role')=='Admin' || main.storage.getItem('role') =='Manager'? ListView(
                 // Important: Remove any padding from the ListView.
                 padding: EdgeInsets.zero,
                 children: [
@@ -80,7 +80,223 @@ class Navbar extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      main.storage.getItem('salesName').toString() +
+                      main.storage.getItem('username').toString() +
+                          '@' +
+                          main.storage.getItem('branch').toString(),
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text('Home'),
+                    onTap: () {
+                      // Update the state of the app.
+                      // ...
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => home.Homepage('')),
+                      );
+                    },
+                  ),
+                  
+                  ListTile(
+                    title: const Text('Daily Sales Entry'),
+                    onTap: () {
+                      // Update the state of the app.
+                      // ...
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DailySalesEntrypage('')),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('Download Daily Indent Report'),
+                    onTap: () {
+                      // Update the state of the app.
+                      // ...
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PdfIndentpage('')),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('Extract Daily Indent'),
+                    onTap: () {
+                      // Update the state of the app.
+                      // ...
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ExtractdailyIndentpage('')),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('Update Payments'),
+                    onTap: () {
+                      // Update the state of the app.
+                      // ...
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                UpdatePayments.UpdatePayments('')),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('Edit Update Payments'),
+                    onTap: () {
+                      // Update the state of the app.
+                      // ...
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => editUpdatePayements('')),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('Logout'),
+                    onTap: () async {
+                      // Update the state of the app.
+                      // ...
+                      final url =
+                          Uri.parse(main.url_start + 'mobileApp/logout/');
+                      final response = await http.get(url);
+                      //  print(response.statusCode);
+
+                      if (response.statusCode == 200) {
+                        main.storage.setItem('username', null);
+
+                        main.storage.setItem('branch', null);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  home.Homepage('logged out successfully')),
+                        );
+                      }
+                    },
+                  ),
+                ],
+              ): main.storage.getItem('role') =='Operator'? ListView(
+                // Important: Remove any padding from the ListView.
+                padding: EdgeInsets.zero,
+                children: [
+                  const DrawerHeader(
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                      ),
+                      child: Image(
+                          width: 200,
+                          height: 60,
+                          image:
+                              AssetImage('assets/images/RaithannaOLogo.png'))),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      main.storage.getItem('username').toString() +
+                          '@' +
+                          main.storage.getItem('branch').toString(),
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text('Home'),
+                    onTap: () {
+                      // Update the state of the app.
+                      // ...
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => home.Homepage('')),
+                      );
+                    },
+                  ),
+                  
+                  ListTile(
+                    title: const Text('Daily Sales Entry'),
+                    onTap: () {
+                      // Update the state of the app.
+                      // ...
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DailySalesEntrypage('')),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('Download Daily Indent Report'),
+                    onTap: () {
+                      // Update the state of the app.
+                      // ...
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PdfIndentpage('')),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('Extract Daily Indent'),
+                    onTap: () {
+                      // Update the state of the app.
+                      // ...
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ExtractdailyIndentpage('')),
+                      );
+                    },
+                  ),
+                  
+                  ListTile(
+                    title: const Text('Logout'),
+                    onTap: () async {
+                      // Update the state of the app.
+                      // ...
+                      final url =
+                          Uri.parse(main.url_start + 'mobileApp/logout/');
+                      final response = await http.get(url);
+                      //  print(response.statusCode);
+
+                      if (response.statusCode == 200) {
+                        main.storage.setItem('username', null);
+
+                        main.storage.setItem('branch', null);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  home.Homepage('logged out successfully')),
+                        );
+                      }
+                    },
+                  ),
+                ],
+              ):main.storage.getItem('role') =='SalesTeam'? ListView(
+                // Important: Remove any padding from the ListView.
+                padding: EdgeInsets.zero,
+                children: [
+                  const DrawerHeader(
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                      ),
+                      child: Image(
+                          width: 200,
+                          height: 60,
+                          image:
+                              AssetImage('assets/images/RaithannaOLogo.png'))),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      main.storage.getItem('username').toString() +
                           '@' +
                           main.storage.getItem('branch').toString(),
                       style: TextStyle(fontWeight: FontWeight.bold),
@@ -123,39 +339,58 @@ class Navbar extends StatelessWidget {
                       );
                     },
                   ),
+                  
+                  
                   ListTile(
-                    title: const Text('Daily Sales Entry'),
-                    onTap: () {
+                    title: const Text('Logout'),
+                    onTap: () async {
                       // Update the state of the app.
                       // ...
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => DailySalesEntrypage('')),
-                      );
+                      final url =
+                          Uri.parse(main.url_start + 'mobileApp/logout/');
+                      final response = await http.get(url);
+                      //  print(response.statusCode);
+
+                      if (response.statusCode == 200) {
+                        main.storage.setItem('username', null);
+
+                        main.storage.setItem('branch', null);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  home.Homepage('logged out successfully')),
+                        );
+                      }
                     },
                   ),
+                ],
+              ):ListView(
+                // Important: Remove any padding from the ListView.
+                padding: EdgeInsets.zero,
+                children: [
+                  const DrawerHeader(
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                      ),
+                      child: Image(
+                          width: 200,
+                          height: 60,
+                          image:
+                              AssetImage('assets/images/RaithannaOLogo.png'))),
+                  //  Image(
+
+                  //     image:
+                  //         AssetImage('assets/images/RaithannaOLogo.jpg'))),
                   ListTile(
-                    title: const Text('Download Daily Indent Report'),
+                    title: const Text('Home'),
                     onTap: () {
                       // Update the state of the app.
                       // ...
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => PdfIndentpage('')),
-                      );
-                    },
-                  ),
-                  ListTile(
-                    title: const Text('Extract Daily Indent'),
-                    onTap: () {
-                      // Update the state of the app.
-                      // ...
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ExtractdailyIndentpage('')),
+                            builder: (context) => home.Homepage('')),
                       );
                     },
                   ),
@@ -170,7 +405,7 @@ class Navbar extends StatelessWidget {
                       //  print(response.statusCode);
 
                       if (response.statusCode == 200) {
-                        main.storage.setItem('salesName', null);
+                        main.storage.setItem('username', null);
 
                         main.storage.setItem('branch', null);
                         Navigator.push(

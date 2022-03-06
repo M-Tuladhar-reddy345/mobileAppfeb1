@@ -41,9 +41,10 @@ class _LoginpageState extends State<Loginpage> {
       if (data['message'] == 'Success') {
         print(data);
 
-        main.storage.setItem('salesName', data['name']);
-        // print(main.storage.getItem('salesName'));
+        main.storage.setItem('username', data['name']);
+        // print(main.storage.getItem('username'));
         main.storage.setItem('branch', data['branch']);
+        main.storage.setItem('role', data['role']);
         // print(main.storage.getItem('branch'));
         Navigator.push(
           context,
@@ -148,7 +149,7 @@ class _LoginpageState extends State<Loginpage> {
                 //         );
                 //     }),
                 FlatButton(
-                  color: Colors.purple,
+                  color: Theme.of(context).primaryColor,
                   onPressed: () => submit(),
                   child: Text(
                     'Submit',
