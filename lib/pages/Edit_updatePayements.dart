@@ -24,6 +24,8 @@ class editUpdatePayements extends StatefulWidget {
   DateTime dateTime2;
   editUpdatePayements(this.message);
   String recNo;
+
+  String recNoDisplay;
   var amt_controller = TextEditingController();
   var payRefNo_controller = TextEditingController();
   var remarks_controller = TextEditingController();
@@ -73,7 +75,7 @@ class _editUpdatePayementsState extends State<editUpdatePayements> {
     }
     final body = {
       'RecieptNo': widget.recNo,
-      'Date': DateFormat("y-M-d").format(widget.dateTime),
+      'Date': DateFormat("yyyy-M-d").format(widget.dateTime2),
       'Rectype': widget.recType,
       'payRefNo': widget.payRefNo_controller.text,
       'RecAmt': widget.amt_controller.text,
@@ -188,11 +190,11 @@ class _editUpdatePayementsState extends State<editUpdatePayements> {
               child: Row(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(9.0),
                     child: Text('Rec Date'),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(9.0),
                     child: RaisedButton(
                         color: Theme.of(context).primaryColor,
                         child: Text(
@@ -216,7 +218,7 @@ class _editUpdatePayementsState extends State<editUpdatePayements> {
                         }),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(9.0),
                     child: Text(
                       DateFormat("d-M-y").format(widget.dateTime),
                       style: TextStyle(fontSize: 20),
@@ -228,7 +230,7 @@ class _editUpdatePayementsState extends State<editUpdatePayements> {
             Align(
               alignment: Alignment.center,
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(9.0),
                 child: Container(
                   child: Row(children: [
                     Text('RecNo: '),
@@ -287,10 +289,10 @@ class _editUpdatePayementsState extends State<editUpdatePayements> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(9.0),
               child: Container(
                   // color: Theme.of(context).primaryColor,
-                  width: 300,
+                  width: 350,
                   child: SingleChildScrollView(
                     child: FutureBuilder(
                         future: getReceiptbyrecNo,
@@ -307,9 +309,12 @@ class _editUpdatePayementsState extends State<editUpdatePayements> {
                             case ConnectionState.done:
                               if (snapshot.data == null) {
                                 return Text('Chooose recNo...');
+                              }else if (snapshot.error == true){
+                                return Text('Some error occured! Retry!!');
                               } else {
+
                                 return SingleChildScrollView(
-                                  child: Column(
+                                  child: widget.dateTime2 !=null ?Column(
                                     children: [
                                       Text(
                                         'Reciept No: ' +
@@ -325,7 +330,7 @@ class _editUpdatePayementsState extends State<editUpdatePayements> {
                                       Row(
                                         children: [
                                           Padding(
-                                            padding: const EdgeInsets.all(8.0),
+                                            padding: const EdgeInsets.all(9.0),
                                             child: RaisedButton(
                                                 color: Theme.of(context)
                                                     .primaryColor,
@@ -354,9 +359,10 @@ class _editUpdatePayementsState extends State<editUpdatePayements> {
                                                 }),
                                           ),
                                           Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Text(DateFormat("d-M-y")
-                                                .format(widget.dateTime)),
+                                            padding: const EdgeInsets.all(9.0),
+                                            child: Text(DateFormat("d-M-yyyy")
+                                                .format(widget.dateTime2)),
+                                          
                                           )
                                         ],
                                       ),
@@ -424,8 +430,10 @@ class _editUpdatePayementsState extends State<editUpdatePayements> {
                                         ),
                                       )
                                     ],
-                                  ),
-                                );
+                                  ):Padding(
+                                            padding: const EdgeInsets.all(9.0),
+                                            child: Text('Some error occured! Retry!!'),
+                                ));
                               }
                               break;
                             case ConnectionState.active:
