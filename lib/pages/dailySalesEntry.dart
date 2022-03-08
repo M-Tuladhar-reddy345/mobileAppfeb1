@@ -178,7 +178,7 @@ class _DailySalesEntrypageState extends State<DailySalesEntrypage> {
   }
 
   void submit() async {
-    const JsonEncoder encoder = JsonEncoder();
+    if (widget.dropdownValue != null){
     var body = {};
     print(widget.listofProduct.length);
     for (int i = 0; i <= widget.listofProduct.length - 1; i++) {
@@ -213,6 +213,10 @@ class _DailySalesEntrypageState extends State<DailySalesEntrypage> {
     } else {
       setState(() {
         widget.message = "Retry";
+      });
+    }}else{
+      setState(() {
+        widget.message = 'please choose customer';
       });
     }
   }
