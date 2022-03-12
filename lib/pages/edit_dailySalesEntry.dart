@@ -1,0 +1,591 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/main.dart' as main;
+import 'package:flutter_complete_guide/models.dart' as models;
+import 'package:flutter_complete_guide/pages/Order.dart';
+import 'package:provider/provider.dart';
+import '../widgets/navbar.dart' as navbar;
+import '../widgets/form.dart' as form;
+import 'package:provider/provider.dart' as provider;
+import '/api.dart' as api;
+import 'package:intl/intl.dart';
+import 'dart:convert';
+import 'dart:io';
+import 'package:http/http.dart' as http;
+import 'reciept.dart' as receipt;
+import '../widgets/message.dart' as message;
+import 'package:dropdown_search/dropdown_search.dart';
+
+class EditDailySalesEntrypageState extends StatefulWidget {
+  String message;
+  final ValueNotifier<String> dropdownValue2 = ValueNotifier<String>('');
+  String custCode;
+  String dropdownValue;
+  String orderNo;
+  String pamt = '0';
+  String pRate = '0';
+  final ValueNotifier<String> product2 = ValueNotifier<String>('');
+  String product;
+  String prodCode;
+  var quantity_controller = TextEditingController()..text = '0';
+  var discount_controller = TextEditingController()..text = '0';
+  var remarks_controller = TextEditingController()..text = ' ';
+  List<models.order_product_indent> listofProduct = [];
+  EditDailySalesEntrypageState(this.message);
+  int prodNo = 0;
+  bool customerIgnore = false;
+  DateTime dateTime = DateTime.now();
+
+  @override
+  State<EditDailySalesEntrypageState> createState() => _EDitDailySalesEntrypageState();
+}
+
+class _EDitDailySalesEntrypageState extends State<EditDailySalesEntrypageState> {
+  Future getOrders;
+  Future getProducts;
+  get_orders() async {
+    final url = Uri.parse(main.url_start +
+        'mobileApp/getOrders/' +
+        main.storage.getItem('branch') +
+        '/');
+    final response = await http.get(url);
+
+    //  print(response.statusCode);
+
+    if (response.statusCode == 200) {
+      //  print(response.body);
+      var data = json.decode(response.body) as Map;
+      
+
+      return data['results'];
+    }
+  }
+  Future getOrder;
+  get_Order(orderNo) async {
+    if (orderNo != '') {
+      final url = Uri.parse(main.url_start +
+          'mobileApp/orderDetails/' +
+          orderNo +
+          '/' +
+          main.storage.getItem('branch') +
+          '/');
+      print(url.toString());
+      final response = await http.get(url);
+      //  print(response.statusCode);
+
+      if (response.statusCode == 200) {
+        //  print(response.body);
+        var data = json.decode(response.body) as Map;
+        setState(() {
+        widget.listofProduct = data['Products']
+                            .map<models.order_product_indent>((json) =>
+                                models.order_product_indent.fromjson(json))
+                            .toList();
+      });
+        return data;
+      }
+    } else {
+      return null;
+    }
+  }
+
+  get_products() async {
+    final url = Uri.parse(main.url_start +
+        'mobileApp/getProducts/' +
+        main.storage.getItem('branch') +
+        '/');
+    final response = await http.get(url);
+    // print(url);
+
+    print(response.statusCode);
+
+    if (response.statusCode == 200) {
+      // print(response.body);
+      var data = json.decode(response.body) as Map;
+      
+      // print(data['results']);
+
+      // List Products =
+      //     data['results'].map((json) => models.product.fromjson(json)).toList();
+
+      return data['results'];
+    }
+  }
+
+ 
+
+  void UpdateAmount() async {
+    var body = {};
+    if (widget.discount_controller.text != '' &&
+        widget.quantity_controller.text != '') {
+      body = {
+        'custCode': widget.dropdownValue,
+        'Date': DateFormat("y-M-d").format(widget.dateTime),
+        'prodCode': widget.prodCode,
+        'qty': widget.quantity_controller.text,
+        'disc': widget.discount_controller.text,
+      };
+    } else {
+      body = {
+        'custCode': widget.dropdownValue,
+        'Date': DateFormat("y-M-d").format(widget.dateTime),
+        'prodCode': widget.prodCode,
+        'qty': '0',
+        'disc': '0',
+      };
+    }
+    print('@129'+body.toString());
+    final url = Uri.parse(main.url_start +
+        'mobileApp/getAmtRate/' +
+        main.storage.getItem('branch') +
+        '/');
+    final response = await http.post(url, body: body);
+    print(url);
+
+    // print('@121 ' + response.statusCode.toString());
+
+    if (response.statusCode == 200) {
+      // print(response.body);
+      var data = json.decode(response.body) as Map;
+      print(data);
+      setState(() {
+        widget.pamt = data['amt'].toString();
+        widget.pRate = data['product'].toString();
+      });
+    }
+  }
+
+  void update() {
+    setState(() {
+        widget.message = '';
+        print('update');
+        
+        setState(() {
+        widget.message = '';
+        widget.prodNo = widget.prodNo + 1;
+          widget.discount_controller.text;
+          widget.listofProduct[int.parse(widget.product)] = models.order_product_indent(
+            widget.listofProduct[int.parse(widget.product)].date,
+            widget.listofProduct[int.parse(widget.product)].product,
+            widget.listofProduct[int.parse(widget.product)].orderNo,
+            widget.pRate,
+            widget.quantity_controller.text,
+            widget.discount_controller.text,
+            widget.pamt,
+            widget.listofProduct[int.parse(widget.product)].Remarks,
+            widget.listofProduct[int.parse(widget.product)].custcode,
+            widget.prodNo.toString());
+        });
+        print(widget.listofProduct[int.parse(widget.product)].get_dict());
+      
+    });
+  }
+
+  void submit() async {
+    if (widget.dropdownValue != null){
+    var body = {};
+    print(widget.listofProduct.length);
+    for (int i = 0; i <= widget.listofProduct.length - 1; i++) {
+      print(widget.listofProduct[i].product + '-' + widget.listofProduct[i].no);
+      body[widget.listofProduct[i].product + '-' + widget.listofProduct[i].no] =
+          widget.listofProduct[i].get_dict();
+    }
+    print(json.encode(body));
+    final url = Uri.parse(main.url_start +
+        'mobileApp/DailySale_update/' +
+        main.storage.getItem('branch') +
+        '/');
+    final response = await http.post(url,
+        headers: {"Content-Type": "application/json"},
+        encoding: Encoding.getByName("utf-8"),
+        body: json.encode(body));
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body) as Map;
+      if (data['message'].contains('Successfully')) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  Orderpage('updated successfully ' + data['orderNo'].toString(), data['orderNo'])),
+        );
+      } else {
+        setState(() {
+          widget.message = data['message'];
+        });
+      }
+    } else {
+      setState(() {
+        widget.message = "Retry";
+      });
+    }}else{
+      setState(() {
+        widget.message = 'please choose customer';
+      });
+    }
+  }
+
+  List<TableRow> productList() {
+    List<TableRow> list = [];
+    if (widget.listofProduct != null) {
+      list = widget.listofProduct.map<TableRow>((e) {
+        return TableRow(children: [
+          Column(children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Center(child: Text(e.product.toString())),
+            ),
+          ]),
+          Column(children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Center(
+                  child: Text(
+                      e.Quantity.toString() + '-' + e.UnitRate.toString())),
+            )
+          ]),
+          Column(children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(e.Discount.toString()),
+            )
+          ]),
+          Column(children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(e.Amount.toString()),
+            )
+          ]),
+          
+        ]);
+      }).toList();
+    } else {
+      list = [
+        TableRow(children: [
+          Column(children: [
+            Center(child: Text('')),
+          ]),
+          Column(children: [Center(child: Text(''))]),
+          Column(children: [Text('')])
+        ])
+      ];
+    }
+
+    return list;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getOrders = get_orders();
+    getOrder = get_Order(widget.orderNo);
+    getProducts = get_products();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        drawer: navbar.Navbar(),
+        appBar: AppBar(
+          title: Text('Edit Daily Sales Entry'),
+        ),
+        body: SingleChildScrollView(
+            child: Column(
+              children: [
+              message.Message(widget.message),
+              Text(
+                'Edit Daily Sales Entry',
+                style: TextStyle(
+                  textBaseline: TextBaseline.alphabetic,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+              Column(children: [
+                Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          child: Row(children: [
+                            Text('Order No: '),
+                            FutureBuilder(
+                              future: getOrders,
+                              // ignore: missing_return
+                              builder: (context, snapshot) {
+                                switch (snapshot.connectionState) {
+                                  case ConnectionState.waiting:
+                                    return Container(
+                                      width: 30,
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  case ConnectionState.done:
+                                    if (snapshot.data != null) {
+                                      print(snapshot.data);
+                                      return Container(
+                                        width: 210,
+                                        child: IgnorePointer(
+                                          ignoring: widget.customerIgnore,
+                                          child: DropdownButton(
+                                            isExpanded: true,
+                                            value: widget.dropdownValue,
+
+                                            // icon: const Icon(Icons.arrow_downward),
+                                            elevation: 16,
+                                            style: const TextStyle(
+                                                color: Colors.lightBlue),
+                                            underline: Container(
+                                              height: 2,
+                                              width: 300,
+                                              color: Colors.lightBlueAccent,
+                                            ),
+                                            onChanged: (String newValue) {
+                                              setState(() {
+                                                widget.dropdownValue = newValue;
+                                                getOrder=get_Order(widget.dropdownValue);
+                                              });
+                                            },
+                                            items: snapshot.data
+                                                .map<DropdownMenuItem<String>>(
+                                                    (v) {
+                                              return DropdownMenuItem<String>(
+                                                  value: v[0].toString(),
+                                                  child: Text(v[0].toString()+'-'+v[1].toString())
+                                                  );
+                                            }).toList(),
+                                          ),
+                                        ),
+                                      );
+                                    } else {
+                                      return Text(
+                                          'Some error fetching pls try later');
+                                    }
+                                    break;
+                                  case ConnectionState.none:
+                                    // TODO: Handle this case.
+                                    break;
+                                  case ConnectionState.active:
+                                    // TODO: Handle this case.
+                                    break;
+                                }
+                              },
+                            ),
+                          ]),
+                        ),
+                      ),
+                      
+                 Padding(
+                   padding: const EdgeInsets.all(8.0),
+                   child: Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    child: SingleChildScrollView(
+                                      child: Table(
+                                        defaultColumnWidth: FixedColumnWidth(60.0),
+                                        border: TableBorder.all(
+                                            color: Colors.black,
+                                            style: BorderStyle.solid,
+                                            width: 2),
+                                        children: [
+                                              TableRow(children: [
+                                                Column(children: [
+                                                  Center(
+                                                      child: Text('Prod',
+                                                          style: TextStyle(
+                                                              fontSize: 15.0)))
+                                                ]),
+                                                Column(children: [
+                                                  Center(
+                                                      child: Text('Qty-Rate',
+                                                          style: TextStyle(
+                                                              fontSize: 15.0)))
+                                                ]),
+                                                Column(children: [
+                                                  Text('Disc',
+                                                      style:
+                                                          TextStyle(fontSize: 15.0))
+                                                ]),
+                                                Column(children: [
+                                                  Text('Amt',
+                                                      style:
+                                                          TextStyle(fontSize: 15.0))
+                                                ]),
+                                               
+                                                // Column(children: [
+                                                //   Text('Amt', style: TextStyle(fontSize: 15.0))
+                                                // ]),
+                                              ]),
+                                            ] +
+                                            productList(),
+                                      ),
+                                    ),
+                                  ),
+                 ),
+                FutureBuilder(
+                future: getOrder,
+                // ignore: missing_return
+                builder: (context, snapshot) {
+                  switch (snapshot.connectionState) {
+                    case ConnectionState.none:
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+
+                    case ConnectionState.waiting:
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    case ConnectionState.active:
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+
+                    case ConnectionState.done:
+                      if (snapshot.data != null) {
+                        
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(children: [
+                            Container(child: Text('Order No: '+ widget.dropdownValue.toString(),style: TextStyle(fontSize: 20),),),
+                            
+                             Padding(
+                               padding: const EdgeInsets.all(8.0),
+                               child: Row(
+                                 children: [Text('Product: '),Container(
+                                                    width: 210,
+                                                   child: DropdownButton(
+                                                     
+                                                        isExpanded: true,
+                                                        value: widget.product,
+                                               
+                                                        // icon: const Icon(Icons.arrow_downward),
+                                                        elevation: 16,
+                                                        style: const TextStyle(
+                                                            color: Colors.lightBlue),
+                                                        underline: Container(
+                                                          height: 2,
+                                                          width: 300,
+                                                          color: Colors.lightBlueAccent,
+                                                        ),
+                                                        onChanged: (String newValue) {
+                                                          setState(() {
+                                                            widget.product = newValue;
+                                                            widget.prodCode = widget.listofProduct[int.parse(newValue)].product;
+                                                            widget.pamt = widget.listofProduct[int.parse(newValue)].Amount;
+                                                            widget.pRate = widget.listofProduct[int.parse(newValue)].UnitRate;
+                                                            widget.quantity_controller.text = widget.listofProduct[int.parse(newValue)].Quantity;
+                                                            widget.discount_controller.text = widget.listofProduct[int.parse(newValue)].Discount;
+                                                          });
+                                                        },
+                                                        items: widget.listofProduct
+                                                            .map<DropdownMenuItem<String>>(
+                                                                (v) {
+                                                          return DropdownMenuItem<String>(
+                                                              value: widget.listofProduct.indexOf(v).toString(),
+                                                              child: Text(v.product.toString())
+                                                              );
+                                                        }).toList(),
+                                                      ),
+                                                 
+                                               ),
+                                 ]),
+                             ),
+                             Column(children: [
+                        Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Amount: ' + widget.pamt.toString(),
+                              style: TextStyle(fontSize: 20),
+                            )),
+                        Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'UnitRate: ' + widget.pRate.toString(),
+                              style: TextStyle(fontSize: 20),
+                            )),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextFormField(
+                              controller: widget.quantity_controller,
+                              keyboardType: TextInputType.number,
+                              onChanged: (value) {
+                                UpdateAmount();
+                              },
+                              decoration: InputDecoration(
+                                labelText: "Quantity",
+                                hintText: "Quantity",
+                              )),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: TextFormField(
+                              controller: widget.discount_controller,
+                              keyboardType: TextInputType.number,
+                              onChanged: (value) {
+                                UpdateAmount();
+                              },
+                              decoration: InputDecoration(
+                                labelText: "Discount",
+                                hintText: "Discount",
+                              )),
+                        ),
+                        
+
+                        // FlatButton(
+                        //     color: Theme.of(context).primaryColor,
+                        //     onPressed: () {
+
+                        //     },
+                        //     child: Text(
+                        //       'Fetch',
+                        //       style: TextStyle(color: Colors.white),
+                        //     ))
+                      ])
+                          ]),
+                        );
+                      }else if( snapshot.data == null){ 
+                        return Text('choose order no');
+                      } else {
+                        return CircularProgressIndicator();
+                      }
+                  }
+                })
+              ]),
+              Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: FlatButton(
+                          color: Theme.of(context).primaryColor,
+                          onPressed: () => update(),
+                          child: Text(
+                            'update',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: FlatButton(
+                          color: Theme.of(context).primaryColor,
+                          onPressed: ()=>submit(),
+                          child: Text(
+                            'Submit',
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+             
+              
+
+        ])])
+        ));
+  }
+}

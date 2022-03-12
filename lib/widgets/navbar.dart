@@ -6,6 +6,7 @@ import 'package:flutter_complete_guide/pages/Edit_updatePayements.dart';
 import 'package:flutter_complete_guide/pages/dailySalesEntry.dart';
 
 import 'package:flutter_complete_guide/pages/ExtractdailyIndent.dart';
+import 'package:flutter_complete_guide/pages/edit_dailySalesEntry.dart';
 import '../main.dart' as main;
 import '../pages/home.dart' as home;
 import '../pages/UpdatePayments.dart' as UpdatePayments;
@@ -108,6 +109,18 @@ class Navbar extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) => DailySalesEntrypage('')),
+                      );
+                    },
+                  ),
+                   ListTile(
+                    title: const Text('Edit Daily Sales Entry'),
+                    onTap: () {
+                      // Update the state of the app.
+                      // ...
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => EditDailySalesEntrypageState('')),
                       );
                     },
                   ),
@@ -228,6 +241,17 @@ class Navbar extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) => DailySalesEntrypage('')),
+                      );
+                    },
+                  ),ListTile(
+                    title: const Text('Edit Daily Sales Entry'),
+                    onTap: () {
+                      // Update the state of the app.
+                      // ...
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => EditDailySalesEntrypageState('')),
                       );
                     },
                   ),
