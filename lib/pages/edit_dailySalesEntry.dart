@@ -35,7 +35,9 @@ class EditDailySalesEntrypageState extends StatefulWidget {
   int prodNo = 0;
   bool customerIgnore = false;
   DateTime dateTime = DateTime.now();
-
+  DateTime dateTimefrom = DateTime.now();
+  DateTime dateTimeto = DateTime.now();
+  
   @override
   State<EditDailySalesEntrypageState> createState() => _EDitDailySalesEntrypageState();
 }
@@ -43,11 +45,18 @@ class EditDailySalesEntrypageState extends StatefulWidget {
 class _EDitDailySalesEntrypageState extends State<EditDailySalesEntrypageState> {
   Future getOrders;
   Future getProducts;
-  get_orders() async {
+  Future getCustomer;
+  
+  get_orders(custcode) async {
+    var datefrom = DateFormat("y-M-d").format(widget.dateTimefrom);
+    var dateto = DateFormat("y-M-d").format(widget.dateTimeto);
     final url = Uri.parse(main.url_start +
         'mobileApp/getOrders/' +
         main.storage.getItem('branch') +
-        '/');
+        '/'+
+        datefrom.toString()+'/'+
+        dateto.toString()+'/'+
+        custcode.toString()+"/");
     final response = await http.get(url);
 
     //  print(response.statusCode);
@@ -119,7 +128,7 @@ class _EDitDailySalesEntrypageState extends State<EditDailySalesEntrypageState> 
     if (widget.discount_controller.text != '' &&
         widget.quantity_controller.text != '') {
       body = {
-        'custCode': widget.dropdownValue,
+        'custCode': widget.custCode,
         'Date': DateFormat("y-M-d").format(widget.dateTime),
         'prodCode': widget.prodCode,
         'qty': widget.quantity_controller.text,
@@ -127,7 +136,7 @@ class _EDitDailySalesEntrypageState extends State<EditDailySalesEntrypageState> 
       };
     } else {
       body = {
-        'custCode': widget.dropdownValue,
+        'custCode': widget.custCode,
         'Date': DateFormat("y-M-d").format(widget.dateTime),
         'prodCode': widget.prodCode,
         'qty': '0',
@@ -182,7 +191,7 @@ class _EDitDailySalesEntrypageState extends State<EditDailySalesEntrypageState> 
   }
 
   void submit() async {
-    if (widget.dropdownValue != null){
+    if (widget.custCode != null){
     var body = {};
     print(widget.listofProduct.length);
     for (int i = 0; i <= widget.listofProduct.length - 1; i++) {
@@ -224,6 +233,26 @@ class _EDitDailySalesEntrypageState extends State<EditDailySalesEntrypageState> 
       });
     }
   }
+   get_customers() async {
+    final url = Uri.parse(main.url_start +
+        'mobileApp/CustomerDetails/' +
+        main.storage.getItem('branch') +
+        '/');
+    final response = await http.get(url);
+
+    //  print(response.statusCode);
+
+    if (response.statusCode == 200) {
+      //  print(response.body);
+      var data = json.decode(response.body) as Map;
+      //  print(data['results']);
+
+      List Customers = data['results']
+          .map<models.Customer>((json) => models.Customer.fromjson(json))
+          .toList();
+
+      return Customers;
+    }}
 
   List<TableRow> productList() {
     List<TableRow> list = [];
@@ -277,9 +306,10 @@ class _EDitDailySalesEntrypageState extends State<EditDailySalesEntrypageState> 
   @override
   void initState() {
     super.initState();
-    getOrders = get_orders();
+    getOrders = get_orders(widget.custCode);
     getOrder = get_Order(widget.orderNo);
     getProducts = get_products();
+    getCustomer = get_customers();
   }
 
   @override
@@ -307,32 +337,193 @@ class _EDitDailySalesEntrypageState extends State<EditDailySalesEntrypageState> 
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Padding(
+                      
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        child: FutureBuilder(
+                          future: getCustomer,
+                          // ignore: missing_return
+                          builder: (context, snapshot) {
+                            switch (snapshot.connectionState) {
+                              case ConnectionState.waiting:
+                                return Container(
+                                  width: 30,
+                                  child: CircularProgressIndicator(),
+                                );
+                              case ConnectionState.done:
+                              if(snapshot.data != null){
+                                return Container(
+                                  width: 300,
+                                  child: DropdownButton(
+                                    isExpanded: true,
+                                    value: widget.custCode,
+
+                                    // icon: const Icon(Icons.arrow_downward),
+                                    elevation: 16,
+                                    style: const TextStyle(
+                                        color: Colors.lightBlue),
+                                    underline: Container(
+                                      height: 2,
+                                      width: 300,
+                                      color: Colors.lightBlueAccent,
+                                    ),
+                                    onChanged: (String newValue) {
+                                      setState(() {
+                                        widget.custCode = newValue;
+                                      });
+                                    },
+                                    items: snapshot.data
+                                        .map<DropdownMenuItem<String>>((v) {
+                                      return DropdownMenuItem<String>(
+                                          value: v.custCode.toString(),
+                                          child: Text(v.custName.toString() +
+                                              '-' +
+                                              v.custCode.toString() +
+                                              '-' +
+                                              v.Osamt.toString()));
+                                    }).toList(),
+                                  ),
+                                );} else{
+                                  return Text('Retry');
+                                  }
+                                break;
+                              case ConnectionState.none:
+                                // TODO: Handle this case.
+                                break;
+                              case ConnectionState.active:
+                                // TODO: Handle this case.
+                                break;
+                            }
+                          },
+                        ),
+                      ),
+                      // FlatButton(
+                      //     color: Theme.of(context).primaryColor,
+                      //     onPressed: () {
+
+                      //     },
+                      //     child: Text(
+                      //       'Fetch',
+                      //       style: TextStyle(color: Colors.white),
+                      //     ))
+                    ]),
+                Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: RaisedButton(
+                      color: Theme.of(context).primaryColor,
+                      child: Text(
+                        'Pick Date',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20),
+                      ),
+                      onPressed: () {
+                        showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(2001),
+                                lastDate: DateTime.now())
+                            .then((value) {
+                          if (value != null) {
+                            setState(() {
+                              widget.dateTimefrom = value;
+                            });
+                          }
+                        });
+                      }),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(DateFormat("d-M-y").format(widget.dateTimefrom),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                )
+              ],
+            ),
+            Text(
+              'To',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+            ),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: RaisedButton(
+                      color: Theme.of(context).primaryColor,
+                      child: Text(
+                        'Pick Date',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20),
+                      ),
+                      onPressed: () {
+                        showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(2001),
+                                lastDate: DateTime.now())
+                            .then((value) {
+                          if (value != null) {
+                            setState(() {
+                              widget.dateTimeto = value;
+                            });
+                          }
+                        });
+                      }),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(DateFormat("d-M-y").format(widget.dateTimeto),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                )
+              ],
+            ),
+            RaisedButton(onPressed: (){
+              setState(() {
+                getOrders = get_orders(widget.custCode);
+              });
+            }, color: Theme.of(context).primaryColor,child: Text(
+                        'Get Orders',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15),
+                      ),),
+
+                 
+                 Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
-                          child: Row(children: [
-                            Text('Order No: '),
-                            FutureBuilder(
-                              future: getOrders,
-                              // ignore: missing_return
-                              builder: (context, snapshot) {
-                                switch (snapshot.connectionState) {
-                                  case ConnectionState.waiting:
-                                    return Container(
-                                      width: 30,
-                                      child: CircularProgressIndicator(),
-                                    );
-                                  case ConnectionState.done:
-                                    if (snapshot.data != null) {
-                                      print(snapshot.data);
-                                      return Container(
+                          child: FutureBuilder(
+                            future: getOrders,
+                            // ignore: missing_return
+                            builder: (context, snapshot) {
+                              switch (snapshot.connectionState) {
+                                case ConnectionState.waiting:
+                                  return Container(
+                                    width: 30,
+                                    child: CircularProgressIndicator(),
+                                  );
+                                case ConnectionState.done:
+                                  if (snapshot.data != null) {
+                                    print(snapshot.data);
+                                    return Row(
+                                      children:[ Text('Order No: '),Container(
                                         width: 210,
                                         child: IgnorePointer(
                                           ignoring: widget.customerIgnore,
                                           child: DropdownButton(
                                             isExpanded: true,
                                             value: widget.dropdownValue,
-
+                                    
                                             // icon: const Icon(Icons.arrow_downward),
                                             elevation: 16,
                                             style: const TextStyle(
@@ -358,26 +549,26 @@ class _EDitDailySalesEntrypageState extends State<EditDailySalesEntrypageState> 
                                             }).toList(),
                                           ),
                                         ),
-                                      );
-                                    } else {
-                                      return Text(
-                                          'Some error fetching pls try later');
-                                    }
-                                    break;
-                                  case ConnectionState.none:
-                                    // TODO: Handle this case.
-                                    break;
-                                  case ConnectionState.active:
-                                    // TODO: Handle this case.
-                                    break;
-                                }
-                              },
-                            ),
-                          ]),
+                                      ),]
+                                    );
+                                  } else {
+                                    return Text(
+                                        'Some error fetching pls try later');
+                                  }
+                                  break;
+                                case ConnectionState.none:
+                                  // TODO: Handle this case.
+                                  break;
+                                case ConnectionState.active:
+                                  // TODO: Handle this case.
+                                  break;
+                              }
+                            },
+                          ),
                         ),
                       ),
-                      
-                 Padding(
+                 Padding
+                 (
                    padding: const EdgeInsets.all(8.0),
                    child: Container(
                                     width: MediaQuery.of(context).size.width,
@@ -532,28 +723,7 @@ class _EDitDailySalesEntrypageState extends State<EditDailySalesEntrypageState> 
                               )),
                         ),
                         
-
-                        // FlatButton(
-                        //     color: Theme.of(context).primaryColor,
-                        //     onPressed: () {
-
-                        //     },
-                        //     child: Text(
-                        //       'Fetch',
-                        //       style: TextStyle(color: Colors.white),
-                        //     ))
-                      ])
-                          ]),
-                        );
-                      }else if( snapshot.data == null){ 
-                        return Text('choose order no');
-                      } else {
-                        return CircularProgressIndicator();
-                      }
-                  }
-                })
-              ]),
-              Padding(
+                        Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
                     children: [
@@ -582,6 +752,27 @@ class _EDitDailySalesEntrypageState extends State<EditDailySalesEntrypageState> 
                     ],
                   ),
                 ),
+                        // FlatButton(
+                        //     color: Theme.of(context).primaryColor,
+                        //     onPressed: () {
+
+                        //     },
+                        //     child: Text(
+                        //       'Fetch',
+                        //       style: TextStyle(color: Colors.white),
+                        //     ))
+                      ])
+                          ]),
+                        );
+                      }else if( snapshot.data == null){ 
+                        return Text('choose order no');
+                      } else {
+                        return CircularProgressIndicator();
+                      }
+                  }
+                })
+              ]),
+              
              
               
 

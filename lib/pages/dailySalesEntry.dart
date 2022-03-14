@@ -603,7 +603,7 @@ class _DailySalesEntrypageState extends State<DailySalesEntrypage> {
                                 hintText: "Remarks",
                               )),
                         ),
-
+                
                         // FlatButton(
                         //     color: Theme.of(context).primaryColor,
                         //     onPressed: () {
@@ -615,35 +615,7 @@ class _DailySalesEntrypageState extends State<DailySalesEntrypage> {
                         //     ))
                       ])
                     ]),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: FlatButton(
-                          color: Theme.of(context).primaryColor,
-                          onPressed: () => add(),
-                          child: Text(
-                            'Add',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: FlatButton(
-                          color: Theme.of(context).primaryColor,
-                          onPressed: () => submit(),
-                          child: Text(
-                            'Submit',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
+                
                 Padding(
                   padding: const EdgeInsets.all(5.0),
                   child: Center(

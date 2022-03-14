@@ -73,7 +73,7 @@ class _editUpdatePayementsState extends State<editUpdatePayements> {
     }
     final body = {
       'RecieptNo': widget.recNo,
-      'Date': DateFormat("yyyy-M-d").format(widget.dateTime2),
+      'Date': DateFormat("y-M-d").format(widget.dateTime2),
       'Rectype': widget.recType,
       'payRefNo': widget.payRefNo_controller.text,
       'RecAmt': widget.amt_controller.text,
@@ -153,9 +153,10 @@ class _editUpdatePayementsState extends State<editUpdatePayements> {
         main.storage.getItem('username').toString() +
         '/'+
           main.storage.getItem('branch'));
+    print(url);
     final response = await http.get(url);
 
-    //  print(response.statusCode);
+     print(response.statusCode);
 
     if (response.statusCode == 200) {
       //  print(response.body);
@@ -358,8 +359,7 @@ class _editUpdatePayementsState extends State<editUpdatePayements> {
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.all(9.0),
-                                            child: Text(DateFormat("d-M-yyyy")
-                                                .format(widget.dateTime2)),
+                                            child: Text(DateFormat("d-M-y").format(widget.dateTime2),),
                                           
                                           )
                                         ],
