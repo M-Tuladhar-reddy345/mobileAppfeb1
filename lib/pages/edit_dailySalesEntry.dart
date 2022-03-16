@@ -22,6 +22,7 @@ class EditDailySalesEntrypageState extends StatefulWidget {
   String custCode;
   String dropdownValue;
   String orderNo;
+  
   String pamt = '0';
   String pRate = '0';
   final ValueNotifier<String> product2 = ValueNotifier<String>('');
@@ -183,7 +184,7 @@ class _EDitDailySalesEntrypageState extends State<EditDailySalesEntrypageState> 
             widget.pamt,
             widget.listofProduct[int.parse(widget.product)].Remarks,
             widget.listofProduct[int.parse(widget.product)].custcode,
-            widget.prodNo.toString());
+            widget.listofProduct[int.parse(widget.product)].Id);
         });
         print(widget.listofProduct[int.parse(widget.product)].get_dict());
       
@@ -195,8 +196,8 @@ class _EDitDailySalesEntrypageState extends State<EditDailySalesEntrypageState> 
     var body = {};
     print(widget.listofProduct.length);
     for (int i = 0; i <= widget.listofProduct.length - 1; i++) {
-      print(widget.listofProduct[i].product + '-' + widget.listofProduct[i].no);
-      body[widget.listofProduct[i].product + '-' + widget.listofProduct[i].no] =
+      print(widget.listofProduct[i].product + '-' + widget.listofProduct[i].Id);
+      body[widget.listofProduct[i].product + '-' + widget.listofProduct[i].Id] =
           widget.listofProduct[i].get_dict();
     }
     print(json.encode(body));

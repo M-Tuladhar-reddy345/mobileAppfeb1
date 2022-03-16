@@ -182,8 +182,8 @@ class _DailySalesEntrypageState extends State<DailySalesEntrypage> {
     var body = {};
     print(widget.listofProduct.length);
     for (int i = 0; i <= widget.listofProduct.length - 1; i++) {
-      print(widget.listofProduct[i].product + '-' + widget.listofProduct[i].no);
-      body[widget.listofProduct[i].product + '-' + widget.listofProduct[i].no] =
+      print(widget.listofProduct[i].product + '-' + widget.listofProduct[i].Id);
+      body[widget.listofProduct[i].product + '-' + widget.listofProduct[i].Id] =
           widget.listofProduct[i].get_dict();
     }
     print(json.encode(body));

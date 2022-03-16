@@ -72,7 +72,7 @@ class order_product_indent {
   String Amount;
   String Remarks;
   String custcode;
-  String no;
+  String Id;
   order_product_indent(
       this.date,
       this.product,
@@ -83,7 +83,7 @@ class order_product_indent {
       this.Amount,
       this.Remarks,
       this.custcode,
-      this.no);
+      this.Id);
 // ignore: missing_return
   factory order_product_indent.fromjson(Map<String, dynamic> e) {
     return order_product_indent(
@@ -96,7 +96,7 @@ class order_product_indent {
         e['amt'].toString(),
         e['remarks'].toString(),
         e['custcode'].toString(),
-        0.toString());
+        e['id'].toString());
   }
   get_dict() {
     final returnn = {
@@ -110,6 +110,7 @@ class order_product_indent {
       'amt': this.Amount,
       'remarks': this.Remarks,
       'custcode': this.custcode,
+      'Id':this.Id,
     };
     return returnn;
   }
