@@ -179,14 +179,15 @@ class _DailySalesEntrypageState extends State<DailySalesEntrypage> {
 
   void submit() async {
     if (widget.dropdownValue != null){
-    var body = {};
+    var body = {'results':{},'orderno':widget.orderNo,'username':main.storage.getItem('username')};
+
+    var results = {};
     print(widget.listofProduct.length);
     for (int i = 0; i <= widget.listofProduct.length - 1; i++) {
-      print(widget.listofProduct[i].product + '-' + widget.listofProduct[i].Id);
-      body[widget.listofProduct[i].product + '-' + widget.listofProduct[i].Id] =
+      results[widget.listofProduct[i].product + '-' + widget.listofProduct[i].Id] =
           widget.listofProduct[i].get_dict();
     }
-    print(json.encode(body));
+    body['results'] = results;
     final url = Uri.parse(main.url_start +
         'mobileApp/DailySale_receive/' +
         main.storage.getItem('branch') +
@@ -195,6 +196,7 @@ class _DailySalesEntrypageState extends State<DailySalesEntrypage> {
         headers: {"Content-Type": "application/json"},
         encoding: Encoding.getByName("utf-8"),
         body: json.encode(body));
+      print(response.statusCode);
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body) as Map;

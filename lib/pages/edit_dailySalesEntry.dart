@@ -193,13 +193,15 @@ class _EDitDailySalesEntrypageState extends State<EditDailySalesEntrypageState> 
 
   void submit() async {
     if (widget.custCode != null){
-    var body = {};
+    var body = {'results':{},'orderno':widget.orderNo,'username':main.storage.getItem('username')};
+
+    var results = {};
     print(widget.listofProduct.length);
     for (int i = 0; i <= widget.listofProduct.length - 1; i++) {
-      print(widget.listofProduct[i].product + '-' + widget.listofProduct[i].Id);
-      body[widget.listofProduct[i].product + '-' + widget.listofProduct[i].Id] =
+      results[widget.listofProduct[i].product + '-' + widget.listofProduct[i].Id] =
           widget.listofProduct[i].get_dict();
     }
+    body['results'] = results;
     print(json.encode(body));
     final url = Uri.parse(main.url_start +
         'mobileApp/DailySale_update/' +
