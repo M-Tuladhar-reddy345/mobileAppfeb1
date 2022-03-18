@@ -156,6 +156,7 @@ class _PdfIndentpageState extends State<PdfIndentpage> {
         brch.toString());
     if (response.statusCode == 200) {
       setState(() {
+        isLoading = false;
         widget.message='Sucessfully downloaded Extract CSV';
 
       });

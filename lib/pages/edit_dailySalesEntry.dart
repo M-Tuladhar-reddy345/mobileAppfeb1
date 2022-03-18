@@ -193,7 +193,7 @@ class _EDitDailySalesEntrypageState extends State<EditDailySalesEntrypageState> 
 
   void submit() async {
     if (widget.custCode != null){
-    var body = {'results':{},'orderno':widget.orderNo,'username':main.storage.getItem('username')};
+    var body = {'results':{},'orderno':widget.dropdownValue,'username':main.storage.getItem('username')};
 
     var results = {};
     print(widget.listofProduct.length);
@@ -384,9 +384,7 @@ class _EDitDailySalesEntrypageState extends State<EditDailySalesEntrypageState> 
                                           value: v.custCode.toString(),
                                           child: Text(v.custName.toString() +
                                               '-' +
-                                              v.custCode.toString() +
-                                              '-' +
-                                              v.Osamt.toString()));
+                                              v.custCode.toString() ));
                                     }).toList(),
                                   ),
                                 );} else{

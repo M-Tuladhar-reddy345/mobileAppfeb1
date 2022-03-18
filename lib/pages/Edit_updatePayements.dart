@@ -273,7 +273,7 @@ class _editUpdatePayementsState extends State<editUpdatePayements> {
                                         value: v['recNo'].toString(),
                                         child: Text(v['recNo'].toString() +
                                             '-' +
-                                            v['custName'].toString()));
+                                            v['custName'].toString()+'-'+v['custcode'].toString()));
                                   }).toList(),
                                 ),
                               );
