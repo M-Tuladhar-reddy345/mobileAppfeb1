@@ -30,7 +30,7 @@ class _ExtractdailyIndentpageState extends State<ExtractdailyIndentpage> {
 
   Future extractDailycsv() async{
     var date = DateFormat("y-M-d").format(widget.dateTime);
-    var url =Uri.parse(main.url_start+ 'mobileApp/dailyindentExcelExtract/'+main.storage.getItem('branch').toString()+'/'+date.toString()+'/');
+    var url =Uri.parse(main.url_start+ 'mobileApp/dailyindentExcelExtract/'+main.storage.getItem('branch').toString()+'/'+date.toString()+'/'+main.storage.getItem('username').toString()+'/');
     setState(() {
       isLoading = true;
     });
