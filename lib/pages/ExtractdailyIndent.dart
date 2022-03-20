@@ -73,6 +73,15 @@ class _ExtractdailyIndentpageState extends State<ExtractdailyIndentpage> {
         widget.message = 'aldready extracted with this file';
         isLoading = false;
       });
+      
+
+    }
+    else if(response.statusCode == 111){
+       setState(() {
+        widget.message = 'File containes customers that dont exist';
+        isLoading = false;
+      });
+      
 
     }
     
@@ -97,7 +106,7 @@ class _ExtractdailyIndentpageState extends State<ExtractdailyIndentpage> {
               }
 
             },child: Text('Select File', style: TextStyle(fontSize: 18),)),
-            Text('CSV File for extract is only accepted', style: TextStyle(fontSize: 15),),
+            Text('XLS File or XLSX FIle for extract is only accepted', style: TextStyle(fontSize: 15),),
             widget.xls != null ?
             Text(basename(widget.xls.path), style: TextStyle(fontSize: 18),):
             Text('', style: TextStyle(fontSize: 18),),

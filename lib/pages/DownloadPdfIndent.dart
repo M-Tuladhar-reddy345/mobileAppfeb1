@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 import '../widgets/navbar.dart' as navbar;
 import '../widgets/form.dart' as form;
 import 'package:provider/provider.dart' as provider;
-import '/api.dart' as api;
 import 'package:intl/intl.dart';
 import 'dart:convert';
 import 'dart:io';
@@ -107,7 +106,7 @@ class _PdfIndentpageState extends State<PdfIndentpage> {
         brch.toString()));
     if (response.statusCode == 200) {
       setState(() {
-        widget.message = 'Success Fully Downloaded CSV';
+        widget.message = 'Success Fully Downloaded Xls';
         isLoading =false;
       });
       return _storeFileCSV(response.body, response.bodyBytes);
@@ -157,7 +156,7 @@ class _PdfIndentpageState extends State<PdfIndentpage> {
     if (response.statusCode == 200) {
       setState(() {
         isLoading = false;
-        widget.message='Sucessfully downloaded Extract CSV';
+        widget.message='Sucessfully downloaded Extract XLS';
 
       });
       return _storeFileExtractionCSV('RMDL'+DateFormat('yMMdd').format(DateTime.now())+'.xls', response.bodyBytes);
@@ -273,15 +272,15 @@ class _PdfIndentpageState extends State<PdfIndentpage> {
                   setState(() {
                     isLoading = true;
                   });
-                  final File csv = await fetchCSV();
-                  OpenFile.open(csv.path);
+                  final File XLS = await fetchCSV();
+                  OpenFile.open(XLS.path);
                   // print(pdf);
                   // openPDF(context, pdf);
                   setState(() {
                     isLoading = false;
                   });
                 },
-                child: Text('Download CSV',
+                child: Text('Download XLS',
                     style:
                         TextStyle(fontWeight: FontWeight.bold, fontSize: 20))),
             Container(
@@ -333,15 +332,15 @@ class _PdfIndentpageState extends State<PdfIndentpage> {
                               setState(() {
                                 isLoading = true;
                               });
-                              final File csv = await fetchCSVExtraction();
-                              OpenFile.open(csv.path);
+                              final File XLS = await fetchCSVExtraction();
+                              OpenFile.open(XLS.path);
                               // print(pdf);
                               // openPDF(context, pdf);
                               setState(() {
                                 isLoading = false;
                               });
                             },
-                            child: Text('Download Extract CSV',
+                            child: Text('Download Extract XLS',
                                 style:
                                     TextStyle(fontWeight: FontWeight.bold, fontSize: 20))),
                         Text('Only one day accepted', style: TextStyle(fontSize: 15),),
