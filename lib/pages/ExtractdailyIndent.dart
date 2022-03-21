@@ -47,7 +47,7 @@ class _ExtractdailyIndentpageState extends State<ExtractdailyIndentpage> {
   var response = await request.send();
     if (response.statusCode == 200){
       setState(() {
-        widget.message = 'success';
+        widget.message = response.headers['message'];
         isLoading = false;
       });
     }else if(response.statusCode == 104){
