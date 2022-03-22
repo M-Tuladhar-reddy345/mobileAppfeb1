@@ -132,7 +132,6 @@ class _OrderpageState extends State<Orderpage> {
                       );
 
                     case ConnectionState.done:
-                      print('@135' + snapshot.data.toString());
                       if (snapshot.data != null) {
                         widget.listofProduct = snapshot.data['Products']
                             .map<models.order_product_indent>((json) =>
