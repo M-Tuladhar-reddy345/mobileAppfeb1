@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/main.dart' as main;
 import 'package:flutter_complete_guide/models.dart' as models;
-import 'package:flutter_complete_guide/pages/Order.dart';
+import 'package:flutter_complete_guide/pages_Operators/Order.dart';
 import 'package:provider/provider.dart';
 import '../widgets/navbar.dart' as navbar;
 import '../widgets/form.dart' as form;
@@ -12,14 +12,14 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'reciept.dart' as receipt;
-import '../widgets/message.dart' as message;
+
 
 class editUpdatePayements extends StatefulWidget {
   String message;
 
   DateTime dateTime = DateTime.now();
   DateTime dateTime2;
-  editUpdatePayements(this.message);
+  editUpdatePayements();
   String recNo;
 
   String recNoDisplay;
@@ -91,17 +91,18 @@ class _editUpdatePayementsState extends State<editUpdatePayements> {
     if (response.statusCode == 200) {
       setState(() {
         var data = json.decode(response.body) as Map;
-        widget.message = data['message'].toString();
-        print(widget.message);
-        if (widget.message.toString().contains('sucessfully')) {
+        if ( data['message'].toString().contains('sucessfully')) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(data['message'].toString()),backgroundColor: Colors.green,));
           print(widget.recNo);
           // widget.dropdownValue = '';
           Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    receipt.Receiptpage(widget.message, data['RecNo'])),
+                    receipt.Receiptpage(data['RecNo'])),
           );
+        }else{
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(data['message'].toString()),backgroundColor: Colors.red,));
         }
       });
     }
@@ -183,7 +184,6 @@ class _editUpdatePayementsState extends State<editUpdatePayements> {
         ),
         body: SingleChildScrollView(
           child: Column(children: [
-            message.Message(widget.message),
             Container(
               child: Row(
                 children: [

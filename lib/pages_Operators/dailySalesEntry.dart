@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/main.dart' as main;
 import 'package:flutter_complete_guide/models.dart' as models;
-import 'package:flutter_complete_guide/pages/Order.dart';
+import 'package:flutter_complete_guide/pages_Operators/Order.dart';
 import 'package:provider/provider.dart';
 import '../widgets/navbar.dart' as navbar;
 import '../widgets/form.dart' as form;
@@ -12,7 +12,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'reciept.dart' as receipt;
-import '../widgets/message.dart' as message;
+
 
 class DailySalesEntrypage extends StatefulWidget {
   String message;
@@ -28,16 +28,16 @@ class DailySalesEntrypage extends StatefulWidget {
   var discount_controller = TextEditingController()..text = '0';
   var remarks_controller = TextEditingController()..text = ' ';
   List<models.order_product_indent> listofProduct = [];
-  DailySalesEntrypage(this.message);
+  DailySalesEntrypage();
   int prodNo = 0;
   bool customerIgnore = false;
   DateTime dateTime = DateTime.now();
 
   @override
-  State<DailySalesEntrypage> createState() => _DailySalesEntrypageState();
+  State<DailySalesEntrypage> createState() => _DailySalesEntrypages_Operatorstate();
 }
 
-class _DailySalesEntrypageState extends State<DailySalesEntrypage> {
+class _DailySalesEntrypages_Operatorstate extends State<DailySalesEntrypage> {
   Future getCustomer;
   Future getOrderNo;
   Future getProducts;
@@ -154,9 +154,9 @@ class _DailySalesEntrypageState extends State<DailySalesEntrypage> {
   void add() {
     setState(() {
       if (widget.quantity_controller.text == '0') {
-        widget.message = 'You cant add with qty 0';
+         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Qty cant be zero'), backgroundColor: Colors.red,));
       } else {
-        widget.message = '';
+         
         widget.listofProduct.add(models.order_product_indent(
             widget.dateTime,
             widget.product,
@@ -200,24 +200,25 @@ class _DailySalesEntrypageState extends State<DailySalesEntrypage> {
     if (response.statusCode == 200) {
       final data = json.decode(response.body) as Map;
       if (data['message'].contains('Successfully')) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(data['message']), backgroundColor: Colors.green,));
         Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) =>
-                  Orderpage(data['message'], data['orderNo'])),
+                  Orderpage(data['orderNo'])),
         );
       } else {
         setState(() {
-          widget.message = data['message'];
+           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(data['message']), backgroundColor: Colors.red,));
         });
       }
     } else {
       setState(() {
-        widget.message = "Retry";
+         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Retry'), backgroundColor: Colors.red,));
       });
     }}else{
       setState(() {
-        widget.message = 'please choose customer';
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Choose a customer'), backgroundColor: Colors.red,));
       });
     }
   }
@@ -308,7 +309,6 @@ class _DailySalesEntrypageState extends State<DailySalesEntrypage> {
             alignment: Alignment.topCenter,
             child: SingleChildScrollView(
                 child: Column(children: [
-              message.Message(widget.message),
               Text(
                 'Daily Sales Entry',
                 style: TextStyle(
@@ -511,10 +511,9 @@ class _DailySalesEntrypageState extends State<DailySalesEntrypage> {
                                                 if (widget.dropdownValue !=
                                                     null) {
                                                   widget.product = newValue;
-                                                  widget.message = '';
+                                                   
                                                 } else {
-                                                  widget.message =
-                                                      'Select Customer First';
+                                                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Select customer first'), backgroundColor: Colors.red,));
                                                 }
                                                 // widget.product2.value = newValue;
                                               });

@@ -7,15 +7,14 @@ import '../widgets/form.dart' as form;
 import 'package:provider/provider.dart' as provider;
 import '../main.dart' as main;
 import 'dart:convert';
-import '../widgets/message.dart' as message;
+
 
 import 'package:http/http.dart' as http;
 
 class Receiptpage extends StatefulWidget {
-  String message;
   String receiptNo;
 
-  Receiptpage(this.message, this.receiptNo);
+  Receiptpage(this.receiptNo);
 
   @override
   State<Receiptpage> createState() => _ReceiptpageState();
@@ -66,7 +65,6 @@ class _ReceiptpageState extends State<Receiptpage> {
         body: SingleChildScrollView(
           // scrollDirection: Axis.horizontal,
           child: Column(children: [
-            message.Message(widget.message),
             Text(
               'Reciept',
               style: TextStyle(

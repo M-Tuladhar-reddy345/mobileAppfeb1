@@ -7,23 +7,22 @@ import '../widgets/form.dart' as form;
 import 'package:provider/provider.dart' as provider;
 import '../main.dart' as main;
 import 'dart:convert';
-import '../widgets/message.dart' as message;
+
 
 import 'package:http/http.dart' as http;
 import '../models.dart' as models;
 
 class Orderpage extends StatefulWidget {
-  String message;
   String orderNo;
   List<models.order_product_indent> listofProduct = [];
 
-  Orderpage(this.message, this.orderNo);
+  Orderpage(this.orderNo);
 
   @override
-  State<Orderpage> createState() => _OrderpageState();
+  State<Orderpage> createState() => _Orderpages_Operatorstate();
 }
 
-class _OrderpageState extends State<Orderpage> {
+class _Orderpages_Operatorstate extends State<Orderpage> {
   Future getOrder;
   get_Order(orderNo) async {
     if (orderNo != '') {
@@ -111,7 +110,6 @@ class _OrderpageState extends State<Orderpage> {
         ),
         body: SingleChildScrollView(
           child: Column(children: [
-            message.Message(widget.message),
             FutureBuilder(
                 future: getOrder,
                 // ignore: missing_return

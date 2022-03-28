@@ -12,7 +12,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'reciept.dart' as receipt;
-import '../widgets/message.dart' as message;
+
 import 'package:async/async.dart' as asyncc;
 // import 'package:date_field/date_field.dart';
 
@@ -30,7 +30,7 @@ class UpdatePayments extends StatefulWidget {
   String recType;
   DateTime dateTime = DateTime.now();
 
-  UpdatePayments(this.message);
+  UpdatePayments();
 
   @override
   State<UpdatePayments> createState() => _UpdatePaymentsState();
@@ -64,17 +64,19 @@ class _UpdatePaymentsState extends State<UpdatePayments>
     if (response.statusCode == 200) {
       setState(() {
         var data = json.decode(response.body) as Map;
-        widget.message = data['message'].toString();
-        print(widget.message);
-        if (widget.message.toString().contains('sucessfully')) {
+        
+        if ( data['message'].toString().contains('sucessfully')) {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(data['message'].toString()),backgroundColor: Colors.green,));
           print(widget.recNo);
           // widget.dropdownValue = '';
           Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    receipt.Receiptpage(widget.message, data['RecNo'])),
+                    receipt.Receiptpage(data['RecNo'])),
           );
+        }else{
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(data['message'].toString()),backgroundColor: Colors.red,));
         }
       });
     }
@@ -195,7 +197,7 @@ class _UpdatePaymentsState extends State<UpdatePayments>
           alignment: Alignment.topCenter,
           child: SingleChildScrollView(
             child: Column(children: [
-              message.Message(widget.message),
+              
               Text(
                 'Update Payments',
                 style: TextStyle(

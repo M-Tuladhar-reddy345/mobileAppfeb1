@@ -1,16 +1,18 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
-import 'package:flutter_complete_guide/pages/DownloadPdfIndent.dart';
-import 'package:flutter_complete_guide/pages/Edit_updatePayements.dart';
-import 'package:flutter_complete_guide/pages/dailySalesEntry.dart';
+import 'package:flutter_complete_guide/pages_Operators/DownloadPdfIndent.dart';
+import 'package:flutter_complete_guide/pages_Operators/Edit_updatePayements.dart';
+import 'package:flutter_complete_guide/pages_Operators/dailySalesEntry.dart';
 
-import 'package:flutter_complete_guide/pages/ExtractdailyIndent.dart';
-import 'package:flutter_complete_guide/pages/edit_dailySalesEntry.dart';
+import 'package:flutter_complete_guide/pages_Operators/ExtractdailyIndent.dart';
+import 'package:flutter_complete_guide/pages_Operators/edit_dailySalesEntry.dart';
+import 'package:flutter_complete_guide/pages_customer/CustomerSignup.dart';
 import '../main.dart' as main;
-import '../pages/home.dart' as home;
-import '../pages/UpdatePayments.dart' as UpdatePayments;
-import '../pages/login.dart' as login;
+import '../pages_Operators/home.dart' as home;
+import '../pages_Operators/UpdatePayments.dart' as UpdatePayments;
+import '../pages_common/login.dart' as login;
+import '../pages_common/login.dart' as loginCustomer;
 import 'package:http/http.dart' as http;
 
 class Navbar extends StatelessWidget {
@@ -47,7 +49,7 @@ class Navbar extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => home.Homepage('')),
+                            builder: (context) => home.Homepage()),
                       );
                     },
                   ),
@@ -59,7 +61,20 @@ class Navbar extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => login.Loginpage('')),
+                            builder: (context) => login.Loginpage()),
+                      );
+                    },
+                  ),
+                  
+                  ListTile(
+                    title: const Text('Customer Sign Up'),
+                    onTap: () {
+                      // Update the state of the app.
+                      // ...
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SignUppage()),
                       );
                     },
                   ),
@@ -95,7 +110,7 @@ class Navbar extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => home.Homepage('')),
+                            builder: (context) => home.Homepage()),
                       );
                     },
                   ),
@@ -108,7 +123,7 @@ class Navbar extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => DailySalesEntrypage('')),
+                            builder: (context) => DailySalesEntrypage()),
                       );
                     },
                   ),
@@ -120,7 +135,7 @@ class Navbar extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => EditDailySalesEntrypageState('')),
+                            builder: (context) => EditDailySalesEntrypages_Operatorstate()),
                       );
                     },
                   ),
@@ -132,7 +147,7 @@ class Navbar extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => PdfIndentpage('')),
+                            builder: (context) => PdfIndentpage()),
                       );
                     },
                   ),
@@ -144,7 +159,7 @@ class Navbar extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ExtractdailyIndentpage('')),
+                            builder: (context) => ExtractdailyIndentpage()),
                       );
                     },
                   ),
@@ -157,7 +172,7 @@ class Navbar extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                UpdatePayments.UpdatePayments('')),
+                                UpdatePayments.UpdatePayments()),
                       );
                     },
                   ),
@@ -169,7 +184,7 @@ class Navbar extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => editUpdatePayements('')),
+                            builder: (context) => editUpdatePayements()),
                       );
                     },
                   ),
@@ -187,11 +202,12 @@ class Navbar extends StatelessWidget {
                         main.storage.setItem('username', null);
 
                         main.storage.setItem('branch', null);
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Logged out succesfully'),backgroundColor: Colors.green,));
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  home.Homepage('logged out successfully')),
+                                  home.Homepage()),
                         );
                       }
                     },
@@ -227,7 +243,7 @@ class Navbar extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => home.Homepage('')),
+                            builder: (context) => home.Homepage()),
                       );
                     },
                   ),
@@ -240,7 +256,7 @@ class Navbar extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => DailySalesEntrypage('')),
+                            builder: (context) => DailySalesEntrypage()),
                       );
                     },
                   ),ListTile(
@@ -251,7 +267,7 @@ class Navbar extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => EditDailySalesEntrypageState('')),
+                            builder: (context) => EditDailySalesEntrypages_Operatorstate()),
                       );
                     },
                   ),
@@ -263,7 +279,7 @@ class Navbar extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => PdfIndentpage('')),
+                            builder: (context) => PdfIndentpage()),
                       );
                     },
                   ),
@@ -275,7 +291,7 @@ class Navbar extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ExtractdailyIndentpage('')),
+                            builder: (context) => ExtractdailyIndentpage()),
                       );
                     },
                   ),
@@ -298,7 +314,7 @@ class Navbar extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  home.Homepage('logged out successfully')),
+                                  home.Homepage()),
                         );
                       }
                     },
@@ -334,7 +350,7 @@ class Navbar extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => home.Homepage('')),
+                            builder: (context) => home.Homepage()),
                       );
                     },
                   ),
@@ -347,7 +363,7 @@ class Navbar extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
-                                UpdatePayments.UpdatePayments('')),
+                                UpdatePayments.UpdatePayments()),
                       );
                     },
                   ),
@@ -359,7 +375,7 @@ class Navbar extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => editUpdatePayements('')),
+                            builder: (context) => editUpdatePayements()),
                       );
                     },
                   ),
@@ -379,11 +395,75 @@ class Navbar extends StatelessWidget {
                         main.storage.setItem('username', null);
 
                         main.storage.setItem('branch', null);
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Logged out succesfully'),backgroundColor: Colors.green,));
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  home.Homepage('logged out successfully')),
+                                  home.Homepage()),
+                        );
+                      }
+                    },
+                  ),
+                ],
+              ):main.storage.getItem('role') =='Customer'?ListView(
+                // Important: Remove any padding from the ListView.
+                padding: EdgeInsets.zero,
+                children: [
+                  const DrawerHeader(
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                      ),
+                      child: Image(
+                          width: 200,
+                          height: 60,
+                          image:
+                              AssetImage('assets/images/RaithannaOLogo.png'))),
+                  //  Image(
+
+                  //     image:
+                  //         AssetImage('assets/images/RaithannaOLogo.jpg'))),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      main.storage.getItem('username').toString() +
+                          '@' +
+                          main.storage.getItem('role').toString(),
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  ListTile(
+                    title: const Text('Home'),
+                    onTap: () {
+                      // Update the state of the app.
+                      // ...
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => home.Homepage()),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('Logout'),
+                    onTap: () async {
+                      // Update the state of the app.
+                      // ...
+                      final url =
+                          Uri.parse(main.url_start + 'mobileApp/logout/');
+                      final response = await http.get(url);
+                      //  print(response.statusCode);
+
+                      if (response.statusCode == 200) {
+                        main.storage.setItem('username', null);
+
+                        main.storage.setItem('branch', null);
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Logged out succesfully'),backgroundColor: Colors.green,));
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  home.Homepage()),
                         );
                       }
                     },
@@ -414,7 +494,7 @@ class Navbar extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => home.Homepage('')),
+                            builder: (context) => home.Homepage()),
                       );
                     },
                   ),
@@ -432,11 +512,12 @@ class Navbar extends StatelessWidget {
                         main.storage.setItem('username', null);
 
                         main.storage.setItem('branch', null);
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Logged out succesfully'),backgroundColor: Colors.green,));
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  home.Homepage('logged out successfully')),
+                                  home.Homepage()),
                         );
                       }
                     },

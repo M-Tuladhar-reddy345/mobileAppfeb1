@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/main.dart' as main;
-import 'package:flutter_complete_guide/widgets/message.dart';
 import 'package:provider/provider.dart';
 import '../models.dart' as models;
 import '../widgets/navbar.dart' as navbar;
-import '../pages/home.dart' as home;
+import '../pages_Operators/home.dart' as home;
 import '../widgets/form.dart' as form;
 import 'package:provider/provider.dart' as provider;
 import 'package:http/http.dart' as http;
@@ -18,13 +17,13 @@ class Loginpage extends StatefulWidget {
   String branch = '';
   bool obsureText = true;
 
-  Loginpage(this.message);
+  Loginpage();
 
   @override
-  State<Loginpage> createState() => _LoginpageState();
+  State<Loginpage> createState() => _Loginpagestate();
 }
 
-class _LoginpageState extends State<Loginpage> {
+class _Loginpagestate extends State<Loginpage> {
   submit() async {
     final body = {
       'username': widget.usernameController.text,
@@ -46,16 +45,17 @@ class _LoginpageState extends State<Loginpage> {
         main.storage.setItem('branch', data['branch']);
         main.storage.setItem('role', data['role']);
         // print(main.storage.getItem('branch'));
+        ScaffoldMessenger.of(context).showSnackBar(
+                     SnackBar(content: Text(data['message']), backgroundColor: Colors.green,));
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => home.Homepage(data['message'])),
+              builder: (context) => home.Homepage()),
         );
       } else {
         print(data);
-        setState(() {
-          widget.message = data['message'];
-        });
+        ScaffoldMessenger.of(context).showSnackBar(
+                     SnackBar(content: Text(data['message']),backgroundColor: Colors.red,));
       }
     }
   }
@@ -88,7 +88,6 @@ class _LoginpageState extends State<Loginpage> {
         ),
         body: SingleChildScrollView(
           child: Column(children: [
-            Message(widget.message),
             Container(
                 child: Padding(
               padding: const EdgeInsets.all(8.0),

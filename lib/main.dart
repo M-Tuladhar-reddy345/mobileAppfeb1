@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart' as provider;
-import './pages/home.dart' as home;
+import './pages_Operators/home.dart' as home;
 import 'package:localstorage/localstorage.dart' as localstorage;
 import 'dart:io';
 import 'package:flutter/foundation.dart';
@@ -12,11 +12,11 @@ import 'package:google_fonts/google_fonts.dart';
 final localstorage.LocalStorage storage =
     localstorage.LocalStorage('RaithannaDairy_local');
 
-final String url_start = 'http://www.jacknjill.solutions/';
+// final String url_start = 'http://www.jacknjill.solutions/';
 // 
 // final String url_start = 'http://192.168.1.10:8000/';
 // final String url_start = 'http://localhost:8000/';
-// final String url_start = 'http://192.168.1.3:8000/';
+final String url_start = 'http://192.168.1.3:8000/';
 main() {
   storage.clear();
 
@@ -43,17 +43,19 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       if (seconds  == 360){
           seconds  = 0;
         stoptime();
+        storage.clear();
       }else{
         
         seconds ++;
       print(seconds);
       
-        storage.clear();
+        
      }});
   }
   void stoptime(){
     timer.cancel();
-    navigatorKey.currentState.push(MaterialPageRoute(builder: (_)=> home.Homepage('logged out, Expired')));
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Logged out expired'),backgroundColor: Colors.red,));
+    navigatorKey.currentState.push(MaterialPageRoute(builder: (_)=> home.Homepage()));
   }
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -103,7 +105,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         ))
 
       ),
-      home: home.Homepage(''),
+      home: home.Homepage(),
       debugShowCheckedModeBanner: false,
       navigatorKey: navigatorKey,
     );

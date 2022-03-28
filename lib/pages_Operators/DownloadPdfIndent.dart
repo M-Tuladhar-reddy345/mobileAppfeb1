@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/main.dart' as main;
 import 'package:flutter_complete_guide/models.dart' as models;
-import 'package:flutter_complete_guide/pages/pdfViewer.dart';
 import 'package:provider/provider.dart';
 import '../widgets/navbar.dart' as navbar;
 import '../widgets/form.dart' as form;
@@ -11,7 +10,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'reciept.dart' as receipt;
-import '../widgets/message.dart' as message;
+
 import 'package:async/async.dart' as asyncc;
 import 'dart:convert';
 import 'dart:io';
@@ -22,20 +21,22 @@ import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 import 'package:open_file/open_file.dart';
 
+import 'package:file_picker/file_picker.dart';
+
 // ignore: must_be_immutable
 class PdfIndentpage extends StatefulWidget {
   String message;
 
-  PdfIndentpage(this.message);
+  PdfIndentpage();
   DateTime dateTimefrom = DateTime.now();
   DateTime dateTimeto = DateTime.now();
   DateTime dateTimeExExtract = DateTime.now();
 
   @override
-  State<PdfIndentpage> createState() => _PdfIndentpageState();
+  State<PdfIndentpage> createState() => _PdfIndentpages_Operatorstate();
 }
 
-class _PdfIndentpageState extends State<PdfIndentpage> {
+class _PdfIndentpages_Operatorstate extends State<PdfIndentpage> {
   bool isLoading = false;
 
   var progress;
@@ -45,16 +46,16 @@ class _PdfIndentpageState extends State<PdfIndentpage> {
     var dateto = DateFormat("y-M-d").format(widget.dateTimeto);
     String fileName = datefrom + 'to' + dateto + '.pdf';
 
-    Directory dir = Directory('/storage/emulated/0/Download');
 
     await Permission.storage.request();
-
-    final File file = File('${dir.path}/$fileName');
+    String dir = await FilePicker.platform.getDirectoryPath();
+              
+    final File file = File('${dir}/$fileName');
     await file.writeAsBytes(bytes, flush: true);
     return file;
   }
 
-  Future<File> fetchPDF() async {
+  Future<File> fetchPDF(context) async {
     var datefrom = DateFormat("y-M-d").format(widget.dateTimefrom);
     var dateto = DateFormat("y-M-d").format(widget.dateTimeto);
     var brch = main.storage.getItem('branch');
@@ -69,7 +70,9 @@ class _PdfIndentpageState extends State<PdfIndentpage> {
     if (response.statusCode == 200) {
       setState(() {
         isLoading= false;
-        widget.message = 'Success Fully Downloaded PDF';
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('successfully Downloaded pdf'),backgroundColor: Colors.green,));
+         
+        
       });
       return _storeFile(response.body, response.bodyBytes);
     } else {
@@ -82,21 +85,21 @@ class _PdfIndentpageState extends State<PdfIndentpage> {
     var dateto = DateFormat("dd-MM-y").format(widget.dateTimeto);
     String fileName = 'Indent'+datefrom+'to'+dateto+'.xls';
 
-    Directory dir = Directory('/storage/emulated/0/Download');
 
     await Permission.storage.request();
-
-    final File file = File('${dir.path}/$fileName');
+    String dir = await FilePicker.platform.getDirectoryPath();
+              
+    final File file = File('${dir}/$filename');
     await file.writeAsBytes(bytes, flush: true);
     return file;
   }
 
-  Future<File> fetchCSV() async {
+  Future<File> fetchCSV(context) async {
     var datefrom = DateFormat("y-M-d").format(widget.dateTimefrom);
     var dateto = DateFormat("y-M-d").format(widget.dateTimeto);
     if ((widget.dateTimeto.day - widget.dateTimefrom.day) <= 16){
     var brch = main.storage.getItem('branch');
-
+    
     final response = await http.get(Uri.parse(main.url_start +
         'dailyindentCSV/' +
         datefrom.toString() +
@@ -106,7 +109,7 @@ class _PdfIndentpageState extends State<PdfIndentpage> {
         brch.toString()));
     if (response.statusCode == 200) {
       setState(() {
-        widget.message = 'Success Fully Downloaded Xls';
+         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('successfully Downloaded XLS'),backgroundColor: Colors.green,));
         isLoading =false;
       });
       return _storeFileCSV(response.body, response.bodyBytes);
@@ -115,7 +118,7 @@ class _PdfIndentpageState extends State<PdfIndentpage> {
     }
     }else{
       setState(() {
-        widget.message ='Days selected more than 16 days';
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('selected days cannot exceed 16 days'),backgroundColor: Colors.red,));
         isLoading = false;
       });
       return null;
@@ -125,16 +128,17 @@ class _PdfIndentpageState extends State<PdfIndentpage> {
     var datefrom = DateFormat("dd-MM-y").format(widget.dateTimefrom);
     var dateto = DateFormat("dd-MM-y").format(widget.dateTimeto);
 
-    Directory dir = Directory('/storage/emulated/0/Download');
+    Directory dr = Directory('/storage/emulated/0/Download');
 
     await Permission.storage.request();
-
-    final File file = File('${dir.path}/$filename');
+    String dir = await FilePicker.platform.getDirectoryPath();
+              
+    final File file = File('${dir}/$filename');
     await file.writeAsBytes(bytes, flush: true);
     return file;
   }
 
-  Future<File> fetchCSVExtraction() async {
+  Future<File> fetchCSVExtraction(context) async {
     var datefrom = DateFormat("y-M-d").format(widget.dateTimeExExtract);
     var dateto = DateFormat("y-M-d").format(widget.dateTimeExExtract);
     var brch = main.storage.getItem('branch');
@@ -156,7 +160,7 @@ class _PdfIndentpageState extends State<PdfIndentpage> {
     if (response.statusCode == 200) {
       setState(() {
         isLoading = false;
-        widget.message='Sucessfully downloaded Extract XLS';
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('successfully Downloaded Extract XLS'),backgroundColor: Colors.green,));
 
       });
       return _storeFileExtractionCSV('RMDL'+DateFormat('yMMdd').format(DateTime.now())+'.xls', response.bodyBytes);
@@ -174,7 +178,6 @@ class _PdfIndentpageState extends State<PdfIndentpage> {
         ),
         body: SingleChildScrollView(
           child: Column(children: [
-            message.Message(widget.message),
             Row(
               children: [
                 Padding(
@@ -256,7 +259,7 @@ class _PdfIndentpageState extends State<PdfIndentpage> {
                   setState(() {
                     isLoading = true;
                   });
-                  final File pdf = await fetchPDF();
+                  final File pdf = await fetchPDF(context);
                   OpenFile.open(pdf.path);
                   // print(pdf);
                   // openPDF(context, pdf);
@@ -272,7 +275,7 @@ class _PdfIndentpageState extends State<PdfIndentpage> {
                   setState(() {
                     isLoading = true;
                   });
-                  final File XLS = await fetchCSV();
+                  final File XLS = await fetchCSV(context);
                   OpenFile.open(XLS.path);
                   // print(pdf);
                   // openPDF(context, pdf);
@@ -332,7 +335,7 @@ class _PdfIndentpageState extends State<PdfIndentpage> {
                               setState(() {
                                 isLoading = true;
                               });
-                              final File XLS = await fetchCSVExtraction();
+                              final File XLS = await fetchCSVExtraction(context);
                               OpenFile.open(XLS.path);
                               // print(pdf);
                               // openPDF(context, pdf);
@@ -353,11 +356,5 @@ class _PdfIndentpageState extends State<PdfIndentpage> {
             isLoading == true ? CircularProgressIndicator() : Text('')
           ]),
         ));
-  }
-
-  openPDF(BuildContext context, File pdf) {
-    // print(pdf.path);
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => PDFViewerPage('', pdf)));
   }
 }

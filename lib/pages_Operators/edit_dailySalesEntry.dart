@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/main.dart' as main;
 import 'package:flutter_complete_guide/models.dart' as models;
-import 'package:flutter_complete_guide/pages/Order.dart';
+import 'package:flutter_complete_guide/pages_Operators/Order.dart';
 import 'package:provider/provider.dart';
 import '../widgets/navbar.dart' as navbar;
 import '../widgets/form.dart' as form;
@@ -12,10 +12,10 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'reciept.dart' as receipt;
-import '../widgets/message.dart' as message;
+
 import 'package:dropdown_search/dropdown_search.dart';
 
-class EditDailySalesEntrypageState extends StatefulWidget {
+class EditDailySalesEntrypages_Operatorstate extends StatefulWidget {
   String message;
   final ValueNotifier<String> dropdownValue2 = ValueNotifier<String>('');
   String custCode;
@@ -31,7 +31,7 @@ class EditDailySalesEntrypageState extends StatefulWidget {
   var discount_controller = TextEditingController()..text = '0';
   var remarks_controller = TextEditingController()..text = ' ';
   List<models.order_product_indent> listofProduct = [];
-  EditDailySalesEntrypageState(this.message);
+  EditDailySalesEntrypages_Operatorstate();
   int prodNo = 0;
   bool customerIgnore = false;
   DateTime dateTime = DateTime.now();
@@ -39,10 +39,10 @@ class EditDailySalesEntrypageState extends StatefulWidget {
   DateTime dateTimeto = DateTime.now();
   
   @override
-  State<EditDailySalesEntrypageState> createState() => _EDitDailySalesEntrypageState();
+  State<EditDailySalesEntrypages_Operatorstate> createState() => _EDitDailySalesEntrypages_Operatorstate();
 }
 
-class _EDitDailySalesEntrypageState extends State<EditDailySalesEntrypageState> {
+class _EDitDailySalesEntrypages_Operatorstate extends State<EditDailySalesEntrypages_Operatorstate> {
   Future getOrders;
   Future getProducts;
   Future getCustomer;
@@ -166,11 +166,9 @@ class _EDitDailySalesEntrypageState extends State<EditDailySalesEntrypageState> 
 
   void update() {
     setState(() {
-        widget.message = '';
         print('update');
         
         setState(() {
-        widget.message = '';
         widget.prodNo = widget.prodNo + 1;
           widget.discount_controller.text;
           widget.listofProduct[int.parse(widget.product)] = models.order_product_indent(
@@ -214,25 +212,26 @@ class _EDitDailySalesEntrypageState extends State<EditDailySalesEntrypageState> 
     if (response.statusCode == 200) {
       final data = json.decode(response.body) as Map;
       if (data['message'].contains('Successfully')) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('updated successfully ' + data['orderNo'].toString()), backgroundColor: Colors.green,));
         Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) =>
-                  Orderpage('updated successfully ' + data['orderNo'].toString(), data['orderNo'])),
+                  Orderpage(data['orderNo'])),
         );
       } else {
         setState(() {
-          widget.message = data['message'];
+           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(data['message'].toString()), backgroundColor: Colors.red,));
         });
       }
     } else {
       setState(() {
-        widget.message = "Retry";
+        
+           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Retry'), backgroundColor: Colors.red,));
       });
     }}else{
-      setState(() {
-        widget.message = 'please choose customer';
-      });
+      
+           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Please choose customer'), backgroundColor: Colors.red,));
     }
   }
    get_customers() async {
@@ -324,7 +323,7 @@ class _EDitDailySalesEntrypageState extends State<EditDailySalesEntrypageState> 
         body: SingleChildScrollView(
             child: Column(
               children: [
-              message.Message(widget.message),
+              
               Text(
                 'Edit Daily Sales Entry',
                 style: TextStyle(

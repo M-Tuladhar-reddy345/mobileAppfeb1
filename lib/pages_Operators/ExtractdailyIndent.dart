@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import '../widgets/navbar.dart' as navbar;
 import '../widgets/form.dart' as form;
 import 'package:provider/provider.dart' as provider;
-import '../widgets/message.dart' as message;
+
 import 'package:file_picker/file_picker.dart';
 import 'package:path/path.dart';
 import 'package:http/http.dart' as http;
@@ -19,16 +19,16 @@ class ExtractdailyIndentpage extends StatefulWidget {
   File xls;
   DateTime dateTime = DateTime.now();
 
-  ExtractdailyIndentpage(this.message);
+  ExtractdailyIndentpage();
 
   @override
-  State<ExtractdailyIndentpage> createState() => _ExtractdailyIndentpageState();
+  State<ExtractdailyIndentpage> createState() => _ExtractdailyIndentpages_Operatorstate();
 }
 
-class _ExtractdailyIndentpageState extends State<ExtractdailyIndentpage> {
+class _ExtractdailyIndentpages_Operatorstate extends State<ExtractdailyIndentpage> {
   bool isLoading = false;
 
-  Future extractDailycsv() async{
+  Future extractDailycsv(context) async{
     var date = DateFormat("y-M-d").format(widget.dateTime);
     var url =Uri.parse(main.url_start+ 'mobileApp/dailyindentExcelExtract/'+main.storage.getItem('branch').toString()+'/'+date.toString()+'/'+main.storage.getItem('username').toString()+'/');
     setState(() {
@@ -47,30 +47,34 @@ class _ExtractdailyIndentpageState extends State<ExtractdailyIndentpage> {
   var response = await request.send();
     if (response.statusCode == 200){
       setState(() {
-        widget.message = response.headers['message'];
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(response.headers['message']),backgroundColor: Colors.green,));
+
         isLoading = false;
       });
     }else if(response.statusCode == 104){
        setState(() {
-        widget.message = 'wrong file extenstion';
+
+         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Wrong file extension'),backgroundColor: Colors.red,));
         isLoading = false;
       });
     }else if(response.statusCode == 106){
        setState(() {
-        widget.message = 'Naming convention not satisfied it should be in the format "RMDLyyyyMMdd000" 000 stands for code';
+         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Naming convention not satisfied it should be in the format "RMDLyyyyMMdd000" 000 stands for code'),backgroundColor: Colors.red,));
         isLoading = false;
       });
       
     }else if(response.statusCode == 108){
        setState(() {
-        widget.message = 'Date in name is not same as date selected';
+         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Date in name is not same as date selected'),backgroundColor: Colors.red,));
+          
         isLoading = false;
       });
 
     }
     else if(response.statusCode == 110){
        setState(() {
-        widget.message = 'aldready extracted with this file';
+         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('aldready extracted with this file'),backgroundColor: Colors.red,));
+          
         isLoading = false;
       });
       
@@ -78,7 +82,8 @@ class _ExtractdailyIndentpageState extends State<ExtractdailyIndentpage> {
     }
     else if(response.statusCode == 111){
        setState(() {
-        widget.message = 'File containes customers that dont exist';
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Date in name is not same as date selected'),backgroundColor: Colors.red,));
+          
         isLoading = false;
       });
       
@@ -96,7 +101,7 @@ class _ExtractdailyIndentpageState extends State<ExtractdailyIndentpage> {
         ),
         body: SingleChildScrollView(
           child: Column(children: [
-            message.Message(widget.message),
+            
             ElevatedButton(onPressed: () async {
               FilePickerResult result = await FilePicker.platform.pickFiles();
               if (result != null){
@@ -145,7 +150,7 @@ class _ExtractdailyIndentpageState extends State<ExtractdailyIndentpage> {
                     )
                   ],),
             ),
-            ElevatedButton(onPressed: () =>extractDailycsv(),
+            ElevatedButton(onPressed: () =>extractDailycsv(context),
             child: Text('Upload', style: TextStyle(fontSize: 18),)),
             isLoading == true ? CircularProgressIndicator() : Text('')
           ]),
