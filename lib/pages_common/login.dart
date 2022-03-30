@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_complete_guide/main.dart' as main;
+import 'package:flutter_complete_guide/pages_customer/CustomerSignup.dart';
+import '../main.dart' as main;
+import '../widgets/Pageroute.dart';
 import 'package:provider/provider.dart';
 import '../models.dart' as models;
 import '../widgets/navbar.dart' as navbar;
@@ -9,6 +11,7 @@ import 'package:provider/provider.dart' as provider;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:io';
+import 'package:google_fonts/google_fonts.dart';
 
 class Loginpage extends StatefulWidget {
   String message;
@@ -83,81 +86,132 @@ class _Loginpagestate extends State<Loginpage> {
   Widget build(BuildContext context) {
     return Scaffold(
         drawer: navbar.Navbar(),
-        appBar: AppBar(
-          title: Text('Login'),
-        ),
-        body: SingleChildScrollView(
-          child: Column(children: [
-            Container(
-                child: Padding(
-              padding: const EdgeInsets.all(8.0),
+        
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/images/bg_7.jpg"),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Center(
+            child: SingleChildScrollView(
               child: Column(children: [
-                TextField(
-                    controller: widget.usernameController,
-                    decoration: InputDecoration(labelText: 'Username')),
-                TextField(
-                    controller: widget.passwordController,
-                    obscureText: widget.obsureText,
-                    decoration: InputDecoration(
-                        labelText: 'Password',
-                        suffixIcon: IconButton(
-                          icon: widget.obsureText
-                              ? Icon(Icons.remove_red_eye)
-                              : Icon(Icons.security_sharp),
-                          onPressed: () {
-                            setState(() {
-                              widget.obsureText = !widget.obsureText;
-                            });
-                          },
-                        ))),
-                // FutureBuilder(
-                //     future: get_branch(),
-                //     builder: (context, snapshot) {
-                //       if (snapshot.data == null) {
-                //         return Container(
-                //           child: Text('loading'),
-                //         );
-                //       } else
-                //         return Container(
-                //           child: DropdownButton(
-                //             isExpanded: true,
-                //             value: widget.branch,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    
+                    decoration: BoxDecoration(color: Colors.black.withOpacity(0.4)),
+                      child: Padding(
+                    padding: const EdgeInsets.all(0.8),
+                    child: Column(
+                      
+                      children: [
+                      Text('Login', style: TextStyle(fontSize: 40, fontFamily: GoogleFonts.robotoMono().fontFamily,color: Colors.white)),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                            
+                            controller: widget.usernameController,
+                            decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+                            hintText: 'Username',
+                            contentPadding:
+                                const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                              borderRadius: BorderRadius.circular(25.7),
+                            ),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                              borderRadius: BorderRadius.circular(25.7),
+                            ),
+                          ),
+                        ),
+                      ),
 
-                //             // icon: const Icon(Icons.arrow_downward),
-                //             elevation: 16,
-                //             style: const TextStyle(color: Colors.deepPurple),
-                //             underline: Container(
-                //               height: 2,
-                //               width: 300,
-                //               color: Colors.deepPurpleAccent,
-                //             ),
-                //             onChanged: (newValue) {
-                //               setState(() {
-                //                 widget.branch = newValue;
-                //               });
-                //             },
-                //             items: snapshot.data
-                //                 .map<DropdownMenuItem<String>>((v) {
-                //               return DropdownMenuItem<String>(
-                //                   value: v.code.toString(),
-                //                   child: Text(v.branch.toString() +
-                //                       '-' +
-                //                       v.address.toString()));
-                //             }).toList(),
-                //           ),
-                //         );
-                //     }),
-                FlatButton(
-                  color: Theme.of(context).primaryColor,
-                  onPressed: () => submit(),
-                  child: Text(
-                    'Submit',
-                    style: TextStyle(color: Colors.white),
-                  ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextField(
+                          
+                            controller: widget.passwordController,
+                            obscureText: widget.obsureText,
+                            decoration: InputDecoration(border: OutlineInputBorder(),filled: true,
+                            fillColor: Colors.white,
+                            contentPadding:
+                                const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                              borderRadius: BorderRadius.circular(25.7),
+                            ),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                              borderRadius: BorderRadius.circular(25.7),
+                            ),
+                                hintText: 'Password',
+                                suffixIcon: IconButton(
+                                  icon: widget.obsureText
+                                      ? Icon(Icons.remove_red_eye)
+                                      : Icon(Icons.security_sharp),
+                                  onPressed: () {
+                                    setState(() {
+                                      widget.obsureText = !widget.obsureText;
+                                    });
+                                  },
+                                ))),
+                      ),
+                      // FutureBuilder(
+                      //     future: get_branch(),
+                      //     builder: (context, snapshot) {
+                      //       if (snapshot.data == null) {
+                      //         return Container(
+                      //           child: Text('loading'),
+                      //         );
+                      //       } else
+                      //         return Container(
+                      //           child: DropdownButton(
+                      //             isExpanded: true,
+                      //             value: widget.branch,
+                      FlatButton(onPressed: (){Navigator.pushReplacement(context, CustomPageRoute(child: SignUppage()));}, child: Text('No Account? Create One',style: TextStyle(color: Colors.black, decoration: TextDecoration.underline),)),
+                      //             // icon: const Icon(Icons.arrow_downward),
+                      //             elevation: 16,
+                      //             style: const TextStyle(color: Colors.deepPurple),
+                      //             underline: Container(
+                      //               height: 2,
+                      //               width: 300,
+                      //               color: Colors.deepPurpleAccent,
+                      //             ),
+                      //             onChanged: (newValue) {
+                      //               setState(() {
+                      //                 widget.branch = newValue;
+                      //               });
+                      //             },
+                      //             items: snapshot.data
+                      //                 .map<DropdownMenuItem<String>>((v) {
+                      //               return DropdownMenuItem<String>(
+                      //                   value: v.code.toString(),
+                      //                   child: Text(v.branch.toString() +
+                      //                       '-' +
+                      //                       v.address.toString()));
+                      //             }).toList(),
+                      //           ),
+                      //         );
+                      //     }),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(primary: Colors.black),
+                        onPressed: () => submit(),
+                        child: Text(
+                          'Login',
+                          style: TextStyle(color: Colors.white, fontSize: 15),
+                        ),
+                      )
+                    ]),
+                  )),
                 )
               ]),
-            ))
-          ]),
+            ),
+          ),
         ));
   }
 }

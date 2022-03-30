@@ -7,6 +7,7 @@ import 'package:localstorage/localstorage.dart' as localstorage;
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'splashFiles/splashTest.dart';
 
 
 final localstorage.LocalStorage storage =
@@ -105,7 +106,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         ))
 
       ),
-      home: home.Homepage(),
+      home: Splash(),
       debugShowCheckedModeBanner: false,
       navigatorKey: navigatorKey,
     );

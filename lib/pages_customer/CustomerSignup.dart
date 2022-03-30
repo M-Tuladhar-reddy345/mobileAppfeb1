@@ -3,6 +3,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/main.dart' as main;
 import 'package:flutter_complete_guide/pages_common/login.dart';
+import 'package:flutter_complete_guide/widgets/Pageroute.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:provider/provider.dart';
 import '../models.dart' as models;
@@ -27,7 +29,7 @@ class SignUppage extends StatefulWidget {
   var verifyed = false;
   String branch = '';
   bool obsureText = true;
-
+  bool obsureText2 = true;
   SignUppage();
 
   @override
@@ -36,6 +38,7 @@ class SignUppage extends StatefulWidget {
 
 class _SignUppagestate extends State<SignUppage> {
   final _formkey = GlobalKey<FormState>();
+  final _formkey2 = GlobalKey<FormState>();
   submit() async {  
     print(widget.phone);
     final body = {
@@ -115,17 +118,20 @@ class _SignUppagestate extends State<SignUppage> {
           title: Text('Enter your OTP'),
           content: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: TextFormField(
-              decoration: InputDecoration(
-                border: new OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(
-                    const Radius.circular(30),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                decoration: InputDecoration(
+                  border: new OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(
+                      const Radius.circular(30),
+                    ),
                   ),
                 ),
+                onChanged: (value) {
+                  otpbyuser = value;
+                },
               ),
-              onChanged: (value) {
-                otpbyuser = value;
-              },
             ),
           ),
           contentPadding: EdgeInsets.all(10.0),
@@ -152,156 +158,286 @@ class _SignUppagestate extends State<SignUppage> {
   Widget build(BuildContext context) {
     return Scaffold(
         drawer: navbar.Navbar(),
-        appBar: AppBar(
-          title: Text('SignUp'),
-        ),
-        body: SingleChildScrollView(
-            child: widget.verifyed== true? Column(children: [
-            Container(
-                child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [Form(
-                  key: _formkey,
-                  child: Column(children: [
-                    TextFormField(
-                        controller: widget.NameController,
-                        decoration: InputDecoration(labelText: 'Full Name'),
-                        validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Name should be there';
-                            }
-                            return null;
-                          },
-                        ), 
-                    TextFormField(
-                        controller: widget.EmailController,
-                        decoration: InputDecoration(labelText: 'Email'),
-                        validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Email should be there';
-                            }
-                            return null;
-                          },
-                        ), 
-                    TextFormField(
-                        controller: widget.usernameController,
-                        decoration: InputDecoration(labelText: 'User Name'),
-                        validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'User name should be there';
-                            }
-                            return null;
-                          },
-                        ), 
-                
-                    TextFormField(
-                        controller: widget.passwordController,
-                        obscureText: widget.obsureText,
-                        decoration: InputDecoration(
-                            labelText: 'Password',
+        
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+             image: AssetImage("assets/images/bg_7.jpg"),
+              fit: BoxFit.cover,
+            ),
+          ), 
+          child: Center(
+            child: SingleChildScrollView(
+                child: widget.verifyed== true? Column(children: [
+                Column(
+                  children: [
+                    
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                         decoration: BoxDecoration(color: Colors.black.withOpacity(0.4)),
+                          child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [Text('Register', style: TextStyle(fontSize: 40, fontFamily: GoogleFonts.robotoMono().fontFamily,color: Colors.white)),Form(
+                            key: _formkey,
+                            child: Column(children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
+                                    controller: widget.NameController,
+                                    decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+                            hintText: 'Full Name',
+                            contentPadding:
+                                  const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                                borderRadius: BorderRadius.circular(25.7),
+                            ),
+                            enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                                borderRadius: BorderRadius.circular(25.7),
+                            ),
+                          ),
+                                    validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Name should be there';
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                              ), 
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
+                                    controller: widget.EmailController,
+                                    decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+                            hintText: 'Email',
+                            contentPadding:
+                                  const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                                borderRadius: BorderRadius.circular(25.7),
+                            ),
+                            enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                                borderRadius: BorderRadius.circular(25.7),
+                            ),
+                          ),
+                            validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Email should be there';
+                                        }else if (RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value)==false){
+                                          return 'Email pattern is wrong';
+                                        }
+                                        
+                                        return null;
+                                      },
+                                    ),
+                              ), 
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
+                                    controller: widget.usernameController,
+                                    decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+                            hintText: 'Username',
+                            contentPadding:
+                                  const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                                borderRadius: BorderRadius.circular(25.7),
+                            ),
+                            enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                                borderRadius: BorderRadius.circular(25.7),
+                            ),
+                          ),
+                                    validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'User name should be there';
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                              ), 
+                          
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
+                                    controller: widget.passwordController,
+                                    obscureText: widget.obsureText,
+                                    decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+                            hintText: 'Password',
                             suffixIcon: IconButton(
-                              icon: widget.obsureText
-                                  ? Icon(Icons.remove_red_eye)
-                                  : Icon(Icons.security_sharp),
-                              onPressed: () {
-                                setState(() {
-                                  widget.obsureText = !widget.obsureText;
-                                });
+                                  icon: widget.obsureText
+                                      ? Icon(Icons.remove_red_eye)
+                                      : Icon(Icons.security_sharp),
+                                  onPressed: () {
+                                    setState(() {
+                                      widget.obsureText = !widget.obsureText;
+                                    });
+                                  },
+                                ),
+                            contentPadding:
+                                  const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                                borderRadius: BorderRadius.circular(25.7),
+                            ),
+                            enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                                borderRadius: BorderRadius.circular(25.7),
+                            ),
+                          ),
+                                  validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Password should is compulsary';
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextFormField(
+                                    controller: widget.confirmPasswordController,
+                                    obscureText: widget.obsureText2,
+                                    decoration: InputDecoration(
+                            filled: true,
+                            fillColor: Colors.white,
+                            hintText: 'Confirm Password',
+                            suffixIcon: IconButton(
+                                  icon: widget.obsureText2
+                                      ? Icon(Icons.remove_red_eye)
+                                      : Icon(Icons.security_sharp),
+                                  onPressed: () {
+                                    setState(() {
+                                      widget.obsureText2 = !widget.obsureText2;
+                                    });
+                                  },
+                                ),
+                            contentPadding:
+                                  const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                                borderRadius: BorderRadius.circular(25.7),
+                            ),
+                            enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                                borderRadius: BorderRadius.circular(25.7),
+                            ),
+                          ),
+                                  // ignore: missing_return
+                                  validator: (value) {
+                                        if (widget.passwordController.text ==null){
+                                          return 'Password is needed before to confirm it';
+                                        }
+                                        else if (value == null || value.isEmpty ) {
+                                          return 'Password should is compulsary';
+                                        }else if(widget.passwordController.text != value){
+                                          return 'Password didnt match';
+                                        }
+                                        return null;
+                                      },
+                                  ),
+                              ),                
+                             
+                            ]),
+                          ),
+                           FlatButton(onPressed: (){Navigator.pushReplacement(context, CustomPageRoute(child: Loginpage()));}, child: Text('Aldready have an account?',style: TextStyle(color: Colors.black, decoration: TextDecoration.underline),)),
+                           ElevatedButton(
+                              style: ElevatedButton.styleFrom(primary: Colors.black),
+                              onPressed: (){
+                              if (_formkey.currentState.validate()) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Processing Data') , backgroundColor: Colors.green,),);
+                              submit();
+                                }
                               },
-                            )),
-                      validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Password should is compulsary';
-                            }
-                            return null;
-                          },
+                              child: Text(
+                                'Submit',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            )
+                          ]
                         ),
-                    TextFormField(
-                        controller: widget.confirmPasswordController,
-                        obscureText: widget.obsureText,
-                        decoration: InputDecoration(
-                            labelText: 'Confirm Password',
-                            suffixIcon: IconButton(
-                              icon: widget.obsureText
-                                  ? Icon(Icons.remove_red_eye)
-                                  : Icon(Icons.security_sharp),
-                              onPressed: () {
-                                setState(() {
-                                  widget.obsureText = !widget.obsureText;
-                                });
-                              },
-                              
-                            )),
-                      // ignore: missing_return
-                      validator: (value) {
-                            if (widget.passwordController.text ==null){
-                              return 'Password is needed before to confirm it';
-                            }
-                            else if (value == null || value.isEmpty ) {
-                              return 'Password should is compulsary';
-                            }else if(widget.passwordController.text != value){
-                              return 'Password didnt match';
-                            }
-                            return null;
-                          },
-                      ),                
-                   
-                  ]),
-                ),
-                 FlatButton(
-                    color: Theme.of(context).primaryColor,
-                    onPressed: (){
-                    if (_formkey.currentState.validate()) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Processing Data') , backgroundColor: Colors.green,),);
-                    submit();
-                      }
-                    },
-                    child: Text(
-                      'Submit',
-                      style: TextStyle(color: Colors.white),
+                      )),
                     ),
-                  )
-                ]
-              ),
-            ))
-          ]):
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                InternationalPhoneNumberInput(
-                  countries: ['IN'],
-                  onInputChanged: (PhoneNumber number) {
-                  setState(() {
-                    widget.phone = number;
-                  });
-                },
-                onInputValidated: (bool value) {
-                  print(value);
-                },
-                selectorConfig: SelectorConfig(
-                  selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+                  ],
+                )
+              ]):
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                   decoration: BoxDecoration(color: Colors.black.withOpacity(0.4)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Form(
+                      key: _formkey2,
+                      child: Column(
+                        children: [
+                          Text('Register', style: TextStyle(fontSize: 40, fontFamily: GoogleFonts.robotoMono().fontFamily,color: Colors.white)),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: InternationalPhoneNumberInput(
+                              countries: ['IN'],
+                              onInputChanged: (PhoneNumber number) {
+                              setState(() {
+                                widget.phone = number;
+                              });
+                            },
+                            validator: (value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Phone number is important';
+                                          }else if (RegExp(r"^(?:[+0]9)?[0-9]{10}$").hasMatch(value) == false){
+                                            return 'Phone pattern not satisfied';
+                                          }
+                                          
+                                          return null;
+                                        },
+                            
+                            selectorConfig: SelectorConfig(
+                              selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
+                            ),
+                            ignoreBlank: false,
+                            autoValidateMode: AutovalidateMode.disabled,
+                            selectorTextStyle: TextStyle(color: Colors.black),
+                            initialValue: widget.phone,
+                            textFieldController: widget.PhoneNumberController,
+                            formatInput: false,
+                            keyboardType:
+                                TextInputType.numberWithOptions(signed: true, decimal: true),
+                            inputBorder: OutlineInputBorder(),
+                            
+                            onSaved: (PhoneNumber number) {
+                              print('On Saved: $number');
+                            },),
+                          ),
+                          FlatButton(onPressed: (){Navigator.pushReplacement(context, CustomPageRoute(child: Loginpage()));}, child: Text('Aldready have an account? ',style: TextStyle(color: Colors.black, decoration: TextDecoration.underline),)),
+                          ElevatedButton(style: ElevatedButton.styleFrom(primary: Colors.black),onPressed: (){if (_formkey2.currentState.validate()) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Processing Data') , backgroundColor: Colors.green,),);
+                              receiveOtp(context);
+                                }
+                              }, child: Text('Receive Otp')),
+                        ],
+                    
+                      ),
+                    ),
+                  ),
                 ),
-                ignoreBlank: false,
-                autoValidateMode: AutovalidateMode.disabled,
-                selectorTextStyle: TextStyle(color: Colors.black),
-                initialValue: widget.phone,
-                textFieldController: widget.PhoneNumberController,
-                formatInput: false,
-                keyboardType:
-                    TextInputType.numberWithOptions(signed: true, decimal: true),
-                inputBorder: OutlineInputBorder(),
-                onSaved: (PhoneNumber number) {
-                  print('On Saved: $number');
-                },),
-                ElevatedButton(onPressed: () => receiveOtp(context), child: Text('Receive Otp')),
-              ],
+              )
 
             ),
-          )
-
+          ),
         ));
   }
 }

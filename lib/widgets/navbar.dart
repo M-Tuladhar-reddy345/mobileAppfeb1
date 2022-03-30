@@ -30,11 +30,11 @@ class Navbar extends StatelessWidget {
                 children: [
                   const DrawerHeader(
                       decoration: BoxDecoration(
-                        color: Colors.blue,
+                        color: Colors.white,
                       ),
                       child: Image(
-                          width: 200,
-                          height: 60,
+                          width: 800,
+                          height: 180,
                           image:
                               AssetImage('assets/images/RaithannaOLogo.png'))),
                   //  Image(
@@ -86,11 +86,11 @@ class Navbar extends StatelessWidget {
                 children: [
                   const DrawerHeader(
                       decoration: BoxDecoration(
-                        color: Colors.blue,
+                        color: Colors.white,
                       ),
                       child: Image(
-                          width: 200,
-                          height: 60,
+                          width: 800,
+                          height: 180,
                           image:
                               AssetImage('assets/images/RaithannaOLogo.png'))),
                   Padding(
@@ -207,7 +207,7 @@ class Navbar extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  home.Homepage()),
+                                  login.Loginpage()),
                         );
                       }
                     },
@@ -219,11 +219,11 @@ class Navbar extends StatelessWidget {
                 children: [
                   const DrawerHeader(
                       decoration: BoxDecoration(
-                        color: Colors.blue,
+                        color: Colors.white,
                       ),
                       child: Image(
-                          width: 200,
-                          height: 60,
+                          width: 800,
+                          height: 180,
                           image:
                               AssetImage('assets/images/RaithannaOLogo.png'))),
                   Padding(
@@ -326,11 +326,11 @@ class Navbar extends StatelessWidget {
                 children: [
                   const DrawerHeader(
                       decoration: BoxDecoration(
-                        color: Colors.blue,
+                        color: Colors.white,
                       ),
                       child: Image(
-                          width: 200,
-                          height: 60,
+                          width: 800,
+                          height: 180,
                           image:
                               AssetImage('assets/images/RaithannaOLogo.png'))),
                   Padding(
@@ -400,7 +400,7 @@ class Navbar extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  home.Homepage()),
+                                  login.Loginpage()),
                         );
                       }
                     },
@@ -412,11 +412,11 @@ class Navbar extends StatelessWidget {
                 children: [
                   const DrawerHeader(
                       decoration: BoxDecoration(
-                        color: Colors.blue,
+                        color: Colors.white,
                       ),
                       child: Image(
-                          width: 200,
-                          height: 60,
+                          width: 800,
+                          height: 180,
                           image:
                               AssetImage('assets/images/RaithannaOLogo.png'))),
                   //  Image(
@@ -463,7 +463,7 @@ class Navbar extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  home.Homepage()),
+                                  login.Loginpage()),
                         );
                       }
                     },
@@ -475,11 +475,11 @@ class Navbar extends StatelessWidget {
                 children: [
                   const DrawerHeader(
                       decoration: BoxDecoration(
-                        color: Colors.blue,
+                        color:Colors.white,
                       ),
                       child: Image(
-                          width: 200,
-                          height: 60,
+                          width: 800,
+                          height: 180,
                           image:
                               AssetImage('assets/images/RaithannaOLogo.png'))),
                   //  Image(
@@ -517,7 +517,7 @@ class Navbar extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  home.Homepage()),
+                                  login.Loginpage()),
                         );
                       }
                     },
