@@ -162,7 +162,7 @@ class _SignUppagestate extends State<SignUppage> {
         body: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-             image: AssetImage("assets/images/bg_7.jpg"),
+             image: AssetImage("assets/images/bg_8.jpg"),
               fit: BoxFit.cover,
             ),
           ), 
@@ -352,7 +352,7 @@ class _SignUppagestate extends State<SignUppage> {
                              
                             ]),
                           ),
-                           FlatButton(onPressed: (){Navigator.pushReplacement(context, CustomPageRoute(child: Loginpage()));}, child: Text('Aldready have an account?',style: TextStyle(color: Colors.black, decoration: TextDecoration.underline),)),
+                           FlatButton(onPressed: (){Navigator.pushReplacement(context, CustomPageRoute(child: Loginpage()));}, child: Text('Aldready have an account?',style: TextStyle(color: Color.fromARGB(255, 207, 206, 206), decoration: TextDecoration.underline),)),
                            ElevatedButton(
                               style: ElevatedButton.styleFrom(primary: Colors.black),
                               onPressed: (){
@@ -394,6 +394,8 @@ class _SignUppagestate extends State<SignUppage> {
                                 widget.phone = number;
                               });
                             },
+                            
+
                             validator: (value) {
                                           if (value == null || value.isEmpty) {
                                             return 'Phone number is important';
@@ -416,12 +418,24 @@ class _SignUppagestate extends State<SignUppage> {
                             keyboardType:
                                 TextInputType.numberWithOptions(signed: true, decimal: true),
                             inputBorder: OutlineInputBorder(),
-                            
+                            inputDecoration: InputDecoration(filled: true,
+                            fillColor: Colors.white,
+                            hintText: 'Phone Number',
+                            contentPadding:
+                                  const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                                borderRadius: BorderRadius.circular(25.7),
+                            ),
+                            enabledBorder: UnderlineInputBorder(
+                                borderSide: BorderSide(color: Colors.white),
+                                borderRadius: BorderRadius.circular(25.7),
+                            ),),
                             onSaved: (PhoneNumber number) {
                               print('On Saved: $number');
                             },),
                           ),
-                          FlatButton(onPressed: (){Navigator.pushReplacement(context, CustomPageRoute(child: Loginpage()));}, child: Text('Aldready have an account? ',style: TextStyle(color: Colors.black, decoration: TextDecoration.underline),)),
+                          FlatButton(onPressed: (){Navigator.pushReplacement(context, CustomPageRoute(child: Loginpage()));}, child: Text('Aldready have an account? ',style: TextStyle(color: Color.fromARGB(255, 207, 206, 206), decoration: TextDecoration.underline),)),
                           ElevatedButton(style: ElevatedButton.styleFrom(primary: Colors.black),onPressed: (){if (_formkey2.currentState.validate()) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(content: Text('Processing Data') , backgroundColor: Colors.green,),);

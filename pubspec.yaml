@@ -42,6 +42,7 @@ dependencies:
   dropdown_search: ^0.6.3
   intl_phone_number_input: ^0.7.0+2
   firebase_auth:
+  flutter_image_slideshow: ^0.1.2
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -94,5 +95,5 @@ flutter:
   assets:
     - assets/images/bg_11.jpeg
     - assets/images/bg_12.jpeg
-    - assets/images/bg_7.jpg
+    - assets/images/bg_8.jpg
     - assets/images/RaithannaOLogo.png

@@ -123,3 +123,12 @@ class order_product_indent {
     this.date = date;
   }
 }
+
+
+class Customerprod{
+  String product;
+  String UnitRate;
+  String Quantity;
+  String Amount;
+  Customerprod(this.product,this.UnitRate,this.Quantity,this.Amount);
+}
