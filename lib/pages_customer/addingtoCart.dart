@@ -16,6 +16,7 @@ import 'package:flutter_complete_guide/models.dart' as models;
 class AddingToCartpage extends StatefulWidget {
   String message;
   Map<String, models.Customerprod> cart = {};
+  int cartProds = 0;
   AddingToCartpage();
 
   @override
@@ -51,7 +52,7 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
       if (widget.cart[pcode] != null){
         setState(() {
           
-        
+        widget.cartProds = widget.cartProds+1;
         widget.cart[pcode].Quantity = (double.parse(widget.cart[pcode].Quantity) + 1).toString();
         widget.cart[pcode].Amount = (double.parse(widget.cart[pcode].Quantity) * double.parse(widget.cart[pcode].UnitRate)).toString();
       });
@@ -67,12 +68,76 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
     void subtract(pcode, unitrate){
       if (widget.cart[pcode].Quantity != '0.0'){
         setState(() {
-        
+        widget.cartProds = widget.cartProds-1;
         widget.cart[pcode].Quantity = (double.parse(widget.cart[pcode].Quantity) - 1).toString();
         widget.cart[pcode].Amount = (double.parse(widget.cart[pcode].Quantity) * double.parse(widget.cart[pcode].UnitRate)).toString();
       });
       }
      }
+    void showCart(BuildContext ctx){
+      showModalBottomSheet(context: context, builder: (ctx){
+        return Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Center(
+                      child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 400,
+                    child: SingleChildScrollView(
+                      child: Table(
+                        defaultColumnWidth: FixedColumnWidth(60.0),
+                        border: TableBorder.all(
+                            color: Colors.black,
+                            style: BorderStyle.solid,
+                            width: 2),
+                        children: [
+                              TableRow(children: [
+                                Column(children: [
+                                  Center(
+                                      child: Text('Prod',
+                                          style: TextStyle(fontSize: 15.0)))
+                                ]),
+                                Column(children: [
+                                  Center(
+                                      child: Text('Qty',
+                                          style: TextStyle(fontSize: 15.0)))
+                                ]),
+                                Column(children: [
+                                  Text('Amt', style: TextStyle(fontSize: 15.0))
+                                ]),
+                                
+                                // Column(children: [
+                                //   Text('Amt', style: TextStyle(fontSize: 20.0))
+                                // ]),
+                              ]),
+                            ] + widget.cart.values.map((e){
+                              if( e.Quantity != '0.0' ){
+                              return TableRow(children: [
+                                Column(children: [
+                                  Center(
+                                      child: Text(e.product,
+                                          style: TextStyle(fontSize: 15.0))
+                                )]),
+                                Column(children: [
+                                  Center(
+                                      child: Text(e.Quantity,
+                                          style: TextStyle(fontSize: 15.0)))
+                                ]),
+                                Column(children: [
+                                  Text(e.Amount, style: TextStyle(fontSize: 15.0))
+                                ]),
+                                
+                                // Column(children: [
+                                //   Text('Amt', style: TextStyle(fontSize: 20.0))
+                                // ]),
+                              ]);}
+                            }).toList()
+                            
+                      ),
+                    ),
+                  )),
+                );
+      });
+    }
   @override
   void initState() {
     // TODO: implement initState
@@ -84,7 +149,7 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
     return Scaffold(
         drawer: navbar.Navbar(),
         appBar: AppBar(
-          title: Text('Add to cart'),
+          title: Text('Order Now'),
         ),
         body: SingleChildScrollView(
           child: Column(children: [
@@ -133,10 +198,26 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
                  break;
                }
 
-             })
-  
+             }),
+             
           ]),
-        ));
+        ),
+        floatingActionButton: Stack(children:[ 
+          FloatingActionButton(onPressed: ()=> showCart(context), child: Icon(Icons.shopping_cart)),
+          Positioned(top: 3,right: 4,child: Container(
+            decoration:  new BoxDecoration(
+          color: Colors.white,
+          shape: BoxShape.circle,
+        ),
+            width: 20,
+            child: Center(child: Text(widget.cartProds.toString(),style: TextStyle(
+                        backgroundColor: Colors.white,
+               color: Colors.black,
+                                      fontSize: 11.0,
+                                      fontWeight: FontWeight.w500
+            ),),),
+          ))
+          ]));
   }
 }
 

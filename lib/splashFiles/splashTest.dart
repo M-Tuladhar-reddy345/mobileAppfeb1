@@ -38,7 +38,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin{
       body: Container(
         decoration:BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("images/bg_7.jpg"),
+            image: AssetImage("assets/images/bg_7.jpg"),
             fit: BoxFit.cover,
           ),
         ),
