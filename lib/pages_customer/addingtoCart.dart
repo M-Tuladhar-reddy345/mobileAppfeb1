@@ -17,7 +17,8 @@ class AddingToCartpage extends StatefulWidget {
   String message;
   Map<String, models.Customerprod> cart = {};
   int cartProds = 0;
-  AddingToCartpage();
+  String prodtype;  
+  StateSetter setModalState;
 
   @override
   State<AddingToCartpage> createState() => _AddingToCartpageState();
@@ -51,36 +52,33 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
   void add(pcode, unitrate){
       if (widget.cart[pcode] != null){
         setState(() {
-          
+         
         widget.cartProds = widget.cartProds+1;
         widget.cart[pcode].Quantity = (double.parse(widget.cart[pcode].Quantity) + 1).toString();
         widget.cart[pcode].Amount = (double.parse(widget.cart[pcode].Quantity) * double.parse(widget.cart[pcode].UnitRate)).toString();
       });
-      }else {
-        widget.cart[pcode] = models.Customerprod(
-          pcode,
-          unitrate,
-          1.toString(),
-          unitrate.toString()
-        ); 
+      
       }
      }
     void subtract(pcode, unitrate){
       if (widget.cart[pcode].Quantity != '0.0'){
         setState(() {
-        widget.cartProds = widget.cartProds-1;
+        
         widget.cart[pcode].Quantity = (double.parse(widget.cart[pcode].Quantity) - 1).toString();
+        widget.cartProds = widget.cartProds-1;
+        
         widget.cart[pcode].Amount = (double.parse(widget.cart[pcode].Quantity) * double.parse(widget.cart[pcode].UnitRate)).toString();
       });
       }
      }
-    void showCart(BuildContext ctx){
-      showModalBottomSheet(context: context, builder: (ctx){
-        return Padding(
+    Widget showCart(BuildContext ctx,StateSetter setModalState){
+      showModalBottomSheet(context: ctx, builder: (ctx){
+        return StatefulBuilder(builder: ((context, setState) {
+          return Padding(
                   padding: const EdgeInsets.all(5.0),
                   child: Center(
                       child: Container(
-                    width: MediaQuery.of(context).size.width,
+                    width: MediaQuery.of(ctx).size.width,
                     height: 400,
                     child: SingleChildScrollView(
                       child: Table(
@@ -110,20 +108,53 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
                                 // ]),
                               ]),
                             ] + widget.cart.values.map((e){
+                              print(e.product);
+                              print(widget.cart.length);
                               if( e.Quantity != '0.0' ){
+                                
                               return TableRow(children: [
                                 Column(children: [
                                   Center(
-                                      child: Text(e.product,
-                                          style: TextStyle(fontSize: 15.0))
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Container(height: 50,width: 50,color: Theme.of(context).primaryColorDark,child: Container(),),
+                                          ),
+                                          Text(e.product,
+                                            style: TextStyle(fontSize: 15.0)),
+
+                                        ])
                                 )]),
                                 Column(children: [
                                   Center(
-                                      child: Text(e.Quantity,
-                                          style: TextStyle(fontSize: 15.0)))
+                                      child: SizedBox(
+                                        width: 30,
+                                        child: Center(
+                                          child: Text(e.Quantity,
+                                            style: TextStyle(fontSize: 15.0)),
+                                        ),
+                                      ))
                                 ]),
                                 Column(children: [
-                                  Text(e.Amount, style: TextStyle(fontSize: 15.0))
+                                  Center(child: Text(e.Amount, style: TextStyle(fontSize: 15.0)))
+                                ]),
+                                
+                                // Column(children: [
+                                //   Text('Amt', style: TextStyle(fontSize: 20.0))
+                                // ]),
+                              ]);}else{  
+                              return TableRow(children: [
+                                Column(children: [
+                                  Center(
+                                      child: Container()
+                                )]),
+                                Column(children: [
+                                  Center(
+                                      child: Container())
+                                ]),
+                                Column(children: [
+                                  Center(child: Container())
                                 ]),
                                 
                                 // Column(children: [
@@ -136,6 +167,8 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
                     ),
                   )),
                 );
+        }));
+        
       });
     }
   @override
@@ -153,6 +186,7 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
         ),
         body: SingleChildScrollView(
           child: Column(children: [
+
              FutureBuilder(future: getProducts,builder: (context, snapshot) {
                
                switch (snapshot.connectionState){
@@ -170,6 +204,7 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
                    return Column(children: snapshot.data.map<Widget>((e){
                       widget.cart.putIfAbsent(e['pcode'], () => models.Customerprod(
                         e['pcode'].toString(),
+                        e['ptype'].toString(),
                         e['unitRate'].toString(),
                         0.0.toString(),
                         0.0.toString(),));
@@ -203,7 +238,7 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
           ]),
         ),
         floatingActionButton: Stack(children:[ 
-          FloatingActionButton(onPressed: ()=> showCart(context), child: Icon(Icons.shopping_cart)),
+          FloatingActionButton(onPressed: ()=> showCart(context,setState), child: Icon(Icons.shopping_cart)),
           Positioned(top: 3,right: 4,child: Container(
             decoration:  new BoxDecoration(
           color: Colors.white,

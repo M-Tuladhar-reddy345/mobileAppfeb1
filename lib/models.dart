@@ -127,8 +127,9 @@ class order_product_indent {
 
 class Customerprod{
   String product;
+  String ptype;
   String UnitRate;
   String Quantity;
   String Amount;
-  Customerprod(this.product,this.UnitRate,this.Quantity,this.Amount);
+  Customerprod(this.product,this.ptype,this.UnitRate,this.Quantity,this.Amount);
 }
