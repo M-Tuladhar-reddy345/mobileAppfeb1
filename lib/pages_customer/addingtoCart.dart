@@ -17,7 +17,8 @@ class AddingToCartpage extends StatefulWidget {
   String message;
   Map<String, models.Customerprod> cart = {};
   int cartProds = 0;
-  String prodtype;  
+  String prodtype = 'All';  
+  List prodtypes=['All'];
   StateSetter setModalState;
 
   @override
@@ -186,8 +187,35 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
         ),
         body: SingleChildScrollView(
           child: Column(children: [
+           Padding(
+             padding: const EdgeInsets.all(8.0),
+             child: DropdownButton(
+                                      isExpanded: true,
+                                      value: widget.prodtype,
 
-             FutureBuilder(future: getProducts,builder: (context, snapshot) {
+                                      // icon: const Icon(Icons.arrow_downward),
+                                      elevation: 16,
+                                      style: const TextStyle(
+                                          color: Colors.lightBlue),
+                                      underline: Container(
+                                        height: 2,
+                                        width: 300,
+                                        color: Colors.lightBlueAccent,
+                                      ),
+                                      onChanged: (String newValue) {
+                                        setState(() {
+                                          widget.prodtype = newValue;
+                                        });
+                                      },
+                                      items: widget.prodtypes
+                                          .map<DropdownMenuItem<String>>((v) {
+                                        return DropdownMenuItem<String>(
+                                            value: v,
+                                            child: Text(v.toString()));
+                                      }).toList(),
+                                    ),
+           ),
+            FutureBuilder(future: getProducts,builder: (context, snapshot) {
                
                switch (snapshot.connectionState){
                  case ConnectionState.active:
@@ -199,6 +227,7 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
                  if( snapshot.data == null){
                    return Text('Not working');
                  }else{
+                   
                     
                     
                    return Column(children: snapshot.data.map<Widget>((e){
@@ -208,23 +237,46 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
                         e['unitRate'].toString(),
                         0.0.toString(),
                         0.0.toString(),));
+                      if (widget.prodtypes.contains(e['ptype'])==false){
+                        widget.prodtypes.add(e['ptype']);
+                      }
                    
-                      
+                     if(widget.prodtype == 'All'){ 
                      return Card(child: Row(children: [
                        Padding(
                          padding: const EdgeInsets.all(8.0),
                          child: Container(height: 100,width: 100,color: Theme.of(context).primaryColorDark,child: Container(),),
                        ),
-                       Column(children: [Text(e['pname'], style: TextStyle(fontFamily: GoogleFonts.roboto().fontFamily, fontWeight: FontWeight.bold), ), Text(e['unitRate'].toString()),Row(children: [ElevatedButton(onPressed: ()=>subtract(e['pcode'], e['unitRate']), child: Text('-')),Padding(
+                       Column(children: [Text(e['pname'], style: TextStyle(fontFamily: GoogleFonts.roboto().fontFamily, fontWeight: FontWeight.bold), ), Text('Rs.'+e['unitRate'].toString()),Row(children: [ElevatedButton(onPressed: ()=>subtract(e['pcode'], e['unitRate']), child: Text('-')),Padding(
                          padding: const EdgeInsets.all(8.0),
                          child: Container(child: Center(child: Text(widget.cart[e['pcode']].Quantity.toString())), color: Colors.white, width: 50,),
                        ),ElevatedButton(onPressed: ()=>
                          add(e['pcode'], e['unitRate'])
                        , child: Text('+')) ],),Padding(
                          padding: const EdgeInsets.all(2.0),
-                         child: Row(children: [Text('Total: '),Container(child: Center(child: Text(widget.cart[e['pcode']].Amount.toString())), color: Colors.white, width: 100,), ]),
+                         child: Row(children: [Text('Total: Rs.'),Container(child: Center(child: Text(widget.cart[e['pcode']].Amount.toString())), color: Colors.white, width: 100,), ]),
+                       ),])
+                     ],),color: Theme.of(context).primaryColorLight,);}
+                     else if (widget.prodtype == e['ptype']){
+                       return Card(child: Row(children: [
+                       Padding(
+                         padding: const EdgeInsets.all(8.0),
+                         child: Container(height: 100,width: 100,color: Theme.of(context).primaryColorDark,child: Container(),),
+                       ),
+                       Column(children: [Text(e['pname'], style: TextStyle(fontFamily: GoogleFonts.roboto().fontFamily, fontWeight: FontWeight.bold), ), Text('Rs.'+e['unitRate'].toString()),Row(children: [ElevatedButton(onPressed: ()=>subtract(e['pcode'], e['unitRate']), child: Text('-')),Padding(
+                         padding: const EdgeInsets.all(8.0),
+                         child: Container(child: Center(child: Text(widget.cart[e['pcode']].Quantity.toString())), color: Colors.white, width: 50,),
+                       ),ElevatedButton(onPressed: ()=>
+                         add(e['pcode'], e['unitRate'])
+                       , child: Text('+')) ],),Padding(
+                         padding: const EdgeInsets.all(2.0),
+                         child: Row(children: [Text('Total: Rs.'),Container(child: Center(child: Text(widget.cart[e['pcode']].Amount.toString())), color: Colors.white, width: 100,), ]),
                        ),])
                      ],),color: Theme.of(context).primaryColorLight,);
+                     }else{
+                       return Container();
+                     }
+                   
                    }).toList());
                  }
                  break;
