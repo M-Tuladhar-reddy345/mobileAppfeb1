@@ -95,6 +95,13 @@ flutter:
   assets:
     - assets/images/bg_11.jpeg
     - assets/images/bg_12.jpeg
+    - assets/images/bg_13.jpg
+    - assets/images/bg_14.jpg
     - assets/images/bg_8.jpg
     - assets/images/bg_7.jpg
     - assets/images/RaithannaOLogo.png
+    - assets/images/prodtypes/CURD.png
+    - assets/images/prodtypes/GHEE.png
+    - assets/images/prodtypes/MILK.png
+    - assets/images/prodtypes/OTHERS.png
+    - assets/images/prodtypes/PANEER.png

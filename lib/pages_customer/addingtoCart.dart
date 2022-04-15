@@ -20,7 +20,7 @@ class AddingToCartpage extends StatefulWidget {
   String prodtype = 'All';  
   List prodtypes=['All'];
   StateSetter setModalState;
-
+  AddingToCartpage(String this.prodtype, List this.prodtypes);
   @override
   State<AddingToCartpage> createState() => _AddingToCartpageState();
 }
@@ -112,7 +112,7 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
                               print(e.product);
                               print(widget.cart.length);
                               if( e.Quantity != '0.0' ){
-                                
+                              var image = e.pImage;
                               return TableRow(children: [
                                 Column(children: [
                                   Center(
@@ -120,7 +120,7 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Container(height: 50,width: 50,color: Theme.of(context).primaryColorDark,child: Container(),),
+                                            child: Container(height: 50,width: 50,decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/prodtypes/$image'),fit:BoxFit.cover ))),
                                           ),
                                           Text(e.product,
                                             style: TextStyle(fontSize: 15.0)),
@@ -236,16 +236,18 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
                         e['ptype'].toString(),
                         e['unitRate'].toString(),
                         0.0.toString(),
-                        0.0.toString(),));
+                        0.0.toString(),
+                        e['pimage'].toString()));
                       if (widget.prodtypes.contains(e['ptype'])==false){
                         widget.prodtypes.add(e['ptype']);
                       }
+                      var image = e['pimage'];
                    
                      if(widget.prodtype == 'All'){ 
                      return Card(child: Row(children: [
                        Padding(
                          padding: const EdgeInsets.all(8.0),
-                         child: Container(height: 100,width: 100,color: Theme.of(context).primaryColorDark,child: Container(),),
+                         child:  Container(height: 100,width: 100,decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/prodtypes/$image'),fit:BoxFit.cover ))),
                        ),
                        Column(children: [Text(e['pname'], style: TextStyle(fontFamily: GoogleFonts.roboto().fontFamily, fontWeight: FontWeight.bold), ), Text('Rs.'+e['unitRate'].toString()),Row(children: [ElevatedButton(onPressed: ()=>subtract(e['pcode'], e['unitRate']), child: Text('-')),Padding(
                          padding: const EdgeInsets.all(8.0),
@@ -261,7 +263,7 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
                        return Card(child: Row(children: [
                        Padding(
                          padding: const EdgeInsets.all(8.0),
-                         child: Container(height: 100,width: 100,color: Theme.of(context).primaryColorDark,child: Container(),),
+                         child:  Container(height: 100,width: 100,decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/prodtypes/$image'),fit:BoxFit.cover ))),
                        ),
                        Column(children: [Text(e['pname'], style: TextStyle(fontFamily: GoogleFonts.roboto().fontFamily, fontWeight: FontWeight.bold), ), Text('Rs.'+e['unitRate'].toString()),Row(children: [ElevatedButton(onPressed: ()=>subtract(e['pcode'], e['unitRate']), child: Text('-')),Padding(
                          padding: const EdgeInsets.all(8.0),

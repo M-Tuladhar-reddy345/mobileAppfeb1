@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/main.dart';
 import 'package:flutter_complete_guide/pages_customer/addingtoCart.dart';
+import 'package:flutter_complete_guide/widgets/Pageroute.dart';
 import 'package:provider/provider.dart';
 import '../widgets/navbar.dart' as navbar;
 import '../widgets/form.dart' as form;
+import 'package:flutter_complete_guide/main.dart' as main;
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart' as provider;
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 
@@ -20,8 +24,40 @@ class Homepage extends StatefulWidget {
 class _HomepageState extends State<Homepage> {
   List homeImages = [
     'bg_11.jpeg',
-    'bg_12.jpeg'
+    'bg_12.jpeg',
+    'bg_13.jpg',
+    'bg_14.jpg',
   ];
+  Future getprodtypes;
+  get_produtypes() async {
+    final url = Uri.parse(main.url_start +
+        'mobileApp/getprodtypes/' +
+        main.storage.getItem('branch') +
+        '/');
+    final response = await http.get(url);
+    // print(url);
+
+
+    if (response.statusCode == 200) {
+      // print(response.body);
+      var data = json.decode(response.body) as Map;
+      
+
+      // List Products =
+      //     data['results'].map((json) => models.product.fromjson(json)).toList();
+      
+    
+         
+         
+      return data['prodtypes'];
+    }
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getprodtypes = get_produtypes();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,11 +82,46 @@ class _HomepageState extends State<Homepage> {
             return Image(image: AssetImage('assets/images/$e'));
           }).toList()
         ),
-        Center(child: ElevatedButton(onPressed: (){
-          Navigator.push(context, MaterialPageRoute(builder: (context)=> AddingToCartpage()));
-        }, child: Text('Place order')),)
-          ]),
-        ));
+        FutureBuilder(
+          future: getprodtypes,
+          // ignore: missing_return
+          builder: (context, snapshot) {
+             switch (snapshot.connectionState){
+                 case ConnectionState.active:
+                 return Container();
+                 break;
+                 case ConnectionState.waiting:
+                 return CircularProgressIndicator();
+                 case ConnectionState.done:
+                 if( snapshot.data == null){
+                   return Text('Some error in backend will catch up later');
+                 }else{
+                   return Wrap(children: snapshot.data.map<Widget>((e){
+                     var image = e['imgname'];
+                     return Padding(
+                       padding: const EdgeInsets.all(8.0),
+                       child: ElevatedButton(
+                         style: ElevatedButton.styleFrom(primary: Theme.of(context).primaryColorDark),
+                         onPressed: (){Navigator.push(context, CustomPageRoute(child: AddingToCartpage(e['ptype'],[e['ptype'],'All'])));},
+                         child: Column(children: [
+                           Padding(
+                           padding: const EdgeInsets.all(8.0),
+                           child: Container(height: 100,width: 100,decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/prodtypes/$image'),fit:BoxFit.cover ))),
+                         ),
+                         Text(e['pname'])
+                         ]),
+                       ),
+                     );
+                   }).toList());
+                 }
+                 break;
+               case ConnectionState.none:
+               return Container();
+                 // TODO: Handle this case.
+                 break;
+          }})
+                 
+          ])));
   }
 }
 

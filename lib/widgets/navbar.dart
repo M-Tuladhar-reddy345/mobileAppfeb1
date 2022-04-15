@@ -7,12 +7,13 @@ import 'package:flutter_complete_guide/pages_Operators/dailySalesEntry.dart';
 
 import 'package:flutter_complete_guide/pages_Operators/ExtractdailyIndent.dart';
 import 'package:flutter_complete_guide/pages_Operators/edit_dailySalesEntry.dart';
+import 'package:flutter_complete_guide/pages_customer/CustomerLogin.dart';
 import 'package:flutter_complete_guide/pages_customer/CustomerSignup.dart';
 import '../main.dart' as main;
 import '../pages_Operators/home.dart' as home;
 import '../pages_Operators/UpdatePayments.dart' as UpdatePayments;
-import '../pages_common/login.dart' as login;
-import '../pages_common/login.dart' as loginCustomer;
+import '../pages_Operators/login.dart' as login;
+import '../pages_Operators/login.dart' as loginCustomer;
 import 'package:http/http.dart' as http;
 
 class Navbar extends StatelessWidget {
@@ -512,12 +513,14 @@ class Navbar extends StatelessWidget {
                         main.storage.setItem('username', null);
 
                         main.storage.setItem('branch', null);
+                        main.storage.setItem('phone', null);
+                        main.storage.setItem('role', null);
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Logged out succesfully'),backgroundColor: Colors.green,));
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  login.Loginpage()),
+                                  CustomerLoginpage()),
                         );
                       }
                     },

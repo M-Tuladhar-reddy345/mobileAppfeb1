@@ -6,7 +6,7 @@ import '../widgets/Pageroute.dart';
 import 'package:provider/provider.dart';
 import '../models.dart' as models;
 import '../widgets/navbar.dart' as navbar;
-import '../pages_Operators/home.dart' as home;
+import 'home.dart' as home;
 import '../widgets/form.dart' as form;
 import 'package:provider/provider.dart' as provider;
 import 'package:http/http.dart' as http;
@@ -90,25 +90,23 @@ class _Loginpagestate extends State<Loginpage> {
         
         body: Container(
           decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/images/bg_8.jpg"),
-              fit: BoxFit.cover,
-            ),
+            
           ),
           child: Center(
             child: SingleChildScrollView(
-              child: Column(children: [
+              child: Column(children: 
+                [Text('Register', style: TextStyle(fontSize: 40, fontFamily: GoogleFonts.robotoMono().fontFamily,color: Colors.white)),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
                     
-                    decoration: BoxDecoration(color: Colors.black.withOpacity(0.4)),
+                    decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(30)),color: Theme.of(context).primaryColorDark.withOpacity(0.7)),
                       child: Padding(
                     padding: const EdgeInsets.all(0.8),
                     child: Column(
                       
                       children: [
-                      Text('Login', style: TextStyle(fontSize: 40, fontFamily: GoogleFonts.robotoMono().fontFamily,color: Colors.white)),
+                      
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: TextFormField(
@@ -200,14 +198,14 @@ class _Loginpagestate extends State<Loginpage> {
                       //         );
                       //     }),
                       ElevatedButton(
-                        style: ElevatedButton.styleFrom(primary: Colors.black),
+                        
                         onPressed: () => submit(),
                         child: Text(
                           'Login',
                           style: TextStyle(color: Colors.white, fontSize: 15),
                         ),
                       ),
-                      ElevatedButton(style: ElevatedButton.styleFrom(primary: Colors.black),onPressed: (){ 
+                      ElevatedButton(onPressed: (){ 
                                 Navigator.pushReplacement(context, CustomPageRoute(child: CustomerLoginpage()));
                               }, child: Text('Customer Login')),
                     ]),
