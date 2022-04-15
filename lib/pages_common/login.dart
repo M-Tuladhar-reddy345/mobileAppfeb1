@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/pages_customer/CustomerLogin.dart';
 import 'package:flutter_complete_guide/pages_customer/CustomerSignup.dart';
 import '../main.dart' as main;
 import '../widgets/Pageroute.dart';
@@ -205,7 +206,10 @@ class _Loginpagestate extends State<Loginpage> {
                           'Login',
                           style: TextStyle(color: Colors.white, fontSize: 15),
                         ),
-                      )
+                      ),
+                      ElevatedButton(style: ElevatedButton.styleFrom(primary: Colors.black),onPressed: (){ 
+                                Navigator.pushReplacement(context, CustomPageRoute(child: CustomerLoginpage()));
+                              }, child: Text('Customer Login')),
                     ]),
                   )),
                 )

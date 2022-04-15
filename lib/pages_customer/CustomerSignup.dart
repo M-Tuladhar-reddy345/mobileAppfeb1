@@ -94,19 +94,29 @@ class _SignUppagestate extends State<SignUppage> {
   String phoneNumber, verificationId;
   String otpbyuser;
   Future receiveOtp(BuildContext context) async{
-    var otp = Random().nextInt(999999)+ 100000;
-    print(otp);
-    otpDialogBox(context).then((value){
-      print('by user'+otpbyuser.toString());
+    var body = {
+      'phone': widget.phone.phoneNumber.toString(),
+      'type':'signup'
+    };
+    final url = Uri.parse(main.url_start + 'mobileApp/sendotp/');
+
+    final response = await http.post(url, body: body);
+    if (response.statusCode == 200){
+      var data = json.decode(response.body) as Map;
+      var otp = data['otp'];
       print(otp);
-      if (otp.toString() == otpbyuser){
-        print(widget.verifyed);
-      setState(() {
-        widget.verifyed = true;
+      otpDialogBox(context).then((value){
+        print('by user'+otpbyuser.toString());
+        if (otp.toString() == otpbyuser){
+          print(widget.verifyed);
+        setState(() {
+          widget.verifyed = true;
+        });
+      } else if (response.statusCode == 111){
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('User with this phone number is aldready there'),backgroundColor: Colors.red,));
+      }
       });
     }
-    });
-    
 
   }
   otpDialogBox(BuildContext context) {

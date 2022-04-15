@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_complete_guide/pages_Operators/home.dart';
 import 'package:flutter_complete_guide/pages_common/login.dart';
+import 'package:flutter_complete_guide/pages_customer/CustomerLogin.dart';
 import 'package:provider/provider.dart';
 import '../widgets/Pageroute.dart';
 
@@ -26,7 +27,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin{
     });
     await Future.delayed(Duration(seconds: 2));
     dispose();
-    Navigator.pushReplacement(context, CustomPageRoute(child: Loginpage()));
+    Navigator.pushReplacement(context, CustomPageRoute(child: CustomerLoginpage()));
   }
   
   @override
