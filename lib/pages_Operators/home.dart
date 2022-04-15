@@ -106,7 +106,7 @@ class _HomepageState extends State<Homepage> {
                          child: Column(children: [
                            Padding(
                            padding: const EdgeInsets.all(8.0),
-                           child: Container(height: 100,width: 100,decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/prodtypes/$image'),fit:BoxFit.cover ))),
+                           child: Container(height: 100,width: 100,decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/prodtypes/$image'),fit:BoxFit.fill ))),
                          ),
                          Text(e['pname'])
                          ]),

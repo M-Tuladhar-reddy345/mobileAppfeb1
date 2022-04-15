@@ -120,7 +120,7 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
-                                            child: Container(height: 50,width: 50,decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/prodtypes/$image'),fit:BoxFit.cover ))),
+                                            child: Container(height: 50,width: 50,decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/prodtypes/$image'),fit:BoxFit.fill ))),
                                           ),
                                           Text(e.product,
                                             style: TextStyle(fontSize: 15.0)),
@@ -247,7 +247,7 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
                      return Card(child: Row(children: [
                        Padding(
                          padding: const EdgeInsets.all(8.0),
-                         child:  Container(height: 100,width: 100,decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/prodtypes/$image'),fit:BoxFit.cover ))),
+                         child:  Container(height: 100,width: 100,decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/prodtypes/$image'),fit:BoxFit.fill ))),
                        ),
                        Column(children: [Text(e['pname'], style: TextStyle(fontFamily: GoogleFonts.roboto().fontFamily, fontWeight: FontWeight.bold), ), Text('Rs.'+e['unitRate'].toString()),Row(children: [ElevatedButton(onPressed: ()=>subtract(e['pcode'], e['unitRate']), child: Text('-')),Padding(
                          padding: const EdgeInsets.all(8.0),
@@ -263,7 +263,7 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
                        return Card(child: Row(children: [
                        Padding(
                          padding: const EdgeInsets.all(8.0),
-                         child:  Container(height: 100,width: 100,decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/prodtypes/$image'),fit:BoxFit.cover ))),
+                         child:  Container(height: 100,width: 100,decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/prodtypes/$image'),fit:BoxFit.fill ))),
                        ),
                        Column(children: [Text(e['pname'], style: TextStyle(fontFamily: GoogleFonts.roboto().fontFamily, fontWeight: FontWeight.bold), ), Text('Rs.'+e['unitRate'].toString()),Row(children: [ElevatedButton(onPressed: ()=>subtract(e['pcode'], e['unitRate']), child: Text('-')),Padding(
                          padding: const EdgeInsets.all(8.0),
