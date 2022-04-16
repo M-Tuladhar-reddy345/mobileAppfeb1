@@ -40,7 +40,42 @@ class CustomerLoginpage extends StatefulWidget {
 class _SignUppagestate extends State<CustomerLoginpage> {
   final _formkey = GlobalKey<FormState>();
   final _formkey2 = GlobalKey<FormState>();
-  submit() async {  
+  submit() async {
+    final body = {
+      'phone': widget.phone.phoneNumber.toString(),
+      'password': widget.passwordController.text,
+      'branch': widget.branch,
+    };
+    print(body);
+    final url = Uri.parse(main.url_start + 'mobileApp/Customerrlogin/');
+
+    final response = await http.post(url, body: body);
+
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body) as Map;
+      if (data['message'] == 'Success') {
+        print(data);
+        main.storage.setItem('username', data['name']);
+        main.storage.setItem('phone', data['phone']);
+        // print(main.storage.getItem('username'));
+        main.storage.setItem('branch', data['branch']);
+        main.storage.setItem('role', data['role']);
+        // print(main.storage.getItem('branch'));
+        ScaffoldMessenger.of(context).showSnackBar(
+                     SnackBar(content: Text(data['message']), backgroundColor: Colors.green,));
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => home.Homepage()),
+        );
+      } else {
+        print(data);
+        ScaffoldMessenger.of(context).showSnackBar(
+                     SnackBar(content: Text(data['message']),backgroundColor: Colors.red,));
+      }
+    }
+  }
+  submit2() async {  
     print(widget.phone);
     final body = {
       'full_name': widget.NameController.text,
@@ -249,16 +284,54 @@ class _SignUppagestate extends State<CustomerLoginpage> {
                                 print('On Saved: $number');
                               },),
                             ),
+                            Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextField(
+                          
+                            controller: widget.passwordController,
+                            obscureText: widget.obsureText,
+                            decoration: InputDecoration(border: OutlineInputBorder(),filled: true,
+                            fillColor: Colors.white,
+                            contentPadding:
+                                const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                              borderRadius: BorderRadius.circular(25.7),
+                            ),
+                            enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                              borderRadius: BorderRadius.circular(25.7),
+                            ),
+                                hintText: 'Password',
+                                suffixIcon: IconButton(
+                                  icon: widget.obsureText
+                                      ? Icon(Icons.remove_red_eye)
+                                      : Icon(Icons.security_sharp),
+                                  onPressed: () {
+                                    setState(() {
+                                      widget.obsureText = !widget.obsureText;
+                                    });
+                                  },
+                                ))),
+                      ),
                             FlatButton(onPressed: (){Navigator.pushReplacement(context, CustomPageRoute(child: SignUppage()));}, child: Text('Dont have a account Click here to create one ',style: TextStyle(color: Color.fromARGB(255, 207, 206, 206), decoration: TextDecoration.underline),)),
-                            ElevatedButton(onPressed: (){if (_formkey2.currentState.validate()) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Processing Data') , backgroundColor: Colors.green,),);
-                                receiveOtp(context);
-                                  }
-                                }, child: Text('Receive Otp')),
+                            // ElevatedButton(onPressed: (){if (_formkey2.currentState.validate()) {
+                            //       ScaffoldMessenger.of(context).showSnackBar(
+                            //     const SnackBar(content: Text('Processing Data') , backgroundColor: Colors.green,),);
+                            //     receiveOtp(context);
+                            //       }
+                            //     }, child: Text('Receive Otp')),
+                            ElevatedButton(
+                        
+                        onPressed: () => submit(),
+                        child: Text(
+                          'Login',
+                          style: TextStyle(color: Colors.white, fontSize: 15),
+                        ),
+                      ),
                             ElevatedButton(onPressed: (){ 
                                   Navigator.pushReplacement(context, CustomPageRoute(child: Loginpage()));
-                                }, child: Text('User Login')),
+                                }, child: Text('Staff Login')),
                           ],
                       
                         ),

@@ -102,7 +102,7 @@ class _HomepageState extends State<Homepage> {
                        padding: const EdgeInsets.all(8.0),
                        child: ElevatedButton(
                          style: ElevatedButton.styleFrom(primary: Theme.of(context).primaryColorDark),
-                         onPressed: (){Navigator.push(context, CustomPageRoute(child: AddingToCartpage(e['ptype'],[e['ptype'],'All'])));},
+                         onPressed: (){Navigator.push(context, CustomPageRoute(child: AddingToCartpage(e['ptype'],['All',e['ptype']])));},
                          child: Column(children: [
                            Padding(
                            padding: const EdgeInsets.all(8.0),
