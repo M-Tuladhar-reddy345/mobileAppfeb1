@@ -17,6 +17,7 @@ class AddingToCartpage extends StatefulWidget {
   String message;
   Map<String, models.Customerprod> cart = {};
   int cartProds = 0;
+  double ttlamt = 0;
   String prodtype = 'All';  
   List prodtypes=['All'];
   StateSetter setModalState;
@@ -54,9 +55,16 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
       if (widget.cart[pcode] != null){
         setState(() {
          
-        widget.cartProds = widget.cartProds+1;
+        
         widget.cart[pcode].Quantity = (double.parse(widget.cart[pcode].Quantity) + 1).toString();
+        if (widget.cart[pcode].Quantity == '1.0'){
+          widget.cartProds = widget.cartProds+1;
+        }
         widget.cart[pcode].Amount = (double.parse(widget.cart[pcode].Quantity) * double.parse(widget.cart[pcode].UnitRate)).toString();
+        widget.ttlamt = widget.ttlamt + (double.parse(widget.cart[pcode].UnitRate));
+        main.storage.setItem('cart', widget.cart);
+         main.storage.setItem('ttl', widget.ttlamt.toString());
+         main.storage.setItem('products', widget.cartProds.toString());
       });
       
       }
@@ -66,9 +74,15 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
         setState(() {
         
         widget.cart[pcode].Quantity = (double.parse(widget.cart[pcode].Quantity) - 1).toString();
-        widget.cartProds = widget.cartProds-1;
+        if (widget.cart[pcode].Quantity == '0.0'){
+          widget.cartProds = widget.cartProds-1;
+        }
         
         widget.cart[pcode].Amount = (double.parse(widget.cart[pcode].Quantity) * double.parse(widget.cart[pcode].UnitRate)).toString();
+        widget.ttlamt = widget.ttlamt - (double.parse(widget.cart[pcode].UnitRate));
+        main.storage.setItem('cart', widget.cart);
+        main.storage.setItem('ttl', widget.ttlamt.toString());
+        main.storage.setItem('products', widget.cartProds.toString());
       });
       }
      }
@@ -138,7 +152,10 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
                                       ))
                                 ]),
                                 Column(children: [
-                                  Center(child: Text(e.Amount, style: TextStyle(fontSize: 15.0)))
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Align(alignment: Alignment.centerRight,child: Text(e.Amount, style: TextStyle(fontSize: 15.0))),
+                                  )
                                 ]),
                                 
                                 // Column(children: [
@@ -162,7 +179,30 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
                                 //   Text('Amt', style: TextStyle(fontSize: 20.0))
                                 // ]),
                               ]);}
-                            }).toList()
+                            }).toList()+[
+                              TableRow(children: [
+                                Column(children: [
+                                  Center(
+                                      child: Text('Total',
+                                          style: TextStyle(fontSize: 15.0)))
+                                ]),
+                                Column(children: [
+                                  Center(
+                                      child: Text('',
+                                          style: TextStyle(fontSize: 15.0)))
+                                ]),
+                                Column(children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Align(alignment: Alignment.centerRight,child: Text(widget.ttlamt.toString(), style: TextStyle(fontSize: 15.0))),
+                                  )
+                                ]),
+                                
+                                // Column(children: [
+                                //   Text('Amt', style: TextStyle(fontSize: 20.0))
+                                // ]),
+                              ]),
+                            ]
                             
                       ),
                     ),
@@ -180,10 +220,16 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
   }
   @override
   Widget build(BuildContext context) {
+    widget.cart = main.storage.getItem('cart');
+    widget.cartProds = int.parse(main.storage.getItem('products'));
+    widget.ttlamt = double.parse(main.storage.getItem('ttl'));
     return Scaffold(
         drawer: navbar.Navbar(),
         appBar: AppBar(
-          title: Text('Order Now'),
+          title: Text('Add products to cart'),
+          actions: [
+            
+          ],
         ),
         body: SingleChildScrollView(
           child: Column(children: [
@@ -237,7 +283,8 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
                         e['unitRate'].toString(),
                         0.0.toString(),
                         0.0.toString(),
-                        e['pimage'].toString()));
+                        e['pimage'].toString(),
+                        e['pname'].toString()),);
                       if (widget.prodtypes.contains(e['ptype'])==false){
                         widget.prodtypes.add(e['ptype']);
                       }
@@ -249,7 +296,7 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
                          padding: const EdgeInsets.all(8.0),
                          child:  Container(height: 100,width: 100,decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/prodtypes/$image'),fit:BoxFit.fill ))),
                        ),
-                       Column(children: [Text(e['pname'], style: TextStyle(fontFamily: GoogleFonts.roboto().fontFamily, fontWeight: FontWeight.bold), ), Text('Rs.'+e['unitRate'].toString()),Row(children: [ElevatedButton(onPressed: ()=>subtract(e['pcode'], e['unitRate']), child: Text('-')),Padding(
+                       Column(children: [Text(e['pname'], style: TextStyle( fontWeight: FontWeight.bold), ), Text('Rs.'+e['unitRate'].toString()),Row(children: [ElevatedButton(onPressed: ()=>subtract(e['pcode'], e['unitRate']), child: Text('-')),Padding(
                          padding: const EdgeInsets.all(8.0),
                          child: Container(child: Center(child: Text(widget.cart[e['pcode']].Quantity.toString())), color: Colors.white, width: 50,),
                        ),ElevatedButton(onPressed: ()=>
@@ -292,21 +339,24 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
           ]),
         ),
         floatingActionButton: Stack(children:[ 
-          FloatingActionButton(onPressed: ()=> showCart(context,setState), child: Icon(Icons.shopping_cart)),
-          Positioned(top: 3,right: 4,child: Container(
-            decoration:  new BoxDecoration(
-          color: Colors.white,
-          shape: BoxShape.circle,
-        ),
-            width: 20,
-            child: Center(child: Text(widget.cartProds.toString(),style: TextStyle(
-                        backgroundColor: Colors.white,
-               color: Colors.black,
-                                      fontSize: 11.0,
-                                      fontWeight: FontWeight.w500
-            ),),),
-          ))
-          ]));
+        //   Container(
+        //   child: Text('Total: '+ widget.ttlamt.toString()),
+        // ),
+        FloatingActionButton(onPressed: ()=> showCart(context,setState), child: Icon(Icons.shopping_cart)),
+        Positioned(top: 3,right: 4,child: Container(
+          decoration:  new BoxDecoration(
+        color: Colors.white,
+        shape: BoxShape.circle,
+          ),
+          width: 20,
+          child: Center(child: Text(widget.cartProds.toString(),style: TextStyle(
+                      backgroundColor: Colors.white,
+             color: Colors.black,
+                                    fontSize: 11.0,
+                                    fontWeight: FontWeight.w500
+          ),),),
+        ))
+        ]));
   }
 }
 

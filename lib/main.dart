@@ -65,10 +65,13 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
     if (state == AppLifecycleState.detached) {
       print('detached');
-      storage.clear();
+      if  (storage.getItem('role') != 'Customer'){
+      storage.clear();}
+      
     } else if (state == AppLifecycleState.inactive) {
       print('inactive');
-      startTimer();
+      if  (storage.getItem('role') != 'Customer'){
+      startTimer();}
     } else if (state == AppLifecycleState.paused) {
       print('paused');
     } else if (state == AppLifecycleState.resumed) {
@@ -96,10 +99,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       title: 'Raithanna Dairy', 
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        fontFamily: GoogleFonts.openSans().fontFamily,
+        fontFamily: GoogleFonts.robotoMono().fontFamily,
         appBarTheme: AppBarTheme(textTheme: ThemeData.light().textTheme.copyWith(
           titleLarge: TextStyle(
-            fontFamily: GoogleFonts.quicksand().fontFamily,
+            fontFamily: GoogleFonts.robotoMono().fontFamily,
             fontSize: 30,
             fontWeight: FontWeight.bold
           )

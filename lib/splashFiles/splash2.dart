@@ -5,6 +5,7 @@ import 'package:flutter_complete_guide/pages_Operators/login.dart';
 import 'package:flutter_complete_guide/pages_customer/CustomerLogin.dart';
 import 'package:provider/provider.dart';
 import '../widgets/Pageroute.dart';
+import 'package:flutter_complete_guide/main.dart' as main;
 
 class Splash2 extends StatefulWidget {
   
@@ -27,7 +28,12 @@ class _Splash2State extends State<Splash2> with TickerProviderStateMixin{
     });
     await Future.delayed(Duration(seconds: 2));
     dispose();
-    Navigator.pushReplacement(context, CustomPageRoute(child: CustomerLoginpage()));
+    if (main.storage.getItem('username') == null){
+      Navigator.pushReplacement(context, CustomPageRoute(child: CustomerLoginpage()));
+    }else{
+      Navigator.pushReplacement(context, CustomPageRoute(child: Homepage()));
+    }
+    
   }
   
   @override

@@ -60,6 +60,9 @@ class _SignUppagestate extends State<CustomerLoginpage> {
         // print(main.storage.getItem('username'));
         main.storage.setItem('branch', data['branch']);
         main.storage.setItem('role', data['role']);
+        main.storage.setItem('ttl', '0.0');
+        main.storage.setItem('products', '0');
+        main.storage.setItem('cart', <String, models.Customerprod>{});
         // print(main.storage.getItem('branch'));
         ScaffoldMessenger.of(context).showSnackBar(
                      SnackBar(content: Text(data['message']), backgroundColor: Colors.green,));

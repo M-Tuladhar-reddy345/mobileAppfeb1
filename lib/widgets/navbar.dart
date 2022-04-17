@@ -62,7 +62,7 @@ class Navbar extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => login.Loginpage()),
+                            builder: (context) => CustomerLoginpage()),
                       );
                     },
                   ),
@@ -208,7 +208,7 @@ class Navbar extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  login.Loginpage()),
+                                  CustomerLoginpage()),
                         );
                       }
                     },
@@ -401,7 +401,7 @@ class Navbar extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  login.Loginpage()),
+                                  CustomerLoginpage()),
                         );
                       }
                     },
@@ -464,7 +464,7 @@ class Navbar extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  login.Loginpage()),
+                                  CustomerLoginpage()),
                         );
                       }
                     },

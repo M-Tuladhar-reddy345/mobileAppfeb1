@@ -132,5 +132,6 @@ class Customerprod{
   String Quantity;
   String Amount;
   String pImage;
-  Customerprod(this.product,this.ptype,this.UnitRate,this.Quantity,this.Amount, this.pImage);
+  String pname;
+  Customerprod(this.product,this.ptype,this.UnitRate,this.Quantity,this.Amount, this.pImage,this.pname);
 }

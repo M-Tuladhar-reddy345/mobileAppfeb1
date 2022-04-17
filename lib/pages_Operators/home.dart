@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/main.dart';
 import 'package:flutter_complete_guide/pages_customer/addingtoCart.dart';
+import 'package:flutter_complete_guide/pages_customer/cart.dart';
 import 'package:flutter_complete_guide/widgets/Pageroute.dart';
 import 'package:provider/provider.dart';
 import '../widgets/navbar.dart' as navbar;
@@ -82,6 +83,25 @@ class _HomepageState extends State<Homepage> {
             return Image(image: AssetImage('assets/images/$e'));
           }).toList()
         ),
+        Padding(
+          padding: const EdgeInsets.only(left: 30, right: 30),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(primary: Colors.white),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: ((context) => Cartpage())));
+            },
+            child: Row(children: [
+              Icon(Icons.shopping_cart, size: 50,color: Theme.of(context).primaryColor,),
+              Column(
+                children: [
+                  Text('Products: '+ main.storage.getItem('products').toString(), style: TextStyle(fontWeight: FontWeight.w100, fontSize: 20,color: Colors.black))
+                  ,Text('Total Amt: '+ main.storage.getItem('ttl').toString(), style: TextStyle(fontWeight: FontWeight.w100, color: Colors.grey),)
+                ],
+              )
+            ]),
+            
+          ),
+        ),
         FutureBuilder(
           future: getprodtypes,
           // ignore: missing_return
@@ -101,7 +121,7 @@ class _HomepageState extends State<Homepage> {
                      return Padding(
                        padding: const EdgeInsets.all(8.0),
                        child: ElevatedButton(
-                         style: ElevatedButton.styleFrom(primary: Theme.of(context).primaryColorDark),
+                         style: ElevatedButton.styleFrom(primary: Colors.lightBlueAccent),
                          onPressed: (){Navigator.push(context, CustomPageRoute(child: AddingToCartpage(e['ptype'],['All',e['ptype']])));},
                          child: Column(children: [
                            Padding(
