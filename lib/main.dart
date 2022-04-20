@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/models.dart';
 import 'package:provider/provider.dart' as provider;
 import './pages_Operators/home.dart' as home;
 import 'package:localstorage/localstorage.dart' as localstorage;
@@ -12,6 +13,8 @@ import 'splashFiles/splashTest.dart';
 
 final localstorage.LocalStorage storage =
     localstorage.LocalStorage('RaithannaDairy_local');
+
+
 
 // final String url_start = 'http://www.jacknjill.solutions/';
 // 
@@ -38,7 +41,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    
+    
     }
+
   void startTimer(){
     timer = Timer.periodic(Duration(seconds: 1), (t) {
       if (seconds  == 360){
@@ -66,6 +72,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     if (state == AppLifecycleState.detached) {
       print('detached');
       if  (storage.getItem('role') != 'Customer'){
+        print('delete');
       storage.clear();}
       
     } else if (state == AppLifecycleState.inactive) {
@@ -89,6 +96,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     // TODO: implement dispose
     super.dispose();
     WidgetsBinding.instance.removeObserver(this);
+
   }
 
   // This widget is the root of your application.

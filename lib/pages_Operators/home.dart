@@ -58,6 +58,8 @@ class _HomepageState extends State<Homepage> {
     // TODO: implement initState
     super.initState();
     getprodtypes = get_produtypes();
+    print(storage.getItem('ttl'));
+    print(storage.getItem('username'));
   }
   @override
   Widget build(BuildContext context) {

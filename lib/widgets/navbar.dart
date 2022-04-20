@@ -9,6 +9,7 @@ import 'package:flutter_complete_guide/pages_Operators/ExtractdailyIndent.dart';
 import 'package:flutter_complete_guide/pages_Operators/edit_dailySalesEntry.dart';
 import 'package:flutter_complete_guide/pages_customer/CustomerLogin.dart';
 import 'package:flutter_complete_guide/pages_customer/CustomerSignup.dart';
+import 'package:flutter_complete_guide/pages_customer/cart.dart';
 import '../main.dart' as main;
 import '../pages_Operators/home.dart' as home;
 import '../pages_Operators/UpdatePayments.dart' as UpdatePayments;
@@ -442,6 +443,18 @@ class Navbar extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) => home.Homepage()),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('Cart'),
+                    onTap: () {
+                      // Update the state of the app.
+                      // ...
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Cartpage()),
                       );
                     },
                   ),
