@@ -1,5 +1,6 @@
 import 'dart:async';
-
+import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/models.dart';
 import 'package:provider/provider.dart' as provider;
@@ -9,7 +10,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'splashFiles/splashTest.dart';
-
+import 'package:http/http.dart' as http;
 
 final localstorage.LocalStorage storage =
     localstorage.LocalStorage('RaithannaDairy_local');
@@ -41,6 +42,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    print('45');
+    print(storage.getItem('username'));
     
     
     }
@@ -50,6 +53,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       if (seconds  == 360){
           seconds  = 0;
         stoptime();
+        submit();
         storage.clear();
       }else{
         
@@ -64,6 +68,59 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Logged out expired'),backgroundColor: Colors.red,));
     navigatorKey.currentState.push(MaterialPageRoute(builder: (_)=> home.Homepage()));
   }
+  submit() async {
+    final body = {
+      'phone':storage.getItem('phone'),
+      'ttlAmt': storage.getItem('ttl'),
+      'cartProds': storage.getItem('products'),
+      'products':storage.getItem('cart').map((e){
+        return {'pcode': e.product, 'quantity': e.Quantity};
+      }).toList()
+    };
+    final url = Uri.parse(url_start +
+        'mobileApp/Updatecart/' );
+    await http.post(url,
+        headers: {"Content-Type": "application/json"},
+        encoding: Encoding.getByName("utf-8"),
+        body: json.encode(body));
+  }
+  getCart() async{
+    final body = {
+      'phone': storage.getItem('phone')
+    };
+    final url = Uri.parse(url_start +
+        'mobileApp/getCart/' );
+    final response = await http.post(url, body: body);
+    if (response.statusCode == 200){
+      final data = json.decode(response.body) as Map;
+      print(data);
+      Map<String,Customerprod> cart = {};
+      
+      
+      
+      if (data['products'] == ''){
+      storage.setItem('ttl', data['ttl']);
+      storage.setItem('products', data['cartprods']);
+      storage.setItem('cart',  <String,Customerprod> {} );}else{
+        List products = data['products'] as List;
+       for (var e in products){
+        print(e);
+        cart.putIfAbsent(e['pcode'], () => Customerprod(
+                        e['pcode'].toString(),
+                        e['ptype'].toString(),
+                        e['unitRate'].toString(),
+                        e['quantity'].toString(),
+                        e['amount'].toString(),
+                        e['pimage'].toString(),
+                        e['pname'].toString()),);
+      }
+      print("@89");
+      print(cart);
+ storage.setItem('ttl', data['ttl']);
+      storage.setItem('products', data['cartprods']);
+      storage.setItem('cart',  cart);
+      }}
+  }
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     // TODO: implement didChangeAppLifecycleState
@@ -72,13 +129,15 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     if (state == AppLifecycleState.detached) {
       print('detached');
       if  (storage.getItem('role') != 'Customer'){
-        print('delete');
-      storage.clear();}
-      
+        submit();
+      }
+      storage.clear();      
     } else if (state == AppLifecycleState.inactive) {
       print('inactive');
       if  (storage.getItem('role') != 'Customer'){
       startTimer();}
+        
+      
     } else if (state == AppLifecycleState.paused) {
       print('paused');
     } else if (state == AppLifecycleState.resumed) {
@@ -96,12 +155,17 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     // TODO: implement dispose
     super.dispose();
     WidgetsBinding.instance.removeObserver(this);
-
+    
   }
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    print(storage.getItem('phone'));
+    if (storage.getItem('phone')!=null){
+      print('168');
+      getCart();
+    }
     contextt = context;
     return MaterialApp(
       title: 'Raithanna Dairy', 

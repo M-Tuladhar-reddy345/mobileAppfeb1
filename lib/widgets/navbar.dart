@@ -16,6 +16,7 @@ import '../pages_Operators/UpdatePayments.dart' as UpdatePayments;
 import '../pages_Operators/login.dart' as login;
 import '../pages_Operators/login.dart' as loginCustomer;
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Navbar extends StatelessWidget {
   @override
@@ -463,8 +464,22 @@ class Navbar extends StatelessWidget {
                     onTap: () async {
                       // Update the state of the app.
                       // ...
-                      final url =
-                          Uri.parse(main.url_start + 'mobileApp/logout/');
+                      List products = main.storage.getItem('cart').values.map(( e){
+                        return {'pcode': e.product, 'quantity': e.Quantity};
+                      }).toList();
+                      final body = {
+                        'phone':main.storage.getItem('phone'),
+                      'ttlAmt': main.storage.getItem('ttl'),
+                      'cartProds': main.storage.getItem('products'),
+                      'products':products
+                    };
+                    var url = Uri.parse(main.url_start +
+                        'mobileApp/Updatecart/' );
+                    await http.post(url,
+                        headers: {"Content-Type": "application/json"},
+                        encoding: Encoding.getByName("utf-8"),
+                        body: json.encode(body));
+                      url =    Uri.parse(main.url_start + 'mobileApp/logout/');
                       final response = await http.get(url);
                       //  print(response.statusCode);
 

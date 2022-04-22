@@ -223,7 +223,7 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
   }
   @override
   Widget build(BuildContext context) {
-    widget.cart = main.storage.getItem('cart') as Map<String, models.Customerprod>;
+    widget.cart = main.storage.getItem('cart') ;
     widget.cartProds = int.parse(main.storage.getItem('products'));
     widget.ttlamt = double.parse(main.storage.getItem('ttl'));
     return Scaffold(

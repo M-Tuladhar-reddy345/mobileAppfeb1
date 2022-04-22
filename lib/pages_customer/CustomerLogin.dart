@@ -8,7 +8,7 @@ import 'package:flutter_complete_guide/widgets/Pageroute.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:provider/provider.dart';
-import '../models.dart' as models;
+import '../models.dart' ;
 import '../widgets/navbar.dart' as navbar;
 import '../pages_Operators/home.dart' as home;
 import '../widgets/form.dart' as form;
@@ -60,9 +60,42 @@ class _SignUppagestate extends State<CustomerLoginpage> {
         // print(main.storage.getItem('username'));
         main.storage.setItem('branch', data['branch']);
         main.storage.setItem('role', data['role']);
-        main.storage.setItem('ttl', '0.0');
-        main.storage.setItem('products', '0');
-        main.storage.setItem('cart', <String, models.Customerprod>{});
+        final body = {
+      'phone': main.storage.getItem('phone')
+    };
+    final url = Uri.parse(main.url_start +
+        'mobileApp/getCart/' );
+    final response = await http.post(url, body: body);
+    if (response.statusCode == 200){
+      final data = json.decode(response.body) as Map;
+      print(data);
+      Map<String,Customerprod> cart = {};
+      
+      
+      
+      if (data['products'] == ''){
+      main.storage.setItem('ttl', data['ttl']);
+      main.storage.setItem('products', data['cartprods']);
+      main.storage.setItem('cart',  <String,Customerprod> {} );}else{
+        List products = data['products'] as List;
+       for (var e in products){
+        print(e);
+        cart.putIfAbsent(e['pcode'], () => Customerprod(
+                        e['pcode'].toString(),
+                        e['ptype'].toString(),
+                        e['unitRate'].toString(),
+                        e['quantity'].toString(),
+                        e['amount'].toString(),
+                        e['pimage'].toString(),
+                        e['pname'].toString()),);
+      }
+      print("@89");
+      print(cart);
+ main.storage.setItem('ttl', data['ttl']);
+      main.storage.setItem('products', data['cartprods']);
+      main.storage.setItem('cart',  cart);
+      }
+    }
         // print(main.storage.getItem('branch'));
         ScaffoldMessenger.of(context).showSnackBar(
                      SnackBar(content: Text(data['message']), backgroundColor: Colors.green,));
@@ -124,7 +157,7 @@ class _SignUppagestate extends State<CustomerLoginpage> {
       //  print(data['results']);
 
       List Branches = data['results']
-          .map<models.Branch>((json) => models.Branch.fromjson(json))
+          .map<Branch>((json) => Branch.fromjson(json))
           .toList();
 
       return Branches;
