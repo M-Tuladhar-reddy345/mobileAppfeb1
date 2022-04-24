@@ -60,7 +60,7 @@ class _SignUppagestate extends State<SignUppage> {
 
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('SuccessFully done'),backgroundColor: Colors.green,));
         // print(main.storage.getItem('branch'));
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
               builder: (context) => CustomerLoginpage()),

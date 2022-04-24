@@ -94,12 +94,13 @@ class _SignUppagestate extends State<CustomerLoginpage> {
  main.storage.setItem('ttl', data['ttl']);
       main.storage.setItem('products', data['cartprods']);
       main.storage.setItem('cart',  cart);
+      main.storage.setItem('role',  'Customer');
       }
     }
         // print(main.storage.getItem('branch'));
         ScaffoldMessenger.of(context).showSnackBar(
                      SnackBar(content: Text(data['message']), backgroundColor: Colors.green,));
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
               builder: (context) => home.Homepage()),
@@ -133,7 +134,7 @@ class _SignUppagestate extends State<CustomerLoginpage> {
 
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('SuccessFully done'),backgroundColor: Colors.green,));
         // print(main.storage.getItem('branch'));
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
               builder: (context) => Loginpage()),

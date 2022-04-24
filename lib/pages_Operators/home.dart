@@ -98,7 +98,7 @@ class _HomepageState extends State<Homepage> {
     super.initState();
     getprodtypes = get_produtypes();
     print(storage.getItem('ttl'));
-    print(storage.getItem('username'));
+    print(storage.getItem('phone'));
   }
   @override
   Widget build(BuildContext context) {
@@ -129,7 +129,7 @@ class _HomepageState extends State<Homepage> {
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(primary: Colors.white),
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: ((context) => Cartpage())));
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => Cartpage())));
             },
             child: Row(children: [
               Icon(Icons.shopping_cart, size: 50,color: Theme.of(context).primaryColor,),
@@ -163,7 +163,7 @@ class _HomepageState extends State<Homepage> {
                        padding: const EdgeInsets.all(8.0),
                        child: ElevatedButton(
                          style: ElevatedButton.styleFrom(primary: Colors.lightBlueAccent),
-                         onPressed: (){Navigator.push(context, CustomPageRoute(child: AddingToCartpage(e['ptype'],['All',e['ptype']])));},
+                         onPressed: (){Navigator.pushReplacement(context, CustomPageRoute(child: AddingToCartpage(e['ptype'],['All',e['ptype']])));},
                          child: Column(children: [
                            Padding(
                            padding: const EdgeInsets.all(8.0),

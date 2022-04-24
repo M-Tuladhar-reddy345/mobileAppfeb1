@@ -28,11 +28,8 @@ class _Splash2State extends State<Splash2> with TickerProviderStateMixin{
     });
     await Future.delayed(Duration(seconds: 2));
     dispose();
-    if (main.storage.getItem('username') == null){
       Navigator.pushReplacement(context, CustomPageRoute(child: CustomerLoginpage()));
-    }else{
-      Navigator.pushReplacement(context, CustomPageRoute(child: Homepage()));
-    }
+    
     
   }
   

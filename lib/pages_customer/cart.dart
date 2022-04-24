@@ -84,12 +84,10 @@ class _CartpageState extends State<Cartpage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
-    print( main.storage.getItem('cart'));
+    
   }
   @override
   Widget build(BuildContext context) {
-    
     widget.cart = main.storage.getItem('cart');
     widget.cartProds = int.parse(main.storage.getItem('products'));
     widget.ttlamt = double.parse(main.storage.getItem('ttl'));
@@ -107,7 +105,7 @@ class _CartpageState extends State<Cartpage> {
             children:[ 
               Text('Total Amt: '+ main.storage.getItem('ttl').toString(), style: TextStyle(fontWeight: FontWeight.w100, color: Colors.black, fontSize: 30),),
               FlatButton(onPressed: (){
-                Navigator.push(context, CustomPageRoute(child: AddingToCartpage('All',['All'])));
+                Navigator.pushReplacement(context, CustomPageRoute(child: AddingToCartpage('All',['All'])));
               }, child: Text('Continue shopping!!!', style: TextStyle(color: Theme.of(context).primaryColor),)),
               widget.cartProds != 0.0?
               Column(children: 

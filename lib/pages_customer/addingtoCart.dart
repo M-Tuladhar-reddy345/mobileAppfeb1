@@ -220,6 +220,7 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
     // TODO: implement initState
     super.initState();
     getProducts = get_products();
+    
   }
   @override
   Widget build(BuildContext context) {

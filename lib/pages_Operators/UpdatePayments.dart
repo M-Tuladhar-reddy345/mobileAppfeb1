@@ -69,7 +69,7 @@ class _UpdatePaymentsState extends State<UpdatePayments>
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(data['message'].toString()),backgroundColor: Colors.green,));
           print(widget.recNo);
           // widget.dropdownValue = '';
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(
                 builder: (context) =>

@@ -54,7 +54,7 @@ class _Loginpagestate extends State<Loginpage> {
         // print(main.storage.getItem('branch'));
         ScaffoldMessenger.of(context).showSnackBar(
                      SnackBar(content: Text(data['message']), backgroundColor: Colors.green,));
-        Navigator.push(
+        Navigator.pushReplacement(
           context,
           MaterialPageRoute(
               builder: (context) => home.Homepage()),
@@ -175,7 +175,7 @@ class _Loginpagestate extends State<Loginpage> {
                       //           child: DropdownButton(
                       //             isExpanded: true,
                       //             value: widget.branch,
-                      FlatButton(onPressed: (){Navigator.pushReplacement(context, CustomPageRoute(child: SignUppage()));}, child: Text('No Account? Create One',style: TextStyle(color: Color.fromARGB(255, 207, 206, 206), decoration: TextDecoration.underline),)),
+                      
                       //             // icon: const Icon(Icons.arrow_downward),
                       //             elevation: 16,
                       //             style: const TextStyle(color: Colors.deepPurple),

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/models.dart';
+import 'package:flutter_complete_guide/pages_customer/CustomerLogin.dart';
 import 'package:provider/provider.dart' as provider;
 import './pages_Operators/home.dart' as home;
 import 'package:localstorage/localstorage.dart' as localstorage;
@@ -50,10 +51,13 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   void startTimer(){
     timer = Timer.periodic(Duration(seconds: 1), (t) {
-      if (seconds  == 360){
+      if (seconds  == 10){
           seconds  = 0;
+          if (storage.getItem('role')=='Customer'){
+            print('yes');
+        submit();}
         stoptime();
-        submit();
+        
         storage.clear();
       }else{
         
@@ -65,24 +69,27 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
   void stoptime(){
     timer.cancel();
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Logged out expired'),backgroundColor: Colors.red,));
-    navigatorKey.currentState.push(MaterialPageRoute(builder: (_)=> home.Homepage()));
+    // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Logged out expired'),backgroundColor: Colors.red,));
+    navigatorKey.currentState.pushReplacement(MaterialPageRoute(builder: (_)=> CustomerLoginpage()));
   }
-  submit() async {
-    final body = {
-      'phone':storage.getItem('phone'),
-      'ttlAmt': storage.getItem('ttl'),
-      'cartProds': storage.getItem('products'),
-      'products':storage.getItem('cart').map((e){
-        return {'pcode': e.product, 'quantity': e.Quantity};
-      }).toList()
-    };
-    final url = Uri.parse(url_start +
-        'mobileApp/Updatecart/' );
-    await http.post(url,
-        headers: {"Content-Type": "application/json"},
-        encoding: Encoding.getByName("utf-8"),
-        body: json.encode(body));
+  void submit() async {
+     List products = storage.getItem('cart').values.map(( e){
+                        return {'pcode': e.product, 'quantity': e.Quantity};
+                      }).toList();
+                      final body = {
+                        'phone':storage.getItem('phone'),
+                      'ttlAmt': storage.getItem('ttl'),
+                      'cartProds': storage.getItem('products'),
+                      'products':products
+                    };
+                    print(body);
+                    var url = Uri.parse(url_start +
+                        'mobileApp/Updatecart/' );
+                    final response = await http.post(url,
+                        headers: {"Content-Type": "application/json"},
+                        encoding: Encoding.getByName("utf-8"),
+                        body: json.encode(body));
+                       
   }
   getCart() async{
     final body = {
@@ -127,23 +134,21 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     super.didChangeAppLifecycleState(state);
 
     if (state == AppLifecycleState.detached) {
-      print('detached');
-      if  (storage.getItem('role') != 'Customer'){
-        submit();
-      }
-      storage.clear();      
+      submit();
+      storage.clear();   
     } else if (state == AppLifecycleState.inactive) {
       print('inactive');
-      if  (storage.getItem('role') != 'Customer'){
-      startTimer();}
+      submit();
+      startTimer();
         
       
     } else if (state == AppLifecycleState.paused) {
-      print('paused');
+      submit();
     } else if (state == AppLifecycleState.resumed) {
       timer.cancel();
       
       seconds = 0 ;
+      getCart();
       
       
       print('resumed');
@@ -162,10 +167,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     print(storage.getItem('phone'));
-    if (storage.getItem('phone')!=null){
-      print('168');
-      getCart();
-    }
+    // getCart();
     contextt = context;
     return MaterialApp(
       title: 'Raithanna Dairy', 

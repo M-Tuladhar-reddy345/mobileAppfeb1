@@ -49,7 +49,7 @@ class Navbar extends StatelessWidget {
                     onTap: () {
                       // Update the state of the app.
                       // ...
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => home.Homepage()),
@@ -61,7 +61,7 @@ class Navbar extends StatelessWidget {
                     onTap: () {
                       // Update the state of the app.
                       // ...
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => CustomerLoginpage()),
@@ -74,7 +74,7 @@ class Navbar extends StatelessWidget {
                     onTap: () {
                       // Update the state of the app.
                       // ...
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => SignUppage()),
@@ -110,7 +110,7 @@ class Navbar extends StatelessWidget {
                     onTap: () {
                       // Update the state of the app.
                       // ...
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => home.Homepage()),
@@ -123,7 +123,7 @@ class Navbar extends StatelessWidget {
                     onTap: () {
                       // Update the state of the app.
                       // ...
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => DailySalesEntrypage()),
@@ -135,7 +135,7 @@ class Navbar extends StatelessWidget {
                     onTap: () {
                       // Update the state of the app.
                       // ...
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => EditDailySalesEntrypages_Operatorstate()),
@@ -147,7 +147,7 @@ class Navbar extends StatelessWidget {
                     onTap: () {
                       // Update the state of the app.
                       // ...
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => PdfIndentpage()),
@@ -159,7 +159,7 @@ class Navbar extends StatelessWidget {
                     onTap: () {
                       // Update the state of the app.
                       // ...
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => ExtractdailyIndentpage()),
@@ -171,7 +171,7 @@ class Navbar extends StatelessWidget {
                     onTap: () {
                       // Update the state of the app.
                       // ...
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
@@ -184,7 +184,7 @@ class Navbar extends StatelessWidget {
                     onTap: () {
                       // Update the state of the app.
                       // ...
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => editUpdatePayements()),
@@ -206,7 +206,7 @@ class Navbar extends StatelessWidget {
 
                         main.storage.setItem('branch', null);
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Logged out succesfully'),backgroundColor: Colors.green,));
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
@@ -243,7 +243,7 @@ class Navbar extends StatelessWidget {
                     onTap: () {
                       // Update the state of the app.
                       // ...
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => home.Homepage()),
@@ -256,7 +256,7 @@ class Navbar extends StatelessWidget {
                     onTap: () {
                       // Update the state of the app.
                       // ...
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => DailySalesEntrypage()),
@@ -267,7 +267,7 @@ class Navbar extends StatelessWidget {
                     onTap: () {
                       // Update the state of the app.
                       // ...
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => EditDailySalesEntrypages_Operatorstate()),
@@ -279,7 +279,7 @@ class Navbar extends StatelessWidget {
                     onTap: () {
                       // Update the state of the app.
                       // ...
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => PdfIndentpage()),
@@ -291,7 +291,7 @@ class Navbar extends StatelessWidget {
                     onTap: () {
                       // Update the state of the app.
                       // ...
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => ExtractdailyIndentpage()),
@@ -313,7 +313,7 @@ class Navbar extends StatelessWidget {
                         main.storage.setItem('username', null);
 
                         main.storage.setItem('branch', null);
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
@@ -350,7 +350,7 @@ class Navbar extends StatelessWidget {
                     onTap: () {
                       // Update the state of the app.
                       // ...
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => home.Homepage()),
@@ -362,7 +362,7 @@ class Navbar extends StatelessWidget {
                     onTap: () {
                       // Update the state of the app.
                       // ...
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
@@ -375,7 +375,7 @@ class Navbar extends StatelessWidget {
                     onTap: () {
                       // Update the state of the app.
                       // ...
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => editUpdatePayements()),
@@ -399,7 +399,7 @@ class Navbar extends StatelessWidget {
 
                         main.storage.setItem('branch', null);
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Logged out succesfully'),backgroundColor: Colors.green,));
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
@@ -409,7 +409,7 @@ class Navbar extends StatelessWidget {
                     },
                   ),
                 ],
-              ):main.storage.getItem('role') =='Customer'?ListView(
+              ):main.storage.getItem('role') =='Customer' ||main.storage.getItem('phone') !=null  ?ListView(
                 // Important: Remove any padding from the ListView.
                 padding: EdgeInsets.zero,
                 children: [
@@ -440,7 +440,7 @@ class Navbar extends StatelessWidget {
                     onTap: () {
                       // Update the state of the app.
                       // ...
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => home.Homepage()),
@@ -452,7 +452,7 @@ class Navbar extends StatelessWidget {
                     onTap: () {
                       // Update the state of the app.
                       // ...
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => Cartpage()),
@@ -473,6 +473,7 @@ class Navbar extends StatelessWidget {
                       'cartProds': main.storage.getItem('products'),
                       'products':products
                     };
+                    print(body);
                     var url = Uri.parse(main.url_start +
                         'mobileApp/Updatecart/' );
                     await http.post(url,
@@ -488,7 +489,7 @@ class Navbar extends StatelessWidget {
 
                         main.storage.setItem('branch', null);
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Logged out succesfully'),backgroundColor: Colors.green,));
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
@@ -520,7 +521,7 @@ class Navbar extends StatelessWidget {
                     onTap: () {
                       // Update the state of the app.
                       // ...
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => home.Homepage()),
@@ -544,7 +545,7 @@ class Navbar extends StatelessWidget {
                         main.storage.setItem('phone', null);
                         main.storage.setItem('role', null);
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Logged out succesfully'),backgroundColor: Colors.green,));
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
