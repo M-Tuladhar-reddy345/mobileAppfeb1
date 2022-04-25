@@ -85,8 +85,6 @@ class _CartpageState extends State<Cartpage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    updatecart();
-    getCart();
     
   }
   @override
