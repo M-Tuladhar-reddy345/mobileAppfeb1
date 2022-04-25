@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/commonApi/cartApi.dart';
 import 'package:flutter_complete_guide/models.dart';
 import 'package:flutter_complete_guide/pages_customer/CustomerLogin.dart';
 import 'package:provider/provider.dart' as provider;
@@ -55,7 +56,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           seconds  = 0;
           if (storage.getItem('role')=='Customer'){
             print('yes');
-        submit();}
+        updatecart();}
         stoptime();
         
         storage.clear();
@@ -72,25 +73,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Logged out expired'),backgroundColor: Colors.red,));
     navigatorKey.currentState.pushReplacement(MaterialPageRoute(builder: (_)=> CustomerLoginpage()));
   }
-  void submit() async {
-     List products = storage.getItem('cart').values.map(( e){
-                        return {'pcode': e.product, 'quantity': e.Quantity};
-                      }).toList();
-                      final body = {
-                        'phone':storage.getItem('phone'),
-                      'ttlAmt': storage.getItem('ttl'),
-                      'cartProds': storage.getItem('products'),
-                      'products':products
-                    };
-                    print(body);
-                    var url = Uri.parse(url_start +
-                        'mobileApp/Updatecart/' );
-                    final response = await http.post(url,
-                        headers: {"Content-Type": "application/json"},
-                        encoding: Encoding.getByName("utf-8"),
-                        body: json.encode(body));
-                       
-  }
+  
   getCart() async{
     final body = {
       'phone': storage.getItem('phone')
@@ -134,16 +117,16 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     super.didChangeAppLifecycleState(state);
 
     if (state == AppLifecycleState.detached) {
-      submit();
+      updatecart();
       storage.clear();   
     } else if (state == AppLifecycleState.inactive) {
       print('inactive');
-      submit();
+      updatecart();
       startTimer();
         
       
     } else if (state == AppLifecycleState.paused) {
-      submit();
+      updatecart();
     } else if (state == AppLifecycleState.resumed) {
       timer.cancel();
       

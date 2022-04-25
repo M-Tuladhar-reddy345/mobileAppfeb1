@@ -105,7 +105,7 @@ class _SignUppagestate extends State<SignUppage> {
       var otp = data['otp'];
       print(otp);
       otpDialogBox(context).then((value){
-        print('by user'+otpbyuser.toString());
+        print(otpbyuser);
         if (otp.toString() == otpbyuser){
           print(widget.verifyed);
         setState(() {

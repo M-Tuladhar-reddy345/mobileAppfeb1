@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/commonApi/cartApi.dart';
 import 'package:flutter_complete_guide/main.dart' as main;
 import 'package:flutter_complete_guide/pages_Operators/login.dart';
 import 'package:flutter_complete_guide/pages_customer/CustomerSignup.dart';
@@ -63,40 +64,7 @@ class _SignUppagestate extends State<CustomerLoginpage> {
         final body = {
       'phone': main.storage.getItem('phone')
     };
-    final url = Uri.parse(main.url_start +
-        'mobileApp/getCart/' );
-    final response = await http.post(url, body: body);
-    if (response.statusCode == 200){
-      final data = json.decode(response.body) as Map;
-      print(data);
-      Map<String,Customerprod> cart = {};
-      
-      
-      
-      if (data['products'] == ''){
-      main.storage.setItem('ttl', data['ttl']);
-      main.storage.setItem('products', data['cartprods']);
-      main.storage.setItem('cart',  <String,Customerprod> {} );}else{
-        List products = data['products'] as List;
-       for (var e in products){
-        print(e);
-        cart.putIfAbsent(e['pcode'], () => Customerprod(
-                        e['pcode'].toString(),
-                        e['ptype'].toString(),
-                        e['unitRate'].toString(),
-                        e['quantity'].toString(),
-                        e['amount'].toString(),
-                        e['pimage'].toString(),
-                        e['pname'].toString()),);
-      }
-      print("@89");
-      print(cart);
- main.storage.setItem('ttl', data['ttl']);
-      main.storage.setItem('products', data['cartprods']);
-      main.storage.setItem('cart',  cart);
-      main.storage.setItem('role',  'Customer');
-      }
-    }
+    getCart();
         // print(main.storage.getItem('branch'));
         ScaffoldMessenger.of(context).showSnackBar(
                      SnackBar(content: Text(data['message']), backgroundColor: Colors.green,));

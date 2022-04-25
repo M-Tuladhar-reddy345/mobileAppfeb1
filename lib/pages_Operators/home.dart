@@ -108,7 +108,22 @@ class _HomepageState extends State<Homepage> {
           title: Text('Home'),
         ),
         body: SingleChildScrollView(
-          child: Column(children: [
+          child: Column(children: main.storage.getItem('role') != 'Customer'?[
+             ImageSlideshow(
+          width: double.infinity ,
+          height: 200,
+          initialPage: 0,
+          indicatorColor: Colors.blue,
+          indicatorBackgroundColor: Colors.grey,
+          onPageChanged: (value) {
+            debugPrint('Page changed: $value');
+          },
+          autoPlayInterval: 3000,
+          isLoop: true,
+          children: homeImages.map((e) {
+            return Image(image: AssetImage('assets/images/$e'));
+          }).toList()
+        )] :[
              ImageSlideshow(
           width: double.infinity ,
           height: 200,

@@ -1,6 +1,7 @@
 // ignore_for_file: missing_return
 
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/commonApi/cartApi.dart';
 import 'package:flutter_complete_guide/main.dart' as main;
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
@@ -84,6 +85,8 @@ class _CartpageState extends State<Cartpage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    updatecart();
+    getCart();
     
   }
   @override
@@ -132,7 +135,8 @@ class _CartpageState extends State<Cartpage> {
               }).toList()
              ): Text('No item in cart'),]
           )),
-        ),);
+        ),
+        floatingActionButton: FloatingActionButton(onPressed: (){}, child: Icon(Icons.arrow_right)),);
         }
-
+     
 }

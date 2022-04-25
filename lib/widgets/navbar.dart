@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/commonApi/cartApi.dart';
 import 'package:flutter_complete_guide/pages_Operators/DownloadPdfIndent.dart';
 import 'package:flutter_complete_guide/pages_Operators/Edit_updatePayements.dart';
 import 'package:flutter_complete_guide/pages_Operators/dailySalesEntry.dart';
@@ -462,25 +463,8 @@ class Navbar extends StatelessWidget {
                   ListTile(
                     title: const Text('Logout'),
                     onTap: () async {
-                      // Update the state of the app.
-                      // ...
-                      List products = main.storage.getItem('cart').values.map(( e){
-                        return {'pcode': e.product, 'quantity': e.Quantity};
-                      }).toList();
-                      final body = {
-                        'phone':main.storage.getItem('phone'),
-                      'ttlAmt': main.storage.getItem('ttl'),
-                      'cartProds': main.storage.getItem('products'),
-                      'products':products
-                    };
-                    print(body);
-                    var url = Uri.parse(main.url_start +
-                        'mobileApp/Updatecart/' );
-                    await http.post(url,
-                        headers: {"Content-Type": "application/json"},
-                        encoding: Encoding.getByName("utf-8"),
-                        body: json.encode(body));
-                      url =    Uri.parse(main.url_start + 'mobileApp/logout/');
+                      updatecart();
+                      final url =    Uri.parse(main.url_start + 'mobileApp/logout/');
                       final response = await http.get(url);
                       //  print(response.statusCode);
 
