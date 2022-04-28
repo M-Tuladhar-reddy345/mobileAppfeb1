@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/commonApi/cartApi.dart';
 import 'package:flutter_complete_guide/main.dart' as main;
+import 'package:flutter_complete_guide/pages_customer/orderConfirming.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -134,7 +135,10 @@ class _CartpageState extends State<Cartpage> {
              ): Text('No item in cart'),]
           )),
         ),
-        floatingActionButton: FloatingActionButton(onPressed: (){}, child: Icon(Icons.arrow_right)),);
+        floatingActionButton: FloatingActionButton(onPressed: (){
+          updatecart();
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OrderConfirm() ));
+        }, child: Icon(Icons.arrow_right)),);
         }
      
 }

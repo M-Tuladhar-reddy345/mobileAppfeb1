@@ -139,7 +139,21 @@ class _HomepageState extends State<Homepage> {
             return Image(image: AssetImage('assets/images/$e'));
           }).toList()
         ),
-        Padding(
+        
+        FutureBuilder(
+          future: getCart(),
+          // ignore: missing_return
+          builder: (context, snapshot) {
+             switch (snapshot.connectionState){
+               
+                 case ConnectionState.active:
+                 return Container();
+                 break;
+                 case ConnectionState.waiting:
+                 return CircularProgressIndicator();
+                 case ConnectionState.done:
+                 print(snapshot.data);
+                 return Padding(
           padding: const EdgeInsets.only(left: 30, right: 30),
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(primary: Colors.white),
@@ -150,14 +164,20 @@ class _HomepageState extends State<Homepage> {
               Icon(Icons.shopping_cart, size: 50,color: Theme.of(context).primaryColor,),
               Column(
                 children: [
-                  Text('Products: '+ main.storage.getItem('products').toString(), style: TextStyle(fontWeight: FontWeight.w100, fontSize: 20,color: Colors.black))
-                  ,Text('Total Amt: '+ main.storage.getItem('ttl').toString(), style: TextStyle(fontWeight: FontWeight.w100, color: Colors.grey),)
+                  Text('Products: '+ snapshot.data[1].toString(), style: TextStyle(fontWeight: FontWeight.w100, fontSize: 20,color: Colors.black))
+                  ,Text('Total Amt: '+ snapshot.data[2].toString(), style: TextStyle(fontWeight: FontWeight.w100, color: Colors.grey),)
                 ],
               )
             ]),
             
           ),
-        ),
+        );
+                 break;
+               case ConnectionState.none:
+               return Container();
+                 // TODO: Handle this case.
+                 break;
+          }}),
         FutureBuilder(
           future: getprodtypes,
           // ignore: missing_return

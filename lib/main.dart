@@ -19,11 +19,11 @@ final localstorage.LocalStorage storage =
 
 
 
-final String url_start = 'http://www.jacknjill.solutions/';
+// final String url_start = 'http://www.jacknjill.solutions/';
 // 
 // final String url_start = 'http://192.168.1.10:8000/';
 // final String url_start = 'http://localhost:8000/';
-// final String url_start = 'http://192.168.1.2:8000/';
+final String url_start = 'http://192.168.1.2:8000/';
 main() {
   storage.clear();
 
@@ -52,13 +52,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   void startTimer(){
     timer = Timer.periodic(Duration(seconds: 1), (t) {
-      if (seconds  == 10){
+      if (seconds  == 360){
           seconds  = 0;
-          if (storage.getItem('role')=='Customer'){
-            print('yes');
-        updatecart();}
+          
         stoptime();
-        
+        storage.setItem('role', null);
+      storage.setItem('phone', null);
         storage.clear();
       }else{
         
@@ -117,21 +116,28 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     super.didChangeAppLifecycleState(state);
 
     if (state == AppLifecycleState.detached) {
-      updatecart();
-      storage.clear();   
+      if (storage.getItem('role')=='Customer'){
+            print('yes');
+        updatecart();}
+      storage.clear();  
+      storage.setItem('role', null);
+      storage.setItem('phone', null); 
     } else if (state == AppLifecycleState.inactive) {
       print('inactive');
-      updatecart();
+      if (storage.getItem('role')=='Customer'){
+            print('yes');
+        updatecart();}
+      
       startTimer();
         
       
     } else if (state == AppLifecycleState.paused) {
-      updatecart();
+      
     } else if (state == AppLifecycleState.resumed) {
       timer.cancel();
       
       seconds = 0 ;
-      getCart();
+      
       
       
       print('resumed');

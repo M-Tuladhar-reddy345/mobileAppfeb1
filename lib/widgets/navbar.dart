@@ -472,6 +472,7 @@ class Navbar extends StatelessWidget {
                         main.storage.setItem('username', null);
 
                         main.storage.setItem('branch', null);
+                        main.storage.clear();
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Logged out succesfully'),backgroundColor: Colors.green,));
                         Navigator.pushReplacement(
                           context,

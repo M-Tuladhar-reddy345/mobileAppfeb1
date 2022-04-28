@@ -57,5 +57,9 @@ void updatecart() async {
  storage.setItem('ttl', data['ttl']);
       storage.setItem('products', data['cartprods']);
       storage.setItem('cart',  cart);
-      }}
+      
+      }
+      print([data['ttl'], data['cartprods']]);
+      return data;}
+      
   }
