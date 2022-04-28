@@ -258,9 +258,9 @@ class _OrderConfirm extends State<OrderConfirm> {
                 },
               ),
             ),       
-            FutureBuilder(future: getAddresses,builder: (context, snapshot) {
+            // FutureBuilder(future: getAddresses,builder: (context, snapshot) {
               
-            })   
+            // })   
             ]
         )));
 
