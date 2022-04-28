@@ -196,72 +196,100 @@ class _OrderConfirm extends State<OrderConfirm> {
           title: Text('Confirm order'),
           
         ),
-        body: SingleChildScrollView(child: Column(
-          children: [
-            Center(child: FlatButton(onPressed: ()=> showCart(context,setState), child: Text('Show products', style: TextStyle(color: Theme.of(context).primaryColor),))),
-            Text('Total:- '+ widget.ttlamt.toString(), style: TextStyle(fontSize: 20),),
-            Text('Total products:- '+ widget.cartProds.toString(), style: TextStyle(fontSize: 20),),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(height: 2,width: MediaQuery.of(context).size.width * (90/100),color: Theme.of(context).primaryColorLight,),
-            ),
-            Align(alignment: Alignment.centerLeft,child: Text('Address', style: TextStyle(fontSize: 15),)),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  labelText:'Flatno/Apartment/floor' 
-                ),
-                onChanged:(value){
-                  setState(() {
-                  widget.Address1 = value;  
-                  });                  
-                },
+        body: SingleChildScrollView(child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Center(child: FlatButton(onPressed: ()=> showCart(context,setState), child: Text('Show products', style: TextStyle(color: Theme.of(context).primaryColor),))),
+              Text('Total:- '+ widget.ttlamt.toString(), style: TextStyle(fontSize: 20),),
+              Text('Total products:- '+ widget.cartProds.toString(), style: TextStyle(fontSize: 20),),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(height: 2,width: MediaQuery.of(context).size.width * (90/100),color: Theme.of(context).primaryColorLight,),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  labelText:'Street' 
+              Align(alignment: Alignment.centerLeft,child: Text('Address', style: TextStyle(fontSize: 15),)),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    labelText:'Flatno/Apartment/floor' 
+                  ),
+                  onChanged:(value){
+                    setState(() {
+                    widget.Address1 = value;  
+                    });                  
+                  },
                 ),
-                onChanged:(value){
-                  setState(() {
-                  widget.Address2 = value;  
-                  });                  
-                },
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  labelText:'colony/City' 
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    labelText:'Street' 
+                  ),
+                  onChanged:(value){
+                    setState(() {
+                    widget.Address2 = value;  
+                    });                  
+                  },
                 ),
-                onChanged:(value){
-                  setState(() {
-                  widget.Address3 = value;  
-                  });                  
-                },
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  labelText:'District/State/Pincode' 
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    labelText:'colony/City' 
+                  ),
+                  onChanged:(value){
+                    setState(() {
+                    widget.Address3 = value;  
+                    });                  
+                  },
                 ),
-                onChanged:(value){
-                  setState(() {
-                  widget.Address4 = value;  
-                  });                  
-                },
               ),
-            ),       
-            // FutureBuilder(future: getAddresses,builder: (context, snapshot) {
-              
-            // })   
-            ]
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    labelText:'District/State/Pincode' 
+                  ),
+                  onChanged:(value){
+                    setState(() {
+                    widget.Address4 = value;  
+                    });                  
+                  },
+                ),
+              ),       
+              // ignore: missing_return
+              // FutureBuilder(future: getAddresses,builder: (context, snapshot) {
+              //   switch (snapshot.connectionState) {
+                  
+                 
+              //     case ConnectionState.none:
+              //       // TODO: Handle this case.
+              //       break;
+              //     case ConnectionState.waiting:
+              //       return CircularProgressIndicator();
+              //       break;
+              //     case ConnectionState.active:
+              //       // TODO: Handle this case.
+              //       break;
+              //     case ConnectionState.done:
+              //       if (snapshot.data == null){
+              //         return Container();
+
+              //       }else{
+              //         return Column(
+              //           children: snapshot.data.map((e){
+              //             return Container();
+              //           })
+              //         );
+              //       }
+              //       break;
+              //   }
+              // })   
+              ]
+          ),
         )));
 
   }

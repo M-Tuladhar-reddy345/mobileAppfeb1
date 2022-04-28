@@ -60,6 +60,6 @@ void updatecart() async {
       
       }
       print([data['ttl'], data['cartprods']]);
-      return data;}
+      return [data['ttl'], data['cartprods']];}
       
   }

@@ -153,9 +153,7 @@ class _HomepageState extends State<Homepage> {
                  return CircularProgressIndicator();
                  case ConnectionState.done:
                  print(snapshot.data);
-                 if (snapshot.data == null){
-                   return CircularProgressIndicator();
-                 }
+                 
                  return Padding(
           padding: const EdgeInsets.only(left: 30, right: 30),
           child: ElevatedButton(
@@ -167,8 +165,8 @@ class _HomepageState extends State<Homepage> {
               Icon(Icons.shopping_cart, size: 50,color: Theme.of(context).primaryColor,),
               Column(
                 children: [
-                  Text('Products: '+ snapshot.data[1].toString(), style: TextStyle(fontWeight: FontWeight.w100, fontSize: 20,color: Colors.black))
-                  ,Text('Total Amt: '+ snapshot.data[2].toString(), style: TextStyle(fontWeight: FontWeight.w100, color: Colors.grey),)
+                  Text('Products: '+ main.storage.getItem('products').toString() , style: TextStyle(fontWeight: FontWeight.w100, fontSize: 20,color: Colors.black))
+                  ,Text('Total Amt: '+  main.storage.getItem('ttl').toString(), style: TextStyle(fontWeight: FontWeight.w100, color: Colors.grey),)
                 ],
               )
             ]),
