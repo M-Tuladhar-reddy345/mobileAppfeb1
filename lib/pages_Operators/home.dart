@@ -153,6 +153,9 @@ class _HomepageState extends State<Homepage> {
                  return CircularProgressIndicator();
                  case ConnectionState.done:
                  print(snapshot.data);
+                 if (snapshot.data == null){
+                   return CircularProgressIndicator();
+                 }
                  return Padding(
           padding: const EdgeInsets.only(left: 30, right: 30),
           child: ElevatedButton(

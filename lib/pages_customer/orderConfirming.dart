@@ -210,7 +210,7 @@ class _OrderConfirm extends State<OrderConfirm> {
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
                 decoration: InputDecoration(
-                  labelText:'Address 1' 
+                  labelText:'Flatno/Apartment/floor' 
                 ),
                 onChanged:(value){
                   setState(() {
@@ -223,7 +223,7 @@ class _OrderConfirm extends State<OrderConfirm> {
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
                 decoration: InputDecoration(
-                  labelText:'Address 2' 
+                  labelText:'Street' 
                 ),
                 onChanged:(value){
                   setState(() {
@@ -236,7 +236,7 @@ class _OrderConfirm extends State<OrderConfirm> {
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
                 decoration: InputDecoration(
-                  labelText:'Address 3' 
+                  labelText:'colony/City' 
                 ),
                 onChanged:(value){
                   setState(() {
@@ -249,7 +249,7 @@ class _OrderConfirm extends State<OrderConfirm> {
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
                 decoration: InputDecoration(
-                  labelText:'Address 4' 
+                  labelText:'District/State/Pincode' 
                 ),
                 onChanged:(value){
                   setState(() {
