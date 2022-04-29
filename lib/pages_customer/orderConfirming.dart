@@ -18,21 +18,50 @@ class OrderConfirm extends StatefulWidget {
   String prodtype = 'All';  
   List prodtypes=['All'];
   StateSetter setModalState;
-  String Address1;
-  String Address2;
-  String Address3;
-  String Address4;
-  
+  TextEditingController Address1 = TextEditingController()..text = '';
+  TextEditingController Address2 = TextEditingController()..text = '';
+  TextEditingController Address3 = TextEditingController()..text = '';
+  TextEditingController Address4 = TextEditingController()..text = '';
+  TextEditingController pincode = TextEditingController()..text = '';
   @override
   State<OrderConfirm> createState() => _OrderConfirm();
 }
 
 class _OrderConfirm extends State<OrderConfirm> {
   Future getAddresses;
+  submit() async{
+    print(widget.Address1.text == '' ||widget.Address2.text == ''||widget.Address3.text == ''||widget.Address4.text == ''|| widget.pincode.text == '');
+    if (widget.Address1.text == '' ||widget.Address2.text == ''||widget.Address3.text == ''||widget.Address4.text == ''|| widget.pincode.text == ''){
+      ScaffoldMessenger.of(context).showSnackBar(
+                     SnackBar(content: Text('Every Field need to be filled'), backgroundColor: Colors.red,));
+    }else{
+    final body = {
+      
+      'phone':main.storage.getItem('phone'),
+      'address1': widget.Address1.text,
+      'address2': widget.Address2.text,
+      'address3': widget.Address3.text,
+      'address4': widget.Address4.text,
+      'pincode':widget.pincode.text
+                    };
+      final url = Uri.parse(main.url_start+'mobileApp/placeorder/');
+      final response =  await http.post(url, body: body);
+      if (response.statusCode == 200){
+        var data = json.decode(response.body) as Map;
+        if (data['message'] == 'Success'){
+          ScaffoldMessenger.of(context).clearSnackBars();
+          ScaffoldMessenger.of(context).showSnackBar(
+                     SnackBar(content: Text(data['message']), backgroundColor: Colors.green,));
+        }else{
+          ScaffoldMessenger.of(context).showSnackBar(
+                     SnackBar(content: Text(data['message']), backgroundColor: Colors.red,));
+        }
+      }}
+  }
   get_addresses() async {
     final url = Uri.parse(main.url_start +
         'mobileApp/getAddresses/' );
-    final response = await http.get(url);
+    final response = await http.post(url, body: {'phone': main.storage.getItem('phone')});
     // print(url);
 
 
@@ -207,6 +236,7 @@ class _OrderConfirm extends State<OrderConfirm> {
                 padding: const EdgeInsets.all(8.0),
                 child: Container(height: 2,width: MediaQuery.of(context).size.width * (90/100),color: Theme.of(context).primaryColorLight,),
               ),
+              Align(alignment: Alignment.centerRight,child: ElevatedButton(onPressed: (() => submit()),child: Text('Place order', style: TextStyle(fontSize: 15),))),
               Align(alignment: Alignment.centerLeft,child: Text('Address', style: TextStyle(fontSize: 15),)),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -214,11 +244,12 @@ class _OrderConfirm extends State<OrderConfirm> {
                   decoration: InputDecoration(
                     labelText:'Flatno/Apartment/floor' 
                   ),
-                  onChanged:(value){
-                    setState(() {
-                    widget.Address1 = value;  
-                    });                  
-                  },
+                  controller: widget.Address1,
+                  // onChanged:(value){
+                  //   setState(() {
+                  //   widget.Address1.text = value;  
+                  //   });                  
+                  // },
                 ),
               ),
               Padding(
@@ -227,11 +258,12 @@ class _OrderConfirm extends State<OrderConfirm> {
                   decoration: InputDecoration(
                     labelText:'Street' 
                   ),
-                  onChanged:(value){
-                    setState(() {
-                    widget.Address2 = value;  
-                    });                  
-                  },
+                  controller: widget.Address2
+                  // onChanged:(value){
+                  //   setState(() {
+                  //   widget.Address2.text = value;  
+                  //   });                  
+                  // },
                 ),
               ),
               Padding(
@@ -240,54 +272,83 @@ class _OrderConfirm extends State<OrderConfirm> {
                   decoration: InputDecoration(
                     labelText:'colony/City' 
                   ),
-                  onChanged:(value){
-                    setState(() {
-                    widget.Address3 = value;  
-                    });                  
-                  },
+                  controller: widget.Address3,
+                  // onChanged:(value){
+                  //   setState(() {
+                  //   widget.Address3.text = value;  
+                  //   });                  
+                  // },
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
                   decoration: InputDecoration(
-                    labelText:'District/State/Pincode' 
+                    labelText:'District/State' 
                   ),
-                  onChanged:(value){
-                    setState(() {
-                    widget.Address4 = value;  
-                    });                  
-                  },
+                  controller: widget.Address4,
+                  // onChanged:(value){
+                  //   setState(() {
+                  //   widget.Address4.text = value;  
+                  //   });                  
+                  // },
                 ),
-              ),       
+              ),   
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    labelText:'Pincode' 
+                  ),
+                  controller: widget.pincode,
+                  // onChanged:(value){
+                  //   setState(() {
+                  //   widget.Address4.text = value;  
+                  //   });                  
+                  // },
+                ),
+              ),     
               // ignore: missing_return
-              // FutureBuilder(future: getAddresses,builder: (context, snapshot) {
-              //   switch (snapshot.connectionState) {
+              FutureBuilder(future: getAddresses,builder: (context, snapshot) {
+                switch (snapshot.connectionState) {
                   
                  
-              //     case ConnectionState.none:
-              //       // TODO: Handle this case.
-              //       break;
-              //     case ConnectionState.waiting:
-              //       return CircularProgressIndicator();
-              //       break;
-              //     case ConnectionState.active:
-              //       // TODO: Handle this case.
-              //       break;
-              //     case ConnectionState.done:
-              //       if (snapshot.data == null){
-              //         return Container();
+                  case ConnectionState.none:
+                    // TODO: Handle this case.
+                    break;
+                  case ConnectionState.waiting:
+                    return CircularProgressIndicator();
+                    break;
+                  case ConnectionState.active:
+                    // TODO: Handle this case.
+                    break;
+                  case ConnectionState.done:
+                    if (snapshot.data == null){
+                      return Container();
 
-              //       }else{
-              //         return Column(
-              //           children: snapshot.data.map((e){
-              //             return Container();
-              //           })
-              //         );
-              //       }
-              //       break;
-              //   }
-              // })   
+                    }else{
+                      
+                          return Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child:    Column(children: snapshot.data.map <Widget>((e){
+                              return ElevatedButton(onPressed: (){
+                                setState(() {
+                                  widget.Address1.text = e[1].toString();
+                                  widget.Address2.text = e[2].toString();
+                                  widget.Address3.text = e[3].toString();
+                                  widget.Address4.text = e[4].toString();
+                                  widget.pincode.text = e[6].toString();
+                                });
+                              }, child: Text(e[5].toString()));
+                            }).toList(),)                  
+                            
+                          );
+                        
+                      
+                    }
+                    break;
+                }
+              })   
               ]
           ),
         )));
