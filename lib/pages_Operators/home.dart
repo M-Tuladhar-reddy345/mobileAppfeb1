@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/commonApi/cartApi.dart';
 import 'package:flutter_complete_guide/main.dart';
 import 'package:flutter_complete_guide/pages_customer/addingtoCart.dart';
 import 'package:flutter_complete_guide/pages_customer/cart.dart';
@@ -16,7 +17,8 @@ import 'package:flutter_complete_guide/models.dart';
 
 class Homepage extends StatefulWidget {
   String message;
-
+  int cartProds = 0;
+  double ttlamt = 0;
   Homepage();
 
   @override
@@ -96,12 +98,17 @@ class _HomepageState extends State<Homepage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    
     getprodtypes = get_produtypes();
-    print(storage.getItem('ttl'));
-    print(storage.getItem('phone'));
   }
   @override
   Widget build(BuildContext context) {
+    print(main.storage.getItem('ttl'));
+    print(main.storage.getItem('products'));
+    if (main.storage.getItem('ttl') != null && main.storage.getItem('products') != null){
+    widget.cartProds = int.parse(main.storage.getItem('products'));
+    widget.ttlamt = double.parse(main.storage.getItem('ttl'));
+    }
     return Scaffold(
         drawer: navbar.Navbar(),
         appBar: AppBar(
@@ -123,7 +130,7 @@ class _HomepageState extends State<Homepage> {
           children: homeImages.map((e) {
             return Image(image: AssetImage('assets/images/$e'));
           }).toList()
-        )] :[
+        )] : widget.cartProds == 0 ? [
              ImageSlideshow(
           width: double.infinity ,
           height: 200,
@@ -138,23 +145,67 @@ class _HomepageState extends State<Homepage> {
           children: homeImages.map((e) {
             return Image(image: AssetImage('assets/images/$e'));
           }).toList()
-        ),
+        ),      
         
+         
+       
         FutureBuilder(
-          future: getCart(),
+          future: getprodtypes,
           // ignore: missing_return
           builder: (context, snapshot) {
              switch (snapshot.connectionState){
-               
                  case ConnectionState.active:
                  return Container();
                  break;
                  case ConnectionState.waiting:
                  return CircularProgressIndicator();
                  case ConnectionState.done:
-                 print(snapshot.data);
+                 if( snapshot.data == null){
+                   return Text('Some error in backend will catch up later');
+                 }else{
+                   return Wrap(children: snapshot.data.map<Widget>((e){
+                     var image = e['imgname'];
+                     return Padding(
+                       padding: const EdgeInsets.all(8.0),
+                       child: ElevatedButton(
+                         style: ElevatedButton.styleFrom(primary: Colors.lightBlueAccent),
+                         onPressed: (){Navigator.pushReplacement(context, CustomPageRoute(child: AddingToCartpage(e['ptype'],['All',e['ptype']])));},
+                         child: Column(children: [
+                           Padding(
+                           padding: const EdgeInsets.all(8.0),
+                           child: Container(height: 100,width: 100,decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/prodtypes/$image'),fit:BoxFit.fill ))),
+                         ),
+                         Text(e['pname'])
+                         ]),
+                       ),
+                     );
+                   }).toList());
+                 }
+                 break;
+               case ConnectionState.none:
+               return Container();
+                 // TODO: Handle this case.
+                 break;
+          }})
                  
-                 return Padding(
+          ]:[
+             ImageSlideshow(
+          width: double.infinity ,
+          height: 200,
+          initialPage: 0,
+          indicatorColor: Colors.blue,
+          indicatorBackgroundColor: Colors.grey,
+          onPageChanged: (value) {
+            debugPrint('Page changed: $value');
+          },
+          autoPlayInterval: 3000,
+          isLoop: true,
+          children: homeImages.map((e) {
+            return Image(image: AssetImage('assets/images/$e'));
+          }).toList()
+        ),      
+        
+         Padding(
           padding: const EdgeInsets.only(left: 30, right: 30),
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(primary: Colors.white),
@@ -165,20 +216,15 @@ class _HomepageState extends State<Homepage> {
               Icon(Icons.shopping_cart, size: 50,color: Theme.of(context).primaryColor,),
               Column(
                 children: [
-                  Text('Products: '+ main.storage.getItem('products').toString() , style: TextStyle(fontWeight: FontWeight.w100, fontSize: 20,color: Colors.black))
-                  ,Text('Total Amt: '+  main.storage.getItem('ttl').toString(), style: TextStyle(fontWeight: FontWeight.w100, color: Colors.grey),)
+                  Text('Products: '+widget.cartProds.toString() , style: TextStyle(fontWeight: FontWeight.w100, fontSize: 20,color: Colors.black))
+                  ,Text('Total Amt: '+  widget.ttlamt.toString(), style: TextStyle(fontWeight: FontWeight.w100, color: Colors.grey),)
                 ],
               )
             ]),
             
           ),
-        );
-                 break;
-               case ConnectionState.none:
-               return Container();
-                 // TODO: Handle this case.
-                 break;
-          }}),
+        ),
+       
         FutureBuilder(
           future: getprodtypes,
           // ignore: missing_return

@@ -51,15 +51,16 @@ class _CartpageState extends State<Cartpage> {
      }
      void delete(pcode, unitrate){
        setState(() {
-        
+         widget.ttlamt = widget.ttlamt - (double.parse(widget.cart[pcode].Quantity) * double.parse(widget.cart[pcode].UnitRate));
+        widget.cartProds = widget.cartProds - 1;
         widget.cart[pcode].Quantity = '0.0';
-          widget.cartProds = widget.cartProds-1;
         
         
         widget.cart[pcode].Amount = '0.0';
-        widget.ttlamt = widget.ttlamt - (double.parse(widget.cart[pcode].Quantity) * double.parse(widget.cart[pcode].UnitRate));
+       
         
       });
+      print(widget.cart[pcode].Amount);
       main.storage.setItem('cart', widget.cart);
         main.storage.setItem('ttl', widget.ttlamt.toString());
         main.storage.setItem('products', widget.cartProds.toString());
@@ -135,10 +136,10 @@ class _CartpageState extends State<Cartpage> {
              ): Text('No item in cart'),]
           )),
         ),
-        floatingActionButton: FloatingActionButton(onPressed: (){
+        floatingActionButton: widget.cartProds != 0? FloatingActionButton(onPressed: (){
           updatecart();
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OrderConfirm() ));
-        }, child: Icon(Icons.arrow_right)),);
+        }, child: Icon(Icons.arrow_right)): Container());
         }
      
 }

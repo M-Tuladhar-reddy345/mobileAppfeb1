@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/main.dart' as main;
+import 'package:flutter_complete_guide/pages_Operators/home.dart';
 import '../models.dart' ;
 import '../widgets/navbar.dart' as navbar;
 import '../widgets/form.dart' as form;
@@ -51,7 +52,8 @@ class _OrderConfirm extends State<OrderConfirm> {
         if (data['message'] == 'Success'){
           ScaffoldMessenger.of(context).clearSnackBars();
           ScaffoldMessenger.of(context).showSnackBar(
-                     SnackBar(content: Text(data['message']), backgroundColor: Colors.green,));
+                     SnackBar(content: Text('Successfully placed order'), backgroundColor: Colors.green,));
+          Navigator.pushReplacement(context, MaterialPageRoute(builder:((context) => Homepage()) ));
         }else{
           ScaffoldMessenger.of(context).showSnackBar(
                      SnackBar(content: Text(data['message']), backgroundColor: Colors.red,));
@@ -331,15 +333,18 @@ class _OrderConfirm extends State<OrderConfirm> {
                           return Padding(
                             padding: const EdgeInsets.all(10.0),
                             child:    Column(children: snapshot.data.map <Widget>((e){
-                              return ElevatedButton(onPressed: (){
-                                setState(() {
-                                  widget.Address1.text = e[1].toString();
-                                  widget.Address2.text = e[2].toString();
-                                  widget.Address3.text = e[3].toString();
-                                  widget.Address4.text = e[4].toString();
-                                  widget.pincode.text = e[6].toString();
-                                });
-                              }, child: Text(e[5].toString()));
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ElevatedButton(onPressed: (){
+                                  setState(() {
+                                    widget.Address1.text = e[0].toString();
+                                    widget.Address2.text = e[1].toString();
+                                    widget.Address3.text = e[2].toString();
+                                    widget.Address4.text = e[3].toString();
+                                    widget.pincode.text = e[5].toString();
+                                  });
+                                }, child: Text(e[4].toString())),
+                              );
                             }).toList(),)                  
                             
                           );
