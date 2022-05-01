@@ -26,6 +26,7 @@ void updatecart() async {
     final body = {
       'phone': storage.getItem('phone')
     };
+    print(storage.getItem('phone'));
     final url = Uri.parse(url_start +
         'mobileApp/getCart/' );
     final response = await http.post(url, body: body);

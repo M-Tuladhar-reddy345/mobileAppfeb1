@@ -91,9 +91,12 @@ class _CartpageState extends State<Cartpage> {
   }
   @override
   Widget build(BuildContext context) {
-    widget.cart = main.storage.getItem('cart');
+    
+    if (main.storage.getItem('ttl') != null && main.storage.getItem('products') != null&& main.storage.getItem('cart') != null){
+      widget.cart = main.storage.getItem('cart');
     widget.cartProds = int.parse(main.storage.getItem('products'));
     widget.ttlamt = double.parse(main.storage.getItem('ttl'));
+    }
 
     return Scaffold(
         drawer: navbar.Navbar(),

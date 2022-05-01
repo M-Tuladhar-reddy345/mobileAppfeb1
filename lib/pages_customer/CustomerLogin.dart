@@ -57,7 +57,7 @@ class _SignUppagestate extends State<CustomerLoginpage> {
       if (data['message'] == 'Success') {
         print(data);
         main.storage.setItem('username', data['name']);
-        main.storage.setItem('phone', data['phone']);
+        main.storage.setItem('phone', widget.phone.phoneNumber.toString());
         // print(main.storage.getItem('username'));
         main.storage.setItem('branch', data['branch']);
         main.storage.setItem('role', data['role']);
