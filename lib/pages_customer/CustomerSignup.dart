@@ -116,7 +116,7 @@ class _SignUppagestate extends State<SignUppage> {
       }
       });
     }else if (response.statusCode == 111){
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('User with this phone number is aldready there'),backgroundColor: Colors.red,));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('User with this username is aldready there'),backgroundColor: Colors.red,));
       }
 
   }

@@ -33,7 +33,7 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
         'mobileApp/getProducts_all/' +
         main.storage.getItem('branch') +
         '/');
-    final response = await http.get(url);
+    final response = await http.post(url, body: {'phone':main.storage.getItem('phone')});
     // print(url);
 
 
