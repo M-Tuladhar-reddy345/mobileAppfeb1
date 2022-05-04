@@ -361,7 +361,9 @@ class _SignUppagestate extends State<SignUppage> {
                              
                             ]),
                           ),
-                           FlatButton(onPressed: (){Navigator.pushReplacement(context, CustomPageRoute(child: Loginpage()));}, child: Text('Aldready have an account?',style: TextStyle(color: Color.fromARGB(255, 207, 206, 206), decoration: TextDecoration.underline),)),
+                           FlatButton(onPressed: (){setState(() {
+                             widget.verifyed == false;
+                           });}, child: Text('<<<  Go back',style: TextStyle(color: Color.fromARGB(255, 207, 206, 206), decoration: TextDecoration.underline),)),
                            ElevatedButton(
                               
                               onPressed: (){
