@@ -10,6 +10,7 @@ import 'package:flutter_complete_guide/pages_Operators/ExtractdailyIndent.dart';
 import 'package:flutter_complete_guide/pages_Operators/edit_dailySalesEntry.dart';
 import 'package:flutter_complete_guide/pages_customer/CustomerLogin.dart';
 import 'package:flutter_complete_guide/pages_customer/CustomerSignup.dart';
+import 'package:flutter_complete_guide/pages_customer/DownloadSoa.dart';
 import 'package:flutter_complete_guide/pages_customer/cart.dart';
 import '../main.dart' as main;
 import '../pages_Operators/home.dart' as home;
@@ -457,6 +458,18 @@ class Navbar extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) => Cartpage()),
+                      );
+                    },
+                  ),
+                  ListTile(
+                    title: const Text('Get SOA'),
+                    onTap: () {
+                      // Update the state of the app.
+                      // ...
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PdfSoaCustomer()),
                       );
                     },
                   ),
