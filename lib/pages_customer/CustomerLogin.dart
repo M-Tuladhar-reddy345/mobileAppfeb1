@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_complete_guide/commonApi/cartApi.dart';
 import 'package:flutter_complete_guide/main.dart' as main;
 import 'package:flutter_complete_guide/pages_Operators/login.dart';
@@ -26,7 +27,7 @@ class CustomerLoginpage extends StatefulWidget {
   final confirmPasswordController = TextEditingController();
   final NameController = TextEditingController();
   final EmailController = TextEditingController();
-  var phone = PhoneNumber();
+  var phone;
   var PhoneNumberController = TextEditingController();
   var verifyed = false;
   String branch = '';
@@ -43,7 +44,7 @@ class _SignUppagestate extends State<CustomerLoginpage> {
   final _formkey2 = GlobalKey<FormState>();
   submit() async {
     final body = {
-      'phone': widget.phone.phoneNumber.toString(),
+      'phone': widget.phone.toString(),
       'password': widget.passwordController.text,
       'branch': widget.branch,
     };
@@ -57,7 +58,7 @@ class _SignUppagestate extends State<CustomerLoginpage> {
       if (data['message'] == 'Success') {
         print(data);
         main.storage.setItem('username', data['name']);
-        main.storage.setItem('phone', widget.phone.phoneNumber.toString());
+        main.storage.setItem('phone', data['phone']);
         // print(main.storage.getItem('username'));
         main.storage.setItem('branch', data['branch']);
         main.storage.setItem('role', data['role']);
@@ -82,7 +83,7 @@ class _SignUppagestate extends State<CustomerLoginpage> {
     final body = {
       'full_name': widget.NameController.text,
       'email': widget.EmailController.text,
-      'phone': widget.phone.phoneNumber.toString(),
+      'phone': widget.phone.toString(),
       'username': widget.usernameController.text,
       'password1': widget.passwordController.text,
     };
@@ -133,7 +134,7 @@ class _SignUppagestate extends State<CustomerLoginpage> {
   String otpbyuser;
   Future receiveOtp(BuildContext context) async{
     var body = {
-      'phone': widget.phone.phoneNumber.toString(),
+      'phone': widget.phone.toString(),
       'type':'login'
     };
     final url = Uri.parse(main.url_start + 'mobileApp/sendotp/');
@@ -150,7 +151,7 @@ class _SignUppagestate extends State<CustomerLoginpage> {
           main.storage.setItem('role', 'Customer');
           main.storage.setItem('branch', '');
           main.storage.setItem('username', '');
-          main.storage.setItem('phone', widget.phone.phoneNumber.toString());
+          main.storage.setItem('phone', widget.phone.toString());
           Navigator.pushReplacement(context, CustomPageRoute(child: home.Homepage()));
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Successfully logged in'),backgroundColor: Colors.green,));
       }else{
@@ -238,43 +239,27 @@ class _SignUppagestate extends State<CustomerLoginpage> {
                             
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: InternationalPhoneNumberInput(
-                                countries: ['IN'],
-                                onInputChanged: (PhoneNumber number) {
+                              child: TextField(
+                                inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9]'))],
+                                onChanged: (number) {
                                 setState(() {
                                   widget.phone = number;
                                 });
                               },
-                              
-              
-                              validator: (value) {
-                                            if (value == null || value.isEmpty) {
-                                              return 'Phone number is important';
-                                            }else if (RegExp(r"^(?:[+0]9)?[0-9]{10}$").hasMatch(value) == false){
-                                              return 'Phone pattern not satisfied';
-                                            }
-                                            
-                                            return null;
-                                          },
-                              
-                              selectorConfig: SelectorConfig(
-                                selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
-                              ),
-                              ignoreBlank: false,
-                              autoValidateMode: AutovalidateMode.disabled,
-                              selectorTextStyle: TextStyle(color: Colors.black),
-                              initialValue: widget.phone,
-                              textFieldController: widget.PhoneNumberController,
-                              formatInput: false,
+                              maxLength: 10,
                               keyboardType:
-                                  TextInputType.numberWithOptions(signed: true, decimal: true),
-                              inputBorder: OutlineInputBorder(),
-                              inputDecoration: InputDecoration(filled: true,
+                                  TextInputType.number,
+                              decoration: InputDecoration(
+                                
+                                filled: true,
+                              prefixText: '+91',
+                              prefixIcon: Icon(Icons.flag),
                               fillColor: Colors.white,
                               hintText: 'Phone Number',
                               contentPadding:
                                     const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
                               focusedBorder: OutlineInputBorder(
+                    
                                   borderSide: BorderSide(color: Colors.white),
                                   borderRadius: BorderRadius.circular(25.7),
                               ),
@@ -282,9 +267,7 @@ class _SignUppagestate extends State<CustomerLoginpage> {
                                   borderSide: BorderSide(color: Colors.white),
                                   borderRadius: BorderRadius.circular(25.7),
                               ),),
-                              onSaved: (PhoneNumber number) {
-                                print('On Saved: $number');
-                              },),
+                              ),
                             ),
                             Padding(
                         padding: const EdgeInsets.all(8.0),

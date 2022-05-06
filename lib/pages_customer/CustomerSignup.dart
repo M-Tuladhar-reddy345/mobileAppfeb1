@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_complete_guide/main.dart' as main;
 import 'package:flutter_complete_guide/pages_Operators/login.dart';
 import 'package:flutter_complete_guide/pages_customer/CustomerLogin.dart';
@@ -23,7 +24,7 @@ class SignUppage extends StatefulWidget {
   final confirmPasswordController = TextEditingController();
   final NameController = TextEditingController();
   final EmailController = TextEditingController();
-  var phone = PhoneNumber();
+  var phone;
   var PhoneNumberController = TextEditingController();
   var verifyed = false;
   String branch = '';
@@ -43,8 +44,8 @@ class _SignUppagestate extends State<SignUppage> {
     final body = {
       'full_name': widget.NameController.text,
       'email': widget.EmailController.text,
-      'phone': widget.phone.phoneNumber.toString(),
-      'username': widget.usernameController.text,
+      'phone': widget.phone.toString(),
+      'username': widget.PhoneNumberController.text,
       'password1': widget.passwordController.text,
     };
     print(body);
@@ -67,7 +68,7 @@ class _SignUppagestate extends State<SignUppage> {
         );
       } else {
         ScaffoldMessenger.of(context).clearSnackBars();
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Aldready account With this number is there'),backgroundColor: Colors.green,));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('User with this Name is aldready there'),backgroundColor: Colors.green,));
       }
     }
   }
@@ -94,7 +95,7 @@ class _SignUppagestate extends State<SignUppage> {
   String otpbyuser;
   Future receiveOtp(BuildContext context) async{
     var body = {
-      'phone': widget.phone.phoneNumber.toString(),
+      'phone': widget.phone.toString(),
       'type':'signup'
     };
     final url = Uri.parse(main.url_start + 'mobileApp/sendotp/');
@@ -110,13 +111,14 @@ class _SignUppagestate extends State<SignUppage> {
           print(widget.verifyed);
         setState(() {
           widget.verifyed = true;
+          widget.usernameController.text == widget.phone.toString();
         });
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Otp dont match retry'),backgroundColor: Colors.red,));
       }
       });
     }else if (response.statusCode == 111){
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('User with this username is aldready there'),backgroundColor: Colors.red,));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Aldready account With this number is there'),backgroundColor: Colors.red,));
       }
 
   }
@@ -251,11 +253,13 @@ class _SignUppagestate extends State<SignUppage> {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: TextFormField(
-                                    controller: widget.usernameController,
+                                    controller: widget.PhoneNumberController,
                                     decoration: InputDecoration(
                             filled: true,
                             fillColor: Colors.white,
-                            hintText: 'Username',
+                            hintText: widget.phone.toString(),
+                            enabled: false,
+                            
                             contentPadding:
                                   const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
                             focusedBorder: OutlineInputBorder(
@@ -362,7 +366,7 @@ class _SignUppagestate extends State<SignUppage> {
                             ]),
                           ),
                            FlatButton(onPressed: (){setState(() {
-                             widget.verifyed == false;
+                             widget.verifyed = false;
                            });}, child: Text('<<<  Go back',style: TextStyle(color: Color.fromARGB(255, 207, 206, 206), decoration: TextDecoration.underline),)),
                            ElevatedButton(
                               
@@ -401,43 +405,28 @@ class _SignUppagestate extends State<SignUppage> {
                             
                             Padding(
                               padding: const EdgeInsets.all(8.0),
-                              child: InternationalPhoneNumberInput(
-                                countries: ['IN'],
-                                onInputChanged: (PhoneNumber number) {
+                              child: TextField(
+                                controller: widget.PhoneNumberController,
+                                inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9]'))],
+                                onChanged: (number) {
                                 setState(() {
                                   widget.phone = number;
                                 });
                               },
-                              
-              
-                              validator: (value) {
-                                            if (value == null || value.isEmpty) {
-                                              return 'Phone number is important';
-                                            }else if (RegExp(r"^(?:[+0]9)?[0-9]{10}$").hasMatch(value) == false){
-                                              return 'Phone pattern not satisfied';
-                                            }
-                                            
-                                            return null;
-                                          },
-                              
-                              selectorConfig: SelectorConfig(
-                                selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
-                              ),
-                              ignoreBlank: false,
-                              autoValidateMode: AutovalidateMode.disabled,
-                              selectorTextStyle: TextStyle(color: Colors.black),
-                              initialValue: widget.phone,
-                              textFieldController: widget.PhoneNumberController,
-                              formatInput: false,
+                              maxLength: 10,
                               keyboardType:
-                                  TextInputType.numberWithOptions(signed: true, decimal: true),
-                              inputBorder: OutlineInputBorder(),
-                              inputDecoration: InputDecoration(filled: true,
+                                  TextInputType.number,
+                              decoration: InputDecoration(
+                                
+                                filled: true,
+                              prefixText: '+91',
+                              prefixIcon: Icon(Icons.flag),
                               fillColor: Colors.white,
                               hintText: 'Phone Number',
                               contentPadding:
                                     const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
                               focusedBorder: OutlineInputBorder(
+                    
                                   borderSide: BorderSide(color: Colors.white),
                                   borderRadius: BorderRadius.circular(25.7),
                               ),
@@ -445,9 +434,7 @@ class _SignUppagestate extends State<SignUppage> {
                                   borderSide: BorderSide(color: Colors.white),
                                   borderRadius: BorderRadius.circular(25.7),
                               ),),
-                              onSaved: (PhoneNumber number) {
-                                print('On Saved: $number');
-                              },),
+                              ),
                             ),
                             FlatButton(onPressed: (){Navigator.pushReplacement(context, CustomPageRoute(child: CustomerLoginpage()));}, child: Text('Aldready have an account? ',style: TextStyle(color: Color.fromARGB(255, 207, 206, 206), decoration: TextDecoration.underline),)),
                             ElevatedButton(onPressed: (){if (_formkey2.currentState.validate()) {

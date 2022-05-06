@@ -6,11 +6,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:provider/provider.dart';
+import '../commonApi/cartApi.dart';
 import '../widgets/navbar.dart' as navbar;
 import '../widgets/form.dart' as form;
 import 'package:provider/provider.dart' as provider;
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:flutter_complete_guide/models.dart' as models;
+
+import 'orderConfirming.dart';
 
 
 class AddingToCartpage extends StatefulWidget {
@@ -95,121 +98,128 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
           return Padding(
                   padding: const EdgeInsets.all(5.0),
                   child: Center(
-                      child: Container(
-                    width: MediaQuery.of(ctx).size.width,
-                    height: 400,
-                    child: SingleChildScrollView(
-                      child: Table(
-                      defaultColumnWidth: FixedColumnWidth(60.0),
-                      border: TableBorder.all(
-                          color: Colors.black,
-                          style: BorderStyle.solid,
-                          width: 2),
-                      children: [
-                            TableRow(children: [
-                              Column(children: [
-                                Center(
-                                    child: Text('Prod',
-                                        style: TextStyle(fontSize: 15.0)))
-                              ]),
-                              Column(children: [
-                                Center(
-                                    child: Text('Qty',
-                                        style: TextStyle(fontSize: 15.0)))
-                              ]),
-                              Column(children: [
-                                Text('Amt', style: TextStyle(fontSize: 15.0))
-                              ]),
-                              
-                              // Column(children: [
-                              //   Text('Amt', style: TextStyle(fontSize: 20.0))
-                              // ]),
-                            ]),
-                          ] + widget.cart.values.map((e){
-                            print(e.product);
-                            print(widget.cart.length);
-                            if( e.Quantity != '0.0' ){
-                            var image = e.pImage;
-                            return TableRow(children: [
-                              Column(children: [
-                                Center(
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Container(height: 50,width: 50,decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/prodtypes/$image'),fit:BoxFit.fill ))),
-                                        ),
-                                        Text(e.product,
-                                          style: TextStyle(fontSize: 15.0)),
-                      
-                                      ])
-                              )]),
-                              Column(children: [
-                                Center(
-                                    child: SizedBox(
-                                      width: 30,
-                                      child: Center(
-                                        child: Text(e.Quantity,
-                                          style: TextStyle(fontSize: 15.0)),
-                                      ),
-                                    ))
-                              ]),
-                              Column(children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Align(alignment: Alignment.centerRight,child: Text(e.Amount, style: TextStyle(fontSize: 15.0))),
-                                )
-                              ]),
-                              
-                              // Column(children: [
-                              //   Text('Amt', style: TextStyle(fontSize: 20.0))
-                              // ]),
-                            ]);}else{  
-                            return TableRow(children: [
-                              Column(children: [
-                                Center(
-                                    child: Container()
-                              )]),
-                              Column(children: [
-                                Center(
-                                    child: Container())
-                              ]),
-                              Column(children: [
-                                Center(child: Container())
-                              ]),
-                              
-                              // Column(children: [
-                              //   Text('Amt', style: TextStyle(fontSize: 20.0))
-                              // ]),
-                            ]);}
-                          }).toList()+[
-                            TableRow(children: [
-                              Column(children: [
-                                Center(
-                                    child: Text('Total',
-                                        style: TextStyle(fontSize: 15.0)))
-                              ]),
-                              Column(children: [
-                                Center(
-                                    child: Text('',
-                                        style: TextStyle(fontSize: 15.0)))
-                              ]),
-                              Column(children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Align(alignment: Alignment.centerRight,child: Text(widget.ttlamt.toString(), style: TextStyle(fontSize: 15.0))),
-                                )
-                              ]),
-                              
-                              // Column(children: [
-                              //   Text('Amt', style: TextStyle(fontSize: 20.0))
-                              // ]),
-                            ]),
-                          ]
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children:[ 
+                            ElevatedButton(onPressed: (){updatecart();
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OrderConfirm() ));}, child: Text('Procced >')),
+                            Container(
+                                            width: MediaQuery.of(ctx).size.width,
+                                            height: 400,
+                                            child: SingleChildScrollView(
+                          child: Table(
+                          defaultColumnWidth: FixedColumnWidth(60.0),
+                          border: TableBorder.all(
+                              color: Colors.black,
+                              style: BorderStyle.solid,
+                              width: 2),
+                          children: [
+                                TableRow(children: [
+                                  Column(children: [
+                                    Center(
+                                        child: Text('Prod',
+                                            style: TextStyle(fontSize: 15.0)))
+                                  ]),
+                                  Column(children: [
+                                    Center(
+                                        child: Text('Qty',
+                                            style: TextStyle(fontSize: 15.0)))
+                                  ]),
+                                  Column(children: [
+                                    Text('Amt', style: TextStyle(fontSize: 15.0))
+                                  ]),
+                                  
+                                  // Column(children: [
+                                  //   Text('Amt', style: TextStyle(fontSize: 20.0))
+                                  // ]),
+                                ]),
+                              ] + widget.cart.values.map((e){
+                                print(e.product);
+                                print(widget.cart.length);
+                                if( e.Quantity != '0.0' ){
+                                var image = e.pImage;
+                                return TableRow(children: [
+                                  Column(children: [
+                                    Center(
+                                        child: Column(
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: Container(height: 50,width: 50,decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/prodtypes/$image'),fit:BoxFit.fill ))),
+                                            ),
+                                            Text(e.product,
+                                              style: TextStyle(fontSize: 15.0)),
                           
+                                          ])
+                                  )]),
+                                  Column(children: [
+                                    Center(
+                                        child: SizedBox(
+                                          width: 30,
+                                          child: Center(
+                                            child: Text(e.Quantity,
+                                              style: TextStyle(fontSize: 15.0)),
+                                          ),
+                                        ))
+                                  ]),
+                                  Column(children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Align(alignment: Alignment.centerRight,child: Text(e.Amount, style: TextStyle(fontSize: 15.0))),
+                                    )
+                                  ]),
+                                  
+                                  // Column(children: [
+                                  //   Text('Amt', style: TextStyle(fontSize: 20.0))
+                                  // ]),
+                                ]);}else{  
+                                return TableRow(children: [
+                                  Column(children: [
+                                    Center(
+                                        child: Container()
+                                  )]),
+                                  Column(children: [
+                                    Center(
+                                        child: Container())
+                                  ]),
+                                  Column(children: [
+                                    Center(child: Container())
+                                  ]),
+                                  
+                                  // Column(children: [
+                                  //   Text('Amt', style: TextStyle(fontSize: 20.0))
+                                  // ]),
+                                ]);}
+                              }).toList()+[
+                                TableRow(children: [
+                                  Column(children: [
+                                    Center(
+                                        child: Text('Total',
+                                            style: TextStyle(fontSize: 15.0)))
+                                  ]),
+                                  Column(children: [
+                                    Center(
+                                        child: Text('',
+                                            style: TextStyle(fontSize: 15.0)))
+                                  ]),
+                                  Column(children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Align(alignment: Alignment.centerRight,child: Text(widget.ttlamt.toString(), style: TextStyle(fontSize: 15.0))),
+                                    )
+                                  ]),
+                                  
+                                  // Column(children: [
+                                  //   Text('Amt', style: TextStyle(fontSize: 20.0))
+                                  // ]),
+                                ]),
+                              ]
+                              
+                            ),
+                                            ),
+                                          ),]
                         ),
-                    ),
-                  )),
+                      )),
                 );
         }));
         
