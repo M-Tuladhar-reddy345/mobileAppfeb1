@@ -1,6 +1,5 @@
-import 'dart:ffi';
-import 'dart:math';
 
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/main.dart' as main;
 import 'package:flutter_complete_guide/pages_Operators/home.dart';
@@ -14,6 +13,7 @@ import 'package:flutter_complete_guide/models.dart' as models;
 class OrderConfirm extends StatefulWidget {
   String message;
   Map<String, models.Customerprod> cart = {};
+  String orderRazorpay;
   int cartProds = 0;
   double ttlamt = 0;
   String prodtype = 'All';  
@@ -29,6 +29,55 @@ class OrderConfirm extends StatefulWidget {
 }
 
 class _OrderConfirm extends State<OrderConfirm> {
+ 
+  final _razorpay = Razorpay();
+  
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getAddresses = get_addresses();
+    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+  }
+  @override
+  void dispose() {
+        // TODO: implement dispose
+        super.dispose();
+        _razorpay.clear();
+      }
+      void _handlePaymentSuccess(PaymentSuccessResponse response) {
+      // Do something when payment succeeds
+      submit();
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+      // Do something when payment fails
+  }
+  void _handleExternalWallet(ExternalWalletResponse response) {
+      // Do something when an external wallet is selected
+    }
+  openRazorpay() async{
+    final url = Uri.parse(main.url_start +
+        'mobileApp/razorPayordercreate/'+main.storage.getItem('ttl') +'/'+main.storage.getItem('phone')+'/');
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body) as Map;
+      setState(() {
+        widget.orderRazorpay = data['orderid'];
+      });
+      _razorpay.open({
+        'key': 'rzp_test_GsXmSVzIavcBnS',
+        'amount': int.parse(main.storage.getItem('ttl').toString()+'00'), //in the smallest currency sub-unit.
+        'name': 'Raithanna milk Dairy ',
+        'order_id': widget.orderRazorpay, // Generate order_id using Orders API
+        'description': 'Fresh milk and milk products',
+        'timeout': 300, // in seconds
+        
+      });
+      }
+  }
   Future getAddresses;
   submit() async{
     print(widget.Address1.text == '' ||widget.Address2.text == ''||widget.Address3.text == ''||widget.Address4.text == ''|| widget.pincode.text == '');
@@ -210,32 +259,13 @@ class _OrderConfirm extends State<OrderConfirm> {
         
       });
     }
-    @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getAddresses = get_addresses();
-  }
+    
   @override
   Widget build(BuildContext context) {
     widget.cart = main.storage.getItem('cart') ;
     widget.cartProds = int.parse(main.storage.getItem('products'));
     widget.ttlamt = double.parse(main.storage.getItem('ttl'));
-    return    Scaffold(       
-      bottomNavigationBar: Container(
-                        color: Theme.of(context).primaryColor,
-                        child: Stack(
-                          
-                          children: [
-                            Image(image: AssetImage("assets/images/jnjlogo.png"),
-                            height: 60,
-                            width: 60,
-                    // color: Color(0xFF3A5A98),
-               ),
-                            Positioned(left: 60,child: Text(' Copyright ©2022 All rights reserved \n Jack n Jill Solutions Pvt.Ltd. \n JacknJill.me.',style:TextStyle(color: Theme.of(context).primaryColor.computeLuminance() > 0.5 ? Colors.black : Colors.white,fontWeight: FontWeight.bold)))
-                          ],
-                        ),
-                      ),
+    return    Scaffold(
     drawer: navbar.Navbar(),
         appBar: AppBar(
           title: Text('Confirm order'),
@@ -252,7 +282,12 @@ class _OrderConfirm extends State<OrderConfirm> {
                 padding: const EdgeInsets.all(8.0),
                 child: Container(height: 2,width: MediaQuery.of(context).size.width * (90/100),color: Theme.of(context).primaryColorLight,),
               ),
-              Align(alignment: Alignment.centerRight,child: ElevatedButton(onPressed: (() => submit()),child: Text('Place order', style: TextStyle(fontSize: 15),))),
+              Align(alignment: Alignment.centerRight,child: ElevatedButton(onPressed: (() {
+                if (widget.Address1.text == '' ||widget.Address2.text == ''||widget.Address3.text == ''||widget.Address4.text == ''|| widget.pincode.text == ''){
+      ScaffoldMessenger.of(context).showSnackBar(
+                     SnackBar(content: Text('Every Field need to be filled'), backgroundColor: Colors.red,));
+    }else{openRazorpay();}
+              }),child: Text('Place order', style: TextStyle(fontSize: 15),))),
               Align(alignment: Alignment.centerLeft,child: Text('Address', style: TextStyle(fontSize: 15),)),
               Padding(
                 padding: const EdgeInsets.all(8.0),

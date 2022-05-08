@@ -513,25 +513,25 @@ class Navbar extends StatelessWidget {
                                                       ),
                                     ),
                                   ),
-              //     Align(
-              //       alignment: Alignment.bottomLeft,
-              //       child: Expanded(
-              //         child: Container(
-              //           color: Theme.of(context).primaryColor,
-              //           child: Wrap(
+                  Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Expanded(
+                      child: Container(
+                        color: Theme.of(context).primaryColor,
+                        child: Wrap(
                           
-              //             children: [
-              //               Image(image: AssetImage("assets/images/jnjlogo.png"),
-              //               height: 50,
-              //               width: 50,
-              //       // color: Color(0xFF3A5A98),
-              //  ),
-              //               Text('Copyright©2022 - All rights reserved to Jack n Jill Solutions Pvt Ltd',style:TextStyle(color: Theme.of(context).primaryColor.computeLuminance() > 0.5 ? Colors.black : Colors.white,fontWeight: FontWeight.bold))
-              //             ],
-              //           ),
-              //         ),
-              //       ),
-              //     )
+                          children: [
+                            Image(image: AssetImage("assets/images/jnjlogo.png"),
+                            height: 50,
+                            width: 50,
+                    // color: Color(0xFF3A5A98),
+               ),
+                            Text('Copyright©2022 - All rights reserved to Jack n Jill Solutions Pvt Ltd',style:TextStyle(color: Theme.of(context).primaryColor.computeLuminance() > 0.5 ? Colors.black : Colors.white,fontWeight: FontWeight.bold))
+                          ],
+                        ),
+                      ),
+                    ),
+                  )
         ]));
          
         

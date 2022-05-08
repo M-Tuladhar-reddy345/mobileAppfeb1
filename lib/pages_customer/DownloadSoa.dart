@@ -90,20 +90,6 @@ class _PdfSoaCustomer extends State<PdfSoaCustomer> {
   @override
   Widget build(BuildContext context) {
     return    Scaffold(       
-      bottomNavigationBar: Container(
-                        color: Theme.of(context).primaryColor,
-                        child: Stack(
-                          
-                          children: [
-                            Image(image: AssetImage("assets/images/jnjlogo.png"),
-                            height: 60,
-                            width: 60,
-                    // color: Color(0xFF3A5A98),
-               ),
-                            Positioned(left: 60,child: Text(' Copyright ©2022 All rights reserved \n Jack n Jill Solutions Pvt.Ltd. \n JacknJill.me.',style:TextStyle(color: Theme.of(context).primaryColor.computeLuminance() > 0.5 ? Colors.black : Colors.white,fontWeight: FontWeight.bold)))
-                          ],
-                        ),
-                      ),       
         drawer: navbar.Navbar(),
         appBar: AppBar(
           title: Text('Download Soa PDF'),
