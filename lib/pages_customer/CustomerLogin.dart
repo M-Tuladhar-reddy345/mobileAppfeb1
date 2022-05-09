@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_complete_guide/commonApi/cartApi.dart';
@@ -11,8 +12,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:provider/provider.dart';
 import '../models.dart' ;
+import '../widgets/loader.dart';
 import '../widgets/navbar.dart' as navbar;
-import '../pages_Operators/home.dart' as home;
+import '../pages_common/home.dart' as home;
 import '../widgets/form.dart' as form;
 import 'package:provider/provider.dart' as provider;
 import 'package:http/http.dart' as http;
@@ -42,7 +44,9 @@ class CustomerLoginpage extends StatefulWidget {
 class _SignUppagestate extends State<CustomerLoginpage> {
   final _formkey = GlobalKey<FormState>();
   final _formkey2 = GlobalKey<FormState>();
+ 
   submit() async {
+    LoaderDialogbox(context);
     final body = {
       'phone': widget.phone.toString(),
       'password': widget.passwordController.text,
@@ -72,6 +76,7 @@ class _SignUppagestate extends State<CustomerLoginpage> {
               builder: (context) => home.Homepage()),
         );
       } else {
+        Navigator.pop(context);
         print(data);
         ScaffoldMessenger.of(context).showSnackBar(
                      SnackBar(content: Text(data['message']),backgroundColor: Colors.red,));

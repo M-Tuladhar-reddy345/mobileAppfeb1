@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_complete_guide/pages_Operators/home.dart';
+import 'package:flutter_complete_guide/pages_common/home.dart';
 import 'package:flutter_complete_guide/pages_Operators/login.dart';
 import 'package:flutter_complete_guide/pages_customer/CustomerLogin.dart';
 import 'package:flutter_complete_guide/splashFiles/splash2.dart';
@@ -51,7 +51,9 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin{
                         image:
                             AssetImage('assets/images/RaithannaOLogo.png')),
         ),
+        
       ),
-    );
+      floatingActionButton:FloatingActionButton(child: Icon(Icons.skip_next), onPressed: ()=>Navigator.pushReplacement(context, MaterialPageRoute(builder:((context) => CustomerLoginpage())),)
+    ));
   }
 }

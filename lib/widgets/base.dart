@@ -10,7 +10,7 @@ import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:provider/provider.dart';
 import '../models.dart' ;
 import '../widgets/navbar.dart' as navbar;
-import '../pages_Operators/home.dart' as home;
+import '../pages_common/home.dart' as home;
 import '../widgets/form.dart' as form;
 import 'package:provider/provider.dart' as provider;
 import 'package:http/http.dart' as http;

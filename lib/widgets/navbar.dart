@@ -13,7 +13,7 @@ import 'package:flutter_complete_guide/pages_customer/CustomerSignup.dart';
 import 'package:flutter_complete_guide/pages_customer/DownloadSoa.dart';
 import 'package:flutter_complete_guide/pages_customer/cart.dart';
 import '../main.dart' as main;
-import '../pages_Operators/home.dart' as home;
+import '../pages_common/home.dart' as home;
 import '../pages_Operators/UpdatePayments.dart' as UpdatePayments;
 import '../pages_Operators/login.dart' as login;
 import '../pages_Operators/login.dart' as loginCustomer;

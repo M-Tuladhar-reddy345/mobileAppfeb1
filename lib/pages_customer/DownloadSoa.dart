@@ -92,6 +92,11 @@ class _PdfSoaCustomer extends State<PdfSoaCustomer> {
     return    Scaffold(       
         drawer: navbar.Navbar(),
         appBar: AppBar(
+          actions: [Image(image: AssetImage("assets/images/RaithannaOLogo.png"),
+                            height: 100,
+                            width: 100,
+                    // color: Color(0xFF3A5A98),
+               ),],
           title: Text('Download Soa PDF'),
         ),
         body: SingleChildScrollView(

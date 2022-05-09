@@ -4,12 +4,13 @@ import 'package:flutter_complete_guide/main.dart' as main;
 import 'package:flutter_complete_guide/pages_Operators/login.dart';
 import 'package:flutter_complete_guide/pages_customer/CustomerLogin.dart';
 import 'package:flutter_complete_guide/widgets/Pageroute.dart';
+import 'package:flutter_complete_guide/widgets/loader.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:provider/provider.dart';
 import '../models.dart' as models;
 import '../widgets/navbar.dart' as navbar;
-import '../pages_Operators/home.dart' as home;
+import '../pages_common/home.dart' as home;
 import '../widgets/form.dart' as form;
 import 'package:provider/provider.dart' as provider;
 import 'package:http/http.dart' as http;
@@ -40,6 +41,7 @@ class _SignUppagestate extends State<SignUppage> {
   final _formkey = GlobalKey<FormState>();
   final _formkey2 = GlobalKey<FormState>();
   submit() async {  
+    LoaderDialogbox(context);
     print(widget.phone);
     final body = {
       'full_name': widget.NameController.text,
@@ -134,6 +136,8 @@ class _SignUppagestate extends State<SignUppage> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextFormField(
+                maxLength: 6,
+                inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9]'))],
                 decoration: InputDecoration(
                   border: new OutlineInputBorder(
                     borderRadius: const BorderRadius.all(

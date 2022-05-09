@@ -6,7 +6,7 @@ import 'package:flutter_complete_guide/commonApi/cartApi.dart';
 import 'package:flutter_complete_guide/models.dart';
 import 'package:flutter_complete_guide/pages_customer/CustomerLogin.dart';
 import 'package:provider/provider.dart' as provider;
-import './pages_Operators/home.dart' as home;
+import 'pages_common/home.dart' as home;
 import 'package:localstorage/localstorage.dart' as localstorage;
 import 'dart:io';
 import 'package:flutter/foundation.dart';
@@ -20,11 +20,11 @@ final localstorage.LocalStorage storage =
 
 
 // final String url_start = 'http://www.jacknjill.solutions/';
-final String url_start = 'http://192.168.1.100:8000/';
+// final String url_start = 'http://192.168.1.104:8000/';
 // final String url_start = 'http://192.168.1.10:8000/';
 // final String url_start = 'http://localhost:8000/';
 // final String url_start = 'http://192.168.1.2:8000/';
-// final String url_start = 'http://192.168.225.229:8000/';
+final String url_start = 'http://192.168.225.229:8000/';
 main() {
   storage.clear();
 

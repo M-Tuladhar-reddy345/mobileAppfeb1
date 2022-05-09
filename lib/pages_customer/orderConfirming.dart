@@ -1,9 +1,12 @@
 
+import 'package:flutter/services.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/main.dart' as main;
-import 'package:flutter_complete_guide/pages_Operators/home.dart';
+import 'package:flutter_complete_guide/pages_common/home.dart';
+import '../commonApi/cartApi.dart';
 import '../models.dart' ;
+import '../widgets/loader.dart';
 import '../widgets/navbar.dart' as navbar;
 import '../widgets/form.dart' as form;
 import 'package:http/http.dart' as http;
@@ -59,8 +62,9 @@ class _OrderConfirm extends State<OrderConfirm> {
       // Do something when an external wallet is selected
     }
   openRazorpay() async{
+    LoaderDialogbox(context);
     final url = Uri.parse(main.url_start +
-        'mobileApp/razorPayordercreate/'+main.storage.getItem('ttl') +'/'+main.storage.getItem('phone')+'/');
+        'mobileApp/razorPayordercreate/'+main.storage.getItem('ttl').toString() +'/'+main.storage.getItem('phone')+'/');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       var data = json.decode(response.body) as Map;
@@ -69,12 +73,14 @@ class _OrderConfirm extends State<OrderConfirm> {
       });
       _razorpay.open({
         'key': 'rzp_test_GsXmSVzIavcBnS',
-        'amount': int.parse(main.storage.getItem('ttl').toString()+'00'), //in the smallest currency sub-unit.
+        'amount': int.parse(data['amt']), //in the smallest currency sub-unit.
         'name': 'Raithanna milk Dairy ',
         'order_id': widget.orderRazorpay, // Generate order_id using Orders API
         'description': 'Fresh milk and milk products',
         'timeout': 300, // in seconds
-        
+        'prefill':{
+          'contact':main.storage.getItem('phone')
+        }
       });
       }
   }
@@ -97,12 +103,18 @@ class _OrderConfirm extends State<OrderConfirm> {
       final url = Uri.parse(main.url_start+'mobileApp/placeorder/');
       final response =  await http.post(url, body: body);
       if (response.statusCode == 200){
+        Navigator.pop(context);
         var data = json.decode(response.body) as Map;
         if (data['message'] == 'Success'){
           ScaffoldMessenger.of(context).clearSnackBars();
           ScaffoldMessenger.of(context).showSnackBar(
                      SnackBar(content: Text('Successfully placed order'), backgroundColor: Colors.green,));
+          getCart();
+          main.storage.setItem('ttl', '0');
+          main.storage.setItem('products', '0');
+          main.storage.setItem('cart',  <String,Customerprod> {} );
           Navigator.pushReplacement(context, MaterialPageRoute(builder:((context) => Homepage()) ));
+
         }else{
           ScaffoldMessenger.of(context).showSnackBar(
                      SnackBar(content: Text(data['message']), backgroundColor: Colors.red,));
@@ -268,6 +280,11 @@ class _OrderConfirm extends State<OrderConfirm> {
     return    Scaffold(
     drawer: navbar.Navbar(),
         appBar: AppBar(
+          actions: [Image(image: AssetImage("assets/images/RaithannaOLogo.png"),
+                            height: 100,
+                            width: 100,
+                    // color: Color(0xFF3A5A98),
+               ),],
           title: Text('Confirm order'),
           
         ),
@@ -351,7 +368,9 @@ class _OrderConfirm extends State<OrderConfirm> {
                   decoration: InputDecoration(
                     labelText:'Pincode' 
                   ),
+                  inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9]'))],
                   controller: widget.pincode,
+                  maxLength: 6,
                   // onChanged:(value){
                   //   setState(() {
                   //   widget.Address4.text = value;  
