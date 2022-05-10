@@ -18,6 +18,7 @@ class OrderConfirm extends StatefulWidget {
   Map<String, models.Customerprod> cart = {};
   String orderRazorpay;
   int cartProds = 0;
+  int ttlqty = 0;
   double ttlamt = 0;
   String prodtype = 'All';  
   List prodtypes=['All'];
@@ -247,7 +248,7 @@ class _OrderConfirm extends State<OrderConfirm> {
                               ]),
                               Column(children: [
                                 Center(
-                                    child: Text('',
+                                    child: Text(widget.ttlqty.toString(),
                                         style: TextStyle(fontSize: 15.0)))
                               ]),
                               Column(children: [
@@ -277,6 +278,7 @@ class _OrderConfirm extends State<OrderConfirm> {
     widget.cart = main.storage.getItem('cart') ;
     widget.cartProds = int.parse(main.storage.getItem('products'));
     widget.ttlamt = double.parse(main.storage.getItem('ttl'));
+    widget.ttlqty = int.parse(main.storage.getItem('ttlqty'));
     return    Scaffold(
     drawer: navbar.Navbar(),
         appBar: AppBar(
@@ -294,7 +296,7 @@ class _OrderConfirm extends State<OrderConfirm> {
             children: [
               Center(child: FlatButton(onPressed: ()=> showCart(context,setState), child: Text('Show products', style: TextStyle(color: Theme.of(context).primaryColor),))),
               Text('Total:- '+ widget.ttlamt.toString(), style: TextStyle(fontSize: 20),),
-              Text('Total products:- '+ widget.cartProds.toString(), style: TextStyle(fontSize: 20),),
+              Text('Total products:- '+ widget.cartProds.toString()+'('+widget.ttlqty.toString()+')', style: TextStyle(fontSize: 20),),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(height: 2,width: MediaQuery.of(context).size.width * (90/100),color: Theme.of(context).primaryColorLight,),

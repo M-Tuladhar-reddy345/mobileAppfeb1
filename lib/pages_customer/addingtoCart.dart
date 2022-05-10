@@ -20,6 +20,7 @@ class AddingToCartpage extends StatefulWidget {
   String message;
   Map<String, models.Customerprod> cart = {};
   int cartProds = 0;
+  int ttlqty = 0;
   double ttlamt = 0;
   String prodtype = 'All';  
   List prodtypes=['All'];
@@ -58,11 +59,12 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
       if (widget.cart[pcode] != null){
         setState(() {
          
-        
+        widget.ttlqty = widget.ttlqty+1;
         widget.cart[pcode].Quantity = (double.parse(widget.cart[pcode].Quantity) + 1).toString();
         if (widget.cart[pcode].Quantity == '1.0'){
           widget.cartProds = widget.cartProds+1;
         }
+
         widget.cart[pcode].Amount = (double.parse(widget.cart[pcode].Quantity) * double.parse(widget.cart[pcode].UnitRate)).toString();
         widget.ttlamt = widget.ttlamt + (double.parse(widget.cart[pcode].UnitRate));
        
@@ -71,6 +73,7 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
       main.storage.setItem('cart', widget.cart);
          main.storage.setItem('ttl', widget.ttlamt.toString());
          main.storage.setItem('products', widget.cartProds.toString());
+         main.storage.setItem('ttlqty',widget.ttlqty.toString());
       }
      }
     void subtract(pcode, unitrate){
@@ -78,10 +81,11 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
         setState(() {
         
         widget.cart[pcode].Quantity = (double.parse(widget.cart[pcode].Quantity) - 1).toString();
+        widget.ttlqty = widget.ttlqty-1;
         if (widget.cart[pcode].Quantity == '0.0'){
           widget.cartProds = widget.cartProds-1;
         }
-        
+        widget.ttlqty = widget.ttlqty-1;
         widget.cart[pcode].Amount = (double.parse(widget.cart[pcode].Quantity) * double.parse(widget.cart[pcode].UnitRate)).toString();
         widget.ttlamt = widget.ttlamt - (double.parse(widget.cart[pcode].UnitRate));
         
@@ -89,6 +93,7 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
       main.storage.setItem('cart', widget.cart);
         main.storage.setItem('ttl', widget.ttlamt.toString());
         main.storage.setItem('products', widget.cartProds.toString());
+        main.storage.setItem('ttlqty',widget.ttlqty.toString());
       }
      }
     Widget showCart(BuildContext ctx,StateSetter setModalState){
@@ -199,8 +204,7 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
                                   ]),
                                   Column(children: [
                                     Center(
-                                        child: Text('',
-                                            style: TextStyle(fontSize: 15.0)))
+                                        child: Text(widget.ttlqty.toString(),                                style: TextStyle(fontSize: 15.0)))
                                   ]),
                                   Column(children: [
                                     Padding(
@@ -234,10 +238,11 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
   }
   @override
   Widget build(BuildContext context) {
-    if (main.storage.getItem('ttl') != null && main.storage.getItem('products') != null&& main.storage.getItem('cart') != null){
+    if (main.storage.getItem('ttl') != null && main.storage.getItem('products') != null&& main.storage.getItem('cart') != null &&main.storage.getItem('ttlqty') != null ){
       widget.cart = main.storage.getItem('cart');
     widget.cartProds = int.parse(main.storage.getItem('products'));
     widget.ttlamt = double.parse(main.storage.getItem('ttl'));
+    widget.ttlqty = int.parse(main.storage.getItem('ttlqty').toString());
     }
     return    Scaffold(       
         drawer: navbar.Navbar(),

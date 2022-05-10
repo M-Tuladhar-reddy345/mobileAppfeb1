@@ -35,15 +35,17 @@ void updatecart() async {
       print(data);
       Map<String,Customerprod> cart = {};
       
-      
+      int totalqty = 0;
       
       if (data['products'] == ''){
       storage.setItem('ttl', data['ttl']);
+      storage.setItem('ttlqty', totalqty);
       storage.setItem('products', data['cartprods']);
       storage.setItem('cart',  <String,Customerprod> {} );}else{
         List products = data['products'] as List;
        for (var e in products){
         print(e);
+        totalqty = totalqty + int.parse(e['quantity'].toString());
         cart.putIfAbsent(e['pcode'], () => Customerprod(
                         e['pcode'].toString(),
                         e['ptype'].toString(),
@@ -58,6 +60,8 @@ void updatecart() async {
  storage.setItem('ttl', data['ttl']);
       storage.setItem('products', data['cartprods']);
       storage.setItem('cart',  cart);
+
+      storage.setItem('ttlqty', totalqty.toString());
       
       }
       print([data['ttl'], data['cartprods']]);

@@ -74,43 +74,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     navigatorKey.currentState.pushReplacement(MaterialPageRoute(builder: (_)=> CustomerLoginpage()));
   }
   
-  getCart() async{
-    final body = {
-      'phone': storage.getItem('phone')
-    };
-    final url = Uri.parse(url_start +
-        'mobileApp/getCart/' );
-    final response = await http.post(url, body: body);
-    if (response.statusCode == 200){
-      final data = json.decode(response.body) as Map;
-      print(data);
-      Map<String,Customerprod> cart = {};
-      
-      
-      
-      if (data['products'] == ''){
-      storage.setItem('ttl', data['ttl']);
-      storage.setItem('products', data['cartprods']);
-      storage.setItem('cart',  <String,Customerprod> {} );}else{
-        List products = data['products'] as List;
-       for (var e in products){
-        print(e);
-        cart.putIfAbsent(e['pcode'], () => Customerprod(
-                        e['pcode'].toString(),
-                        e['ptype'].toString(),
-                        e['unitRate'].toString(),
-                        e['quantity'].toString(),
-                        e['amount'].toString(),
-                        e['pimage'].toString(),
-                        e['pname'].toString()),);
-      }
-      print("@89");
-      print(cart);
- storage.setItem('ttl', data['ttl']);
-      storage.setItem('products', data['cartprods']);
-      storage.setItem('cart',  cart);
-      }}
-  }
+  
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     // TODO: implement didChangeAppLifecycleState

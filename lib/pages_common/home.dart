@@ -18,6 +18,7 @@ import 'package:flutter_complete_guide/models.dart';
 class Homepage extends StatefulWidget {
   String message;
   int cartProds = 0;
+  int ttlqty = 0;
   double ttlamt = 0;
   Homepage();
 
@@ -105,14 +106,15 @@ class _HomepageState extends State<Homepage> {
   Widget build(BuildContext context) {
     print(main.storage.getItem('ttl'));
     print(main.storage.getItem('products'));
-    if (main.storage.getItem('ttl') != null && main.storage.getItem('products') != null){
+    if (main.storage.getItem('ttlqty')!=null && main.storage.getItem('ttl') != null && main.storage.getItem('products') != null){
     widget.cartProds = int.parse(main.storage.getItem('products'));
     widget.ttlamt = double.parse(main.storage.getItem('ttl'));
+    widget.ttlqty = int.parse(main.storage.getItem('ttlqty'));
     }
     return    Scaffold(
         drawer: navbar.Navbar(),
         appBar: AppBar(
-          actions: [Image(image: AssetImage("assets/images/RaithannaOLogo.jpg"),
+          actions: [Image(image: AssetImage("assets/images/RaithannaOLogo.png"),
                             height: 100,
                             width: 100,
                     // color: Color(0xFF3A5A98),
@@ -221,7 +223,7 @@ class _HomepageState extends State<Homepage> {
               Icon(Icons.shopping_cart, size: 50,color: Theme.of(context).primaryColor,),
               Column(
                 children: [
-                  Text('Products: '+widget.cartProds.toString() , style: TextStyle(fontWeight: FontWeight.w100, fontSize: 20,color: Colors.black))
+                  Text('Products: '+widget.cartProds.toString()+'('+widget.ttlqty.toString()+')' , style: TextStyle(fontWeight: FontWeight.w100, fontSize: 20,color: Colors.black))
                   ,Text('Total Amt: '+  widget.ttlamt.toString(), style: TextStyle(fontWeight: FontWeight.w100, color: Colors.grey),)
                 ],
               )
