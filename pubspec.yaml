@@ -94,17 +94,19 @@ flutter:
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
   assets:
-    - assets/images/bg_11.jpeg
-    - assets/images/bg_12.jpeg
-    - assets/images/bg_13.jpg
-    - assets/images/bg_14.jpg
-    - assets/images/bg_8.jpg
-    - assets/images/bg_7.jpg
-    - assets/images/RaithannaOLogo.png
-    - assets/images/RaithannaOLogo.jpg
-    - assets/images/prodtypes/CURD.png
-    - assets/images/prodtypes/GHEE.png
-    - assets/images/prodtypes/MILK.png
-    - assets/images/prodtypes/OTHERS.png
-    - assets/images/prodtypes/PANEER.png
-    - assets/images/jnjlogo.png
+    - assets/images/
+    - assets/images/prodtypes/
+    # - assets/images/bg_11.jpeg
+    # - assets/images/bg_12.jpeg
+    # - assets/images/bg_13.jpg
+    # - assets/images/bg_14.jpg
+    # - assets/images/bg_8.jpg
+    # - assets/images/bg_7.jpg
+    # - assets/images/RaithannaOLogo.png
+    # - assets/images/RaithannaOLogo.jpg
+    # - assets/images/prodtypes/CURD.png
+    # - assets/images/prodtypes/GHEE.png
+    # - assets/images/prodtypes/MILK.png
+    # - assets/images/prodtypes/OTHERS.png
+    # - assets/images/prodtypes/PANEER.png
+    # - assets/images/jnjlogo.png

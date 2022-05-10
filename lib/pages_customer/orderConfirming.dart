@@ -278,7 +278,7 @@ class _OrderConfirm extends State<OrderConfirm> {
     widget.cart = main.storage.getItem('cart') ;
     widget.cartProds = int.parse(main.storage.getItem('products'));
     widget.ttlamt = double.parse(main.storage.getItem('ttl'));
-    widget.ttlqty = int.parse(main.storage.getItem('ttlqty'));
+    widget.ttlqty = int.parse(main.storage.getItem('ttlqty').toString());
     return    Scaffold(
     drawer: navbar.Navbar(),
         appBar: AppBar(

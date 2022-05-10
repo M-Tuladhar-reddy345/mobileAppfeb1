@@ -109,7 +109,7 @@ class _HomepageState extends State<Homepage> {
     if (main.storage.getItem('ttlqty')!=null && main.storage.getItem('ttl') != null && main.storage.getItem('products') != null){
     widget.cartProds = int.parse(main.storage.getItem('products'));
     widget.ttlamt = double.parse(main.storage.getItem('ttl'));
-    widget.ttlqty = int.parse(main.storage.getItem('ttlqty'));
+    widget.ttlqty = int.parse(main.storage.getItem('ttlqty').toString());
     }
     return    Scaffold(
         drawer: navbar.Navbar(),
