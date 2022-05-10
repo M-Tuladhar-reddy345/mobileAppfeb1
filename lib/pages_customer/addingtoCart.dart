@@ -81,7 +81,7 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
         setState(() {
         
         widget.cart[pcode].Quantity = (double.parse(widget.cart[pcode].Quantity) - 1).toString();
-        widget.ttlqty = widget.ttlqty-1;
+       
         if (widget.cart[pcode].Quantity == '0.0'){
           widget.cartProds = widget.cartProds-1;
         }

@@ -19,12 +19,12 @@ final localstorage.LocalStorage storage =
 
 
 
-// final String url_start = 'http://www.jacknjill.solutions/';
+final String url_start = 'http://www.jacknjill.solutions/';
 // final String url_start = 'http://192.168.1.104:8000/';
 // final String url_start = 'http://192.168.1.10:8000/';
 // final String url_start = 'http://localhost:8000/';
 // final String url_start = 'http://192.168.1.2:8000/';
-final String url_start = 'http://192.168.225.229:8000/';
+// final String url_start = 'http://192.168.225.229:8000/';
 main() {
   storage.clear();
 
