@@ -54,3 +54,18 @@ Future rechargeWallet(amt)async{
     }
   }
 }
+Future PaywithWallet(amt)async{
+
+  final response = await http.get(Uri.parse(main.url_start+'mobileApp/paymentWallet/'+amt.toString() +'/'+main.storage.getItem('phone')+'/'));
+  if (response.statusCode==200){
+    final data= json.decode(response.body) as Map;
+    if (data['message'] == 'success'){
+      print(data);
+      // setState(() {
+      //   widget.balance = data['balance'];
+      //   widget.wallet_id = data['wallet_id'];
+      // });
+      return [data['balance'],data['wallet_id'],data['message']];
+    }
+  }
+}

@@ -25,6 +25,7 @@ class OrderConfirm extends StatefulWidget {
   String prodtype = 'All';  
   List prodtypes=['All'];
   StateSetter setModalState;
+  int walletBalance;
   TextEditingController Address1 = TextEditingController()..text = '';
   TextEditingController Address2 = TextEditingController()..text = '';
   TextEditingController Address3 = TextEditingController()..text = '';
@@ -277,17 +278,31 @@ class _OrderConfirm extends State<OrderConfirm> {
   void WalletPayment(context){
     Navigator.pop(context);
     final Future<List> walletData = getWallet();
-    walletData.then((value) => 
+    
+    walletData.then((value) { 
+      setState(() {
+        widget.walletBalance = value[0];
+      });
     showDialog(context: context, builder: (_)=>Dialog(shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(25))),child: Container(height: 200,color:Theme.of(context).primaryColorDark,child: Column(
       children: <Widget>[
       Text('Wallet Payment', style: Theme.of(context).primaryTextTheme.titleLarge,),
       Text('Balance:'+value[0].toString(),style: TextStyle(color:Colors.white,fontSize:24 ),),
       
-      Expanded(child: Align(alignment: Alignment.bottomCenter,child: ElevatedButton(onPressed: (){}, child: Text('Pay  '+widget.ttlamt.toString()))))
+      Expanded(child: Align(alignment: Alignment.bottomCenter,child: ElevatedButton(onPressed: ()=>PayWallet(), child: Text('Pay  '+widget.ttlamt.toString()))))
       
       ],
 
-      ),),)));
+      ),),));});
+  }
+  void PayWallet()async{
+    if (widget.walletBalance >= widget.ttlamt){
+      final walletPay = PaywithWallet(widget.ttlamt);
+      walletPay.then((value){
+        submit();
+      });
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Insuffcient Balance... try after recharging'),backgroundColor: Colors.red,));
+    }
   }
   void selectPaymentMethod(context){
     showDialog(context: context, builder: (_)=>Dialog(shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(25))),child: Container(height: 200,child: Column(crossAxisAlignment: CrossAxisAlignment.center,children: [Container(child: Center(child: Text('Choose Payment Method',style: Theme.of(context).primaryTextTheme.titleMedium)),), FlatButton(onPressed: ()=>WalletPayment(context), child: Text('Pay Using Wallet',style: Theme.of(context).primaryTextTheme.titleSmall,),color: Theme.of(context).primaryColor,),FlatButton(onPressed: ()=>openRazorpay(), child: Text('Pay Using Razor pay',style: Theme.of(context).primaryTextTheme.titleSmall,),color: Theme.of(context).primaryColor,)])),backgroundColor: Theme.of(context).primaryColorDark,));
