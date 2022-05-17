@@ -238,11 +238,11 @@ class _UpdatePaymentsState extends State<UpdatePayments>
                                     // icon: const Icon(Icons.arrow_downward),
                                     elevation: 16,
                                     style: const TextStyle(
-                                        color: Colors.lightBlue),
+                                        color: Colors.red),
                                     underline: Container(
                                       height: 2,
                                       width: 300,
-                                      color: Colors.lightBlueAccent,
+                                      color: Colors.redAccent,
                                     ),
                                     onChanged: (String newValue) {
                                       setState(() {
@@ -365,11 +365,11 @@ class _UpdatePaymentsState extends State<UpdatePayments>
                                           // icon: const Icon(Icons.arrow_downward),
                                           elevation: 16,
                                           style: const TextStyle(
-                                              color: Colors.lightBlue),
+                                              color: Colors.red),
                                           underline: Container(
                                             height: 2,
                                             width: 300,
-                                            color: Colors.lightBlueAccent,
+                                            color: Colors.redAccent,
                                           ),
                                           onChanged: (String newValue) {
                                             setState(() {

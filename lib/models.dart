@@ -135,3 +135,10 @@ class Customerprod{
   String pname;
   Customerprod(this.product,this.ptype,this.UnitRate,this.Quantity,this.Amount, this.pImage,this.pname);
 }
+class wallet_transaction{
+  String transaction_id;
+  String wallet_id;
+  String User;
+  int amount;
+  String type;
+}

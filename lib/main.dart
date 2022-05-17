@@ -18,9 +18,8 @@ final localstorage.LocalStorage storage =
     localstorage.LocalStorage('RaithannaDairy_local');
 
 
-
 // final String url_start = 'http://www.jacknjill.solutions/';
-// final String url_start = 'http://192.168.1.104:8000/';
+// final String url_start = 'http://192.168.1.100:8000/';
 // final String url_start = 'http://192.168.1.10:8000/';
 // final String url_start = 'http://localhost:8000/';
 // final String url_start = 'http://192.168.1.2:8000/';
@@ -126,7 +125,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     return MaterialApp(
       title: 'Raithanna Dairy', 
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryTextTheme: TextTheme(
+          titleSmall: TextStyle(color: Colors.white,fontSize: 18,fontFamily: GoogleFonts.aBeeZee().fontFamily),
+          titleLarge: TextStyle(color: Colors.white,fontSize: 32,fontFamily: GoogleFonts.aBeeZee().fontFamily),
+          titleMedium: TextStyle(color: Colors.white,fontSize: 22,fontFamily: GoogleFonts.aBeeZee().fontFamily),
+          ),
+        primarySwatch: Colors.red,
         fontFamily: GoogleFonts.robotoMono().fontFamily,
         appBarTheme: AppBarTheme(textTheme: ThemeData.light().textTheme.copyWith(
           titleLarge: TextStyle(

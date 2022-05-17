@@ -5,10 +5,9 @@ Widget LoaderDialogbox (BuildContext context){
     return Container(
       width: 50,
       child: new AlertDialog(content: SizedBox(
-        height: 0.1,
-        width: 50,
+        height: 0.5,       width: 50,
         child: CircularProgressIndicator(
-          
+          color: Theme.of(context).primaryColor,
         ),
       )),
     );

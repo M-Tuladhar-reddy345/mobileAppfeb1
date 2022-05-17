@@ -2,11 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/main.dart' as main;
+import 'package:flutter_complete_guide/widgets/Appbar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:provider/provider.dart';
 import '../commonApi/cartApi.dart';
+import '../commonApi/commonApi.dart';
 import '../widgets/navbar.dart' as navbar;
 import '../widgets/form.dart' as form;
 import 'package:provider/provider.dart' as provider;
@@ -32,29 +34,7 @@ class AddingToCartpage extends StatefulWidget {
 
 class _AddingToCartpageState extends State<AddingToCartpage> {
   Future getProducts;
-  get_products() async {
-    final url = Uri.parse(main.url_start +
-        'mobileApp/getProducts_all/' +
-        main.storage.getItem('branch') +
-        '/');
-    final response = await http.post(url, body: {'phone':main.storage.getItem('phone')});
-    // print(url);
-
-
-    if (response.statusCode == 200) {
-      // print(response.body);
-      var data = json.decode(response.body) as Map;
-      
-
-      // List Products =
-      //     data['results'].map((json) => models.product.fromjson(json)).toList();
-      
-    
-         
-         
-      return data['products'];
-    }
-  }
+  
   void add(pcode, unitrate){
       if (widget.cart[pcode] != null){
         setState(() {
@@ -246,12 +226,7 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
     }
     return    Scaffold(       
         drawer: navbar.Navbar(),
-        appBar: AppBar(
-          title: Text('Add products to cart'),
-          actions: [
-            
-          ],
-        ),
+        appBar: AppBarCustom('Add to cart', Size(MediaQuery.of(context).size.width,56)),
         body: SingleChildScrollView(
           child: Column(children: [
            Padding(
@@ -263,11 +238,11 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
                                       // icon: const Icon(Icons.arrow_downward),
                                       elevation: 16,
                                       style: const TextStyle(
-                                          color: Colors.lightBlue),
+                                          color: Colors.black),
                                       underline: Container(
                                         height: 2,
                                         width: 300,
-                                        color: Colors.lightBlueAccent,
+                                        color: Colors.red,
                                       ),
                                       onChanged: (String newValue) {
                                         setState(() {

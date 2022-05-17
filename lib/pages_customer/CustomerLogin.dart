@@ -9,7 +9,6 @@ import 'package:flutter_complete_guide/pages_Operators/login.dart';
 import 'package:flutter_complete_guide/pages_customer/CustomerSignup.dart';
 import 'package:flutter_complete_guide/widgets/Pageroute.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:provider/provider.dart';
 import '../models.dart' ;
 import '../widgets/loader.dart';
@@ -20,7 +19,6 @@ import 'package:provider/provider.dart' as provider;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:io';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class CustomerLoginpage extends StatefulWidget {
   String message;

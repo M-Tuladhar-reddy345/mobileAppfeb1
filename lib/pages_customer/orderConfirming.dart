@@ -1,5 +1,7 @@
 
 import 'package:flutter/services.dart';
+import 'package:flutter_complete_guide/commonApi/walletApi.dart';
+import 'package:flutter_complete_guide/widgets/Appbar.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/main.dart' as main;
@@ -73,7 +75,7 @@ class _OrderConfirm extends State<OrderConfirm> {
         widget.orderRazorpay = data['orderid'];
       });
       _razorpay.open({
-        'key': 'rzp_test_GsXmSVzIavcBnS',
+        'key': 'rzp_test_mgKxKCgU8H0pwv',
         'amount': int.parse(data['amt']), //in the smallest currency sub-unit.
         'name': 'Raithanna milk Dairy ',
         'order_id': widget.orderRazorpay, // Generate order_id using Orders API
@@ -93,7 +95,7 @@ class _OrderConfirm extends State<OrderConfirm> {
                      SnackBar(content: Text('Every Field need to be filled'), backgroundColor: Colors.red,));
     }else{
     final body = {
-      
+      'branch':main.storage.getItem('branch'),
       'phone':main.storage.getItem('phone'),
       'address1': widget.Address1.text,
       'address2': widget.Address2.text,
@@ -272,7 +274,24 @@ class _OrderConfirm extends State<OrderConfirm> {
         
       });
     }
-    
+  void WalletPayment(context){
+    Navigator.pop(context);
+    final Future<List> walletData = getWallet();
+    walletData.then((value) => 
+    showDialog(context: context, builder: (_)=>Dialog(shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(25))),child: Container(height: 200,color:Theme.of(context).primaryColorDark,child: Column(
+      children: <Widget>[
+      Text('Wallet Payment', style: Theme.of(context).primaryTextTheme.titleLarge,),
+      Text('Balance:'+value[0].toString(),style: TextStyle(color:Colors.white,fontSize:24 ),),
+      
+      Expanded(child: Align(alignment: Alignment.bottomCenter,child: ElevatedButton(onPressed: (){}, child: Text('Pay  '+widget.ttlamt.toString()))))
+      
+      ],
+
+      ),),)));
+  }
+  void selectPaymentMethod(context){
+    showDialog(context: context, builder: (_)=>Dialog(shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(25))),child: Container(height: 200,child: Column(crossAxisAlignment: CrossAxisAlignment.center,children: [Container(child: Center(child: Text('Choose Payment Method',style: Theme.of(context).primaryTextTheme.titleMedium)),), FlatButton(onPressed: ()=>WalletPayment(context), child: Text('Pay Using Wallet',style: Theme.of(context).primaryTextTheme.titleSmall,),color: Theme.of(context).primaryColor,),FlatButton(onPressed: ()=>openRazorpay(), child: Text('Pay Using Razor pay',style: Theme.of(context).primaryTextTheme.titleSmall,),color: Theme.of(context).primaryColor,)])),backgroundColor: Theme.of(context).primaryColorDark,));
+  }
   @override
   Widget build(BuildContext context) {
     widget.cart = main.storage.getItem('cart') ;
@@ -281,15 +300,7 @@ class _OrderConfirm extends State<OrderConfirm> {
     widget.ttlqty = int.parse(main.storage.getItem('ttlqty').toString());
     return    Scaffold(
     drawer: navbar.Navbar(),
-        appBar: AppBar(
-          actions: [Image(image: AssetImage("assets/images/RaithannaOLogo.png"),
-                            height: 100,
-                            width: 100,
-                    // color: Color(0xFF3A5A98),
-               ),],
-          title: Text('Confirm order'),
-          
-        ),
+        appBar: AppBarCustom('Confirm Order',Size(MediaQuery.of(context).size.width, 56)),
         body: SingleChildScrollView(child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -305,7 +316,7 @@ class _OrderConfirm extends State<OrderConfirm> {
                 if (widget.Address1.text == '' ||widget.Address2.text == ''||widget.Address3.text == ''||widget.Address4.text == ''|| widget.pincode.text == ''){
       ScaffoldMessenger.of(context).showSnackBar(
                      SnackBar(content: Text('Every Field need to be filled'), backgroundColor: Colors.red,));
-    }else{openRazorpay();}
+    }else{selectPaymentMethod(context);}
               }),child: Text('Place order', style: TextStyle(fontSize: 15),))),
               Align(alignment: Alignment.centerLeft,child: Text('Address', style: TextStyle(fontSize: 15),)),
               Padding(

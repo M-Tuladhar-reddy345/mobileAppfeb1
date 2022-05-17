@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:provider/provider.dart';
+import '../widgets/Appbar.dart';
 import '../widgets/Pageroute.dart';
 import '../widgets/navbar.dart' as navbar;
 import '../widgets/form.dart' as form;
@@ -110,15 +111,7 @@ class _CartpageState extends State<Cartpage> {
 
     return    Scaffold(       
         drawer: navbar.Navbar(),
-        appBar: AppBar(
-          actions: [Image(image: AssetImage("assets/images/RaithannaOLogo.png"),
-                            height: 100,
-                            width: 100,
-                    // color: Color(0xFF3A5A98),
-               ),],
-          title: Text('Cart'),
-          
-        ),
+        appBar: AppBarCustom('Cart', Size(MediaQuery.of(context).size.width,56)),
         body: Center(
           child: SingleChildScrollView(child: Column(
             children:[ 

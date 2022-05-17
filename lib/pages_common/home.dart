@@ -3,6 +3,7 @@ import 'package:flutter_complete_guide/commonApi/cartApi.dart';
 import 'package:flutter_complete_guide/main.dart';
 import 'package:flutter_complete_guide/pages_customer/addingtoCart.dart';
 import 'package:flutter_complete_guide/pages_customer/cart.dart';
+import 'package:flutter_complete_guide/widgets/Appbar.dart';
 import 'package:flutter_complete_guide/widgets/Pageroute.dart';
 import 'package:provider/provider.dart';
 import '../widgets/navbar.dart' as navbar;
@@ -26,6 +27,7 @@ class Homepage extends StatefulWidget {
   State<Homepage> createState() => _HomepageState();
   
 }
+
 
 class _HomepageState extends State<Homepage> {
   List homeImages = [
@@ -113,21 +115,14 @@ class _HomepageState extends State<Homepage> {
     }
     return    Scaffold(
         drawer: navbar.Navbar(),
-        appBar: AppBar(
-          actions: [Image(image: AssetImage("assets/images/RaithannaOLogo.png"),
-                            height: 100,
-                            width: 100,
-                    // color: Color(0xFF3A5A98),
-               ),],
-          title: Text('Home'),
-        ),
+        appBar: AppBarCustom('Home', Size(MediaQuery.of(context).size.width, 56)),
         body: SingleChildScrollView(
           child: Column(children: main.storage.getItem('role') != 'Customer'?[
              ImageSlideshow(
           width: double.infinity ,
           height: 200,
           initialPage: 0,
-          indicatorColor: Colors.blue,
+          indicatorColor: Colors.red,
           indicatorBackgroundColor: Colors.grey,
           onPageChanged: (value) {
             debugPrint('Page changed: $value');
@@ -142,7 +137,7 @@ class _HomepageState extends State<Homepage> {
           width: double.infinity ,
           height: 200,
           initialPage: 0,
-          indicatorColor: Colors.blue,
+          indicatorColor: Colors.red,
           indicatorBackgroundColor: Colors.grey,
           onPageChanged: (value) {
             debugPrint('Page changed: $value');
@@ -175,7 +170,7 @@ class _HomepageState extends State<Homepage> {
                      return Padding(
                        padding: const EdgeInsets.all(8.0),
                        child: ElevatedButton(
-                         style: ElevatedButton.styleFrom(primary: Colors.lightBlueAccent),
+                         style: ElevatedButton.styleFrom(primary: Colors.redAccent),
                          onPressed: (){Navigator.pushReplacement(context, CustomPageRoute(child: AddingToCartpage(e['ptype'],['All',e['ptype']])));},
                          child: Column(children: [
                            Padding(
@@ -200,7 +195,7 @@ class _HomepageState extends State<Homepage> {
           width: double.infinity ,
           height: 200,
           initialPage: 0,
-          indicatorColor: Colors.blue,
+          indicatorColor: Colors.red,
           indicatorBackgroundColor: Colors.grey,
           onPageChanged: (value) {
             debugPrint('Page changed: $value');
@@ -214,21 +209,34 @@ class _HomepageState extends State<Homepage> {
         
          Padding(
           padding: const EdgeInsets.only(left: 30, right: 30),
-          child: ElevatedButton(
-            style: ElevatedButton.styleFrom(primary: Colors.white),
-            onPressed: () {
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => Cartpage())));
-            },
-            child: Row(children: [
-              Icon(Icons.shopping_cart, size: 50,color: Theme.of(context).primaryColor,),
-              Column(
-                children: [
-                  Text('Products: '+widget.cartProds.toString()+'('+widget.ttlqty.toString()+')' , style: TextStyle(fontWeight: FontWeight.w100, fontSize: 20,color: Colors.black))
-                  ,Text('Total Amt: '+  widget.ttlamt.toString(), style: TextStyle(fontWeight: FontWeight.w100, color: Colors.grey),)
-                ],
-              )
-            ]),
-            
+          child: GestureDetector(
+            onTap: () { Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => Cartpage())));},
+            child: Container(
+              height: 90,
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(children: [
+                    // Icon(Icons.shopping_cart, size: 50,color: Theme.of(context).primaryColor,),
+                    Image(image:AssetImage('assets/icons/shopping-bag.png')),
+                    Container(
+                      padding: const EdgeInsets.only(left:40, top: 10),
+                      
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('Products: '+widget.cartProds.toString()+'('+widget.ttlqty.toString()+')' , style: TextStyle(fontWeight: FontWeight.w100, fontSize: 20,color: Colors.black))
+                          ,Text('Total Amt: '+  widget.ttlamt.toString(), style: TextStyle(fontWeight: FontWeight.w100, color: Colors.grey),)
+                        ],
+                      ),
+                    )
+                  ]),
+                ),
+                elevation:30,
+                shape: RoundedRectangleBorder(borderRadius:  BorderRadius.all(Radius.circular(25))),
+                margin: EdgeInsets.all(2),
+              ),
+            ),
           ),
         ),
        
@@ -250,16 +258,25 @@ class _HomepageState extends State<Homepage> {
                      var image = e['imgname'];
                      return Padding(
                        padding: const EdgeInsets.all(8.0),
-                       child: ElevatedButton(
-                         style: ElevatedButton.styleFrom(primary: Colors.lightBlueAccent),
-                         onPressed: (){Navigator.pushReplacement(context, CustomPageRoute(child: AddingToCartpage(e['ptype'],['All',e['ptype']])));},
-                         child: Column(children: [
-                           Padding(
-                           padding: const EdgeInsets.all(8.0),
-                           child: Container(height: 100,width: 100,decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/prodtypes/$image'),fit:BoxFit.fill ))),
+                       child: GestureDetector(
+                         
+                         onTap: (){Navigator.pushReplacement(context, CustomPageRoute(child: AddingToCartpage(e['ptype'],['All',e['ptype']])));},
+                         child: Container(
+                           height:160,
+                           width:150,
+                           child: Card(
+                             elevation:5,
+                             color: Colors.redAccent,
+                              shape:RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(25))),
+                             child: Column(children: [
+                               Padding(
+                               padding: const EdgeInsets.all(8.0),
+                               child: Container(height: 100,width: 100,decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/prodtypes/$image'),fit:BoxFit.fill ))),
+                             ),
+                             Text(e['pname'], style: Theme.of(context).primaryTextTheme.titleSmall,)
+                             ]),
+                           ),
                          ),
-                         Text(e['pname'])
-                         ]),
                        ),
                      );
                    }).toList());

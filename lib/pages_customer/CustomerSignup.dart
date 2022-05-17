@@ -6,7 +6,6 @@ import 'package:flutter_complete_guide/pages_customer/CustomerLogin.dart';
 import 'package:flutter_complete_guide/widgets/Pageroute.dart';
 import 'package:flutter_complete_guide/widgets/loader.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:provider/provider.dart';
 import '../models.dart' as models;
 import '../widgets/navbar.dart' as navbar;
@@ -16,7 +15,6 @@ import 'package:provider/provider.dart' as provider;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'dart:io';
-import 'package:firebase_auth/firebase_auth.dart';
 
 class SignUppage extends StatefulWidget {
   String message;
