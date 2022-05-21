@@ -1,24 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/main.dart' as main;
-import 'package:flutter_complete_guide/models.dart' as models;
-import 'package:provider/provider.dart';
 import '../widgets/navbar.dart' as navbar;
-import '../widgets/form.dart' as form;
-import 'package:provider/provider.dart' as provider;
 import 'package:intl/intl.dart';
-import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'reciept.dart' as receipt;
 
-import 'package:async/async.dart' as asyncc;
-import 'dart:convert';
-import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:http/http.dart' as http;
-import 'package:path/path.dart';
 import 'package:open_file/open_file.dart';
 
 import 'package:file_picker/file_picker.dart';

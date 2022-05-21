@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter_complete_guide/pages_common/home.dart';
-import 'package:flutter_complete_guide/pages_Operators/login.dart';
 import 'package:flutter_complete_guide/pages_customer/CustomerLogin.dart';
 import 'package:flutter_complete_guide/splashFiles/splash2.dart';
-import 'package:provider/provider.dart';
 import '../widgets/Pageroute.dart';
 
 class Splash extends StatefulWidget {

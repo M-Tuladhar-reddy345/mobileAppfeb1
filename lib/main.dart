@@ -1,29 +1,23 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/commonApi/cartApi.dart';
-import 'package:flutter_complete_guide/models.dart';
 import 'package:flutter_complete_guide/pages_customer/CustomerLogin.dart';
-import 'package:provider/provider.dart' as provider;
-import 'pages_common/home.dart' as home;
 import 'package:localstorage/localstorage.dart' as localstorage;
-import 'dart:io';
-import 'package:flutter/foundation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'splashFiles/splashTest.dart';
-import 'package:http/http.dart' as http;
 
 final localstorage.LocalStorage storage =
     localstorage.LocalStorage('RaithannaDairy_local');
 
 
 // final String url_start = 'http://www.jacknjill.solutions/';
-// final String url_start = 'http://192.168.1.100:8000/';
+// final String url_start = 'http://192.168.1.103:8000/';
 // final String url_start = 'http://192.168.1.10:8000/';
 // final String url_start = 'http://localhost:8000/';
 // final String url_start = 'http://192.168.1.2:8000/';
-final String url_start = 'http://192.168.225.229:8000/';
+final String url_start = 'http://192.168.225.117:8000/';
+
+// final String url_start = 'http://192.168.29.70:8000/';
 main() {
   storage.clear();
 
@@ -126,19 +120,25 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       title: 'Raithanna Dairy', 
       theme: ThemeData(
         primaryTextTheme: TextTheme(
-          titleSmall: TextStyle(color: Colors.white,fontSize: 18,fontFamily: GoogleFonts.aBeeZee().fontFamily),
-          titleLarge: TextStyle(color: Colors.white,fontSize: 32,fontFamily: GoogleFonts.aBeeZee().fontFamily),
-          titleMedium: TextStyle(color: Colors.white,fontSize: 22,fontFamily: GoogleFonts.aBeeZee().fontFamily),
+          titleSmall: TextStyle(color: Colors.white,fontSize: 16,fontFamily: GoogleFonts.aBeeZee().fontFamily),
+          titleLarge: TextStyle(color: Colors.white,fontSize: 28,fontFamily: GoogleFonts.aBeeZee().fontFamily),
+          titleMedium: TextStyle(color: Colors.white,fontSize: 20,fontFamily: GoogleFonts.aBeeZee().fontFamily),
           ),
         primarySwatch: Colors.red,
         fontFamily: GoogleFonts.robotoMono().fontFamily,
-        appBarTheme: AppBarTheme(textTheme: ThemeData.light().textTheme.copyWith(
+        appBarTheme: AppBarTheme(toolbarTextStyle: ThemeData.light().textTheme.copyWith(
           titleLarge: TextStyle(
             fontFamily: GoogleFonts.robotoMono().fontFamily,
             fontSize: 30,
             fontWeight: FontWeight.bold
           )
-        ))
+        ).bodyText2, titleTextStyle: ThemeData.light().textTheme.copyWith(
+          titleLarge: TextStyle(
+            fontFamily: GoogleFonts.robotoMono().fontFamily,
+            fontSize: 30,
+            fontWeight: FontWeight.bold
+          )
+        ).headline6)
 
       ),
       home: Splash(),

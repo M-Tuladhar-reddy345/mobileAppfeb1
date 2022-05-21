@@ -1,7 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_complete_guide/main.dart' as main;
-import 'dart:io';
 get_products() async {
     final url = Uri.parse(main.url_start +
         'mobileApp/getProducts_all/' +

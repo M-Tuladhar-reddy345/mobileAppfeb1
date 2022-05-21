@@ -1,6 +1,4 @@
-import 'dart:math';
 
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_complete_guide/commonApi/cartApi.dart';
@@ -9,16 +7,12 @@ import 'package:flutter_complete_guide/pages_Operators/login.dart';
 import 'package:flutter_complete_guide/pages_customer/CustomerSignup.dart';
 import 'package:flutter_complete_guide/widgets/Pageroute.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import '../models.dart' ;
 import '../widgets/loader.dart';
 import '../widgets/navbar.dart' as navbar;
 import '../pages_common/home.dart' as home;
-import '../widgets/form.dart' as form;
-import 'package:provider/provider.dart' as provider;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'dart:io';
 
 class CustomerLoginpage extends StatefulWidget {
   String message;

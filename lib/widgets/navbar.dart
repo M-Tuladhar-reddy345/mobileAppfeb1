@@ -16,10 +16,7 @@ import 'package:flutter_complete_guide/pages_customer/wallet.dart';
 import '../main.dart' as main;
 import '../pages_common/home.dart' as home;
 import '../pages_Operators/UpdatePayments.dart' as UpdatePayments;
-import '../pages_Operators/login.dart' as login;
-import '../pages_Operators/login.dart' as loginCustomer;
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 class Navbar extends StatelessWidget {
   @override

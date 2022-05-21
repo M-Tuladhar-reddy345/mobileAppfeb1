@@ -1,24 +1,11 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_complete_guide/main.dart' as main;
-import 'package:flutter_complete_guide/pages_Operators/login.dart';
-import 'package:flutter_complete_guide/pages_customer/CustomerSignup.dart';
 import 'package:flutter_complete_guide/pages_customer/showTransactions.dart';
 import 'package:flutter_complete_guide/widgets/Appbar.dart';
-import 'package:flutter_complete_guide/widgets/Pageroute.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_complete_guide/widgets/loader.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import '../commonApi/walletApi.dart';
-import '../models.dart' ;
 import '../widgets/navbar.dart' as navbar;
-import '../pages_common/home.dart' as home;
-import '../widgets/form.dart' as form;
-import 'package:provider/provider.dart' as provider;
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'dart:io';
 class Wallet extends StatefulWidget {
   int balance;
   String wallet_id;
@@ -45,6 +32,7 @@ class _WalletState extends State<Wallet> {
        widget.balance = value[0];
        widget.wallet_id = value[1]; 
       });
+      Navigator.pop(context);
     });
   }
 
@@ -91,14 +79,14 @@ class _WalletState extends State<Wallet> {
               color: Colors.red,
               child: Row(children: [
                 
-                Container(padding: EdgeInsets.only(left: 50,top: 30),width: 200,alignment: Alignment.centerLeft,child: Column(        
+                Container(padding: EdgeInsets.only(left: 30,top: 30),width: 200,alignment: Alignment.centerLeft,child: Column(        
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('Balance',style: Theme.of(context).primaryTextTheme.titleSmall, ),
                   Text(widget.balance.toString()+'/-',style: Theme.of(context).primaryTextTheme.titleLarge, )
                   ],),),
-                  Container(padding: EdgeInsets.only(left: 80),child:Image(image:AssetImage('assets/icons/Balanceruppe.png'))),
+                  Container(padding: EdgeInsets.only(left: 45),child:Image(image:AssetImage('assets/icons/Balanceruppe.png'))),
               ]),
             ),
           ),
@@ -120,6 +108,7 @@ class _WalletState extends State<Wallet> {
                     width: 110,
                     child: GestureDetector(
                       onTap:() {
+                        LoaderDialogbox(context);
                         openRazorpay(_razorpay, e);
                         setState(() {
                           widget.rechargeAmount =int.parse(e);

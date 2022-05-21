@@ -10,7 +10,6 @@ import '../commonApi/cartApi.dart';
 import '../models.dart' ;
 import '../widgets/loader.dart';
 import '../widgets/navbar.dart' as navbar;
-import '../widgets/form.dart' as form;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_complete_guide/models.dart' as models;
@@ -19,6 +18,8 @@ class OrderConfirm extends StatefulWidget {
   String message;
   Map<String, models.Customerprod> cart = {};
   String orderRazorpay;
+  bool Paid = false;
+  String type;
   int cartProds = 0;
   int ttlqty = 0;
   double ttlamt = 0;
@@ -26,6 +27,7 @@ class OrderConfirm extends StatefulWidget {
   List prodtypes=['All'];
   StateSetter setModalState;
   int walletBalance;
+  String paymentMethod;
   TextEditingController Address1 = TextEditingController()..text = '';
   TextEditingController Address2 = TextEditingController()..text = '';
   TextEditingController Address3 = TextEditingController()..text = '';
@@ -48,16 +50,20 @@ class _OrderConfirm extends State<OrderConfirm> {
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
   }
-  @override
-  void dispose() {
-        // TODO: implement dispose
+      @override
+      void dispose() {
+            // TODO: implement dispose
         super.dispose();
         _razorpay.clear();
       }
       void _handlePaymentSuccess(PaymentSuccessResponse response) {
       // Do something when payment succeeds
       submit();
-  }
+      setState(() {
+        widget.Paid=true;  
+      });
+      
+      }
 
   void _handlePaymentError(PaymentFailureResponse response) {
       // Do something when payment fails
@@ -65,29 +71,7 @@ class _OrderConfirm extends State<OrderConfirm> {
   void _handleExternalWallet(ExternalWalletResponse response) {
       // Do something when an external wallet is selected
     }
-  openRazorpay() async{
-    LoaderDialogbox(context);
-    final url = Uri.parse(main.url_start +
-        'mobileApp/razorPayordercreate/'+main.storage.getItem('ttl').toString() +'/'+main.storage.getItem('phone')+'/');
-    final response = await http.get(url);
-    if (response.statusCode == 200) {
-      var data = json.decode(response.body) as Map;
-      setState(() {
-        widget.orderRazorpay = data['orderid'];
-      });
-      _razorpay.open({
-        'key': 'rzp_test_mgKxKCgU8H0pwv',
-        'amount': int.parse(data['amt']), //in the smallest currency sub-unit.
-        'name': 'Raithanna milk Dairy ',
-        'order_id': widget.orderRazorpay, // Generate order_id using Orders API
-        'description': 'Fresh milk and milk products',
-        'timeout': 300, // in seconds
-        'prefill':{
-          'contact':main.storage.getItem('phone')
-        }
-      });
-      }
-  }
+  
   Future getAddresses;
   submit() async{
     print(widget.Address1.text == '' ||widget.Address2.text == ''||widget.Address3.text == ''||widget.Address4.text == ''|| widget.pincode.text == '');
@@ -102,7 +86,9 @@ class _OrderConfirm extends State<OrderConfirm> {
       'address2': widget.Address2.text,
       'address3': widget.Address3.text,
       'address4': widget.Address4.text,
-      'pincode':widget.pincode.text
+      'pincode':widget.pincode.text,
+      'ifPaid':widget.Paid.toString(),
+      'paymentMethod':widget.paymentMethod.toString(),
                     };
       final url = Uri.parse(main.url_start+'mobileApp/placeorder/');
       final response =  await http.post(url, body: body);
@@ -275,7 +261,38 @@ class _OrderConfirm extends State<OrderConfirm> {
         
       });
     }
+  // payments ------
+
+  void openRazorpay() async{
+    setState(() {
+      widget.paymentMethod ='Razorpay';
+    });
+    LoaderDialogbox(context);
+    final url = Uri.parse(main.url_start +
+        'mobileApp/razorPayordercreate/'+main.storage.getItem('ttl').toString() +'/'+main.storage.getItem('phone')+'/');
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body) as Map;
+      setState(() {
+        widget.orderRazorpay = data['orderid'];
+      });
+      _razorpay.open({
+        'key': 'rzp_test_mgKxKCgU8H0pwv',
+        'amount': int.parse(data['amt']), //in the smallest currency sub-unit.
+        'name': 'Raithanna milk Dairy ',
+        'order_id': widget.orderRazorpay, // Generate order_id using Orders API
+        'description': 'Fresh milk and milk products',
+        'timeout': 300, // in seconds
+        'prefill':{
+          'contact':main.storage.getItem('phone')
+        }
+      });
+      }
+  }
   void WalletPayment(context){
+    setState(() {
+      widget.paymentMethod='Wallet';
+    });
     Navigator.pop(context);
     final Future<List> walletData = getWallet();
     
@@ -298,6 +315,9 @@ class _OrderConfirm extends State<OrderConfirm> {
     if (widget.walletBalance >= widget.ttlamt){
       final walletPay = PaywithWallet(widget.ttlamt);
       walletPay.then((value){
+        setState(() {
+        widget.Paid=true;
+        });
         submit();
       });
     }else{
@@ -305,8 +325,25 @@ class _OrderConfirm extends State<OrderConfirm> {
     }
   }
   void selectPaymentMethod(context){
-    showDialog(context: context, builder: (_)=>Dialog(shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(25))),child: Container(height: 200,child: Column(crossAxisAlignment: CrossAxisAlignment.center,children: [Container(child: Center(child: Text('Choose Payment Method',style: Theme.of(context).primaryTextTheme.titleMedium)),), FlatButton(onPressed: ()=>WalletPayment(context), child: Text('Pay Using Wallet',style: Theme.of(context).primaryTextTheme.titleSmall,),color: Theme.of(context).primaryColor,),FlatButton(onPressed: ()=>openRazorpay(), child: Text('Pay Using Razor pay',style: Theme.of(context).primaryTextTheme.titleSmall,),color: Theme.of(context).primaryColor,)])),backgroundColor: Theme.of(context).primaryColorDark,));
-  }
+    showDialog(context: context, builder: (_)=>Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(25))),
+      child: Container(
+        height: 200,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(child: Center(child: Text('Choose Payment Method',style: Theme.of(context).primaryTextTheme.titleMedium)),),
+            FlatButton(onPressed: ()=>WalletPayment(context), child: Text('Pay Using Wallet',style: Theme.of(context).primaryTextTheme.titleSmall,),color: Theme.of(context).primaryColor,),
+            FlatButton(onPressed: ()=>openRazorpay(), child: Text('Pay Using Razor pay',style: Theme.of(context).primaryTextTheme.titleSmall,),color: Theme.of(context).primaryColor,),
+            FlatButton(onPressed: (){
+              setState(() {
+                widget.paymentMethod ='Cash on delivery';
+                submit();
+              });
+            }, child: Text('Cash on delivery',style: Theme.of(context).primaryTextTheme.titleSmall,),color: Theme.of(context).primaryColor,),
+            ])),backgroundColor: Theme.of(context).primaryColorDark,));
+   }
+   // --payment
   @override
   Widget build(BuildContext context) {
     widget.cart = main.storage.getItem('cart') ;

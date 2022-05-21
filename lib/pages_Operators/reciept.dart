@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter_complete_guide/main.dart';
-import 'package:provider/provider.dart';
 import '../widgets/navbar.dart' as navbar;
-import '../widgets/form.dart' as form;
-import 'package:provider/provider.dart' as provider;
 import '../main.dart' as main;
 import 'dart:convert';
 

@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/main.dart' as main;
 import 'package:flutter_complete_guide/models.dart' as models;
 import 'package:flutter_complete_guide/pages_Operators/Order.dart';
-import 'package:provider/provider.dart';
 import '../widgets/navbar.dart' as navbar;
-import '../widgets/form.dart' as form;
-import 'package:provider/provider.dart' as provider;
 import 'package:intl/intl.dart';
 import 'dart:convert';
-import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'reciept.dart' as receipt;
 
 
 class DailySalesEntrypage extends StatefulWidget {

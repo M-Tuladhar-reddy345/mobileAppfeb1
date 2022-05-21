@@ -1,23 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/main.dart' as main;
-import 'package:flutter_complete_guide/models.dart' as models;
-import 'package:provider/provider.dart';
+import 'package:flutter_complete_guide/widgets/Appbar.dart';
 import '../widgets/navbar.dart' as navbar;
-import '../widgets/form.dart' as form;
-import 'package:provider/provider.dart' as provider;
 import 'package:intl/intl.dart';
-import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 
-import 'package:async/async.dart' as asyncc;
-import 'dart:convert';
-import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:http/http.dart' as http;
-import 'package:path/path.dart';
 import 'package:open_file/open_file.dart';
 
 import 'package:file_picker/file_picker.dart';
@@ -91,14 +80,7 @@ class _PdfSoaCustomer extends State<PdfSoaCustomer> {
   Widget build(BuildContext context) {
     return    Scaffold(       
         drawer: navbar.Navbar(),
-        appBar: AppBar(
-          actions: [Image(image: AssetImage("assets/images/RaithannaOLogo.png"),
-                            height: 100,
-                            width: 100,
-                    // color: Color(0xFF3A5A98),
-               ),],
-          title: Text('Download Soa PDF'),
-        ),
+        appBar: AppBarCustom('Download Statement', Size(MediaQuery.of(context).size.width, 56)),
         body: SingleChildScrollView(
           child: Column(children: [
             Row(

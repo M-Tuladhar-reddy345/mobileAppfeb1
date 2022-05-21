@@ -4,16 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/commonApi/cartApi.dart';
 import 'package:flutter_complete_guide/main.dart' as main;
 import 'package:flutter_complete_guide/pages_customer/orderConfirming.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:provider/provider.dart';
 import '../widgets/Appbar.dart';
 import '../widgets/Pageroute.dart';
 import '../widgets/navbar.dart' as navbar;
-import '../widgets/form.dart' as form;
-import 'package:provider/provider.dart' as provider;
-import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:flutter_complete_guide/models.dart' as models;
 
 import 'addingtoCart.dart';
