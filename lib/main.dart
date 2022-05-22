@@ -9,6 +9,9 @@ import 'splashFiles/splashTest.dart';
 final localstorage.LocalStorage storage =
     localstorage.LocalStorage('RaithannaDairy_local');
 
+final Razorpay_key_id = 'rzp_live_BSjztnNbDRfvxe';
+final Razorpay_key_secret = 'KK4gdYSW0UnuvQf4PJ47E3bP';
+final Razorpay_timeout = 240;
 
 // final String url_start = 'http://www.jacknjill.solutions/';
 // final String url_start = 'http://192.168.1.103:8000/';

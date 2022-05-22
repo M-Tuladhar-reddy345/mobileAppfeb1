@@ -16,7 +16,7 @@ class Wallet extends StatefulWidget {
 
 class _WalletState extends State<Wallet> {
   final _razorpay = Razorpay();
-  List Rechargeamounts = ['50','100','200','500','1000'];
+  List Rechargeamounts = ['1','50','100','200','500','1000'];
   @override
   void dispose() {
         // TODO: implement dispose

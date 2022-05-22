@@ -277,12 +277,12 @@ class _OrderConfirm extends State<OrderConfirm> {
         widget.orderRazorpay = data['orderid'];
       });
       _razorpay.open({
-        'key': 'rzp_test_mgKxKCgU8H0pwv',
+        'key': main.Razorpay_key_id,
         'amount': int.parse(data['amt']), //in the smallest currency sub-unit.
         'name': 'Raithanna milk Dairy ',
         'order_id': widget.orderRazorpay, // Generate order_id using Orders API
         'description': 'Fresh milk and milk products',
-        'timeout': 300, // in seconds
+        'timeout': main.Razorpay_timeout, // in seconds
         'prefill':{
           'contact':main.storage.getItem('phone')
         }
