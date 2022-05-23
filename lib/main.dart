@@ -4,21 +4,25 @@ import 'package:flutter_complete_guide/commonApi/cartApi.dart';
 import 'package:flutter_complete_guide/pages_customer/CustomerLogin.dart';
 import 'package:localstorage/localstorage.dart' as localstorage;
 import 'package:google_fonts/google_fonts.dart';
-import 'splashFiles/splashTest.dart';
+import 'splashFiles/splash1.dart';
 
 final localstorage.LocalStorage storage =
     localstorage.LocalStorage('RaithannaDairy_local');
 
+// -- Razorpay Settings
 final Razorpay_key_id = 'rzp_live_BSjztnNbDRfvxe';
-final Razorpay_key_secret = 'KK4gdYSW0UnuvQf4PJ47E3bP';
 final Razorpay_timeout = 240;
+// final Razorpay_key_id = 'rzp_test_mgKxKCgU8H0pwv';
+// final Razorpay_key_secret = 'wT9omdKRRTDcqqs9HXKGlXIX';
+
+// Razorpay Settings --
 
 // final String url_start = 'http://www.jacknjill.solutions/';
 // final String url_start = 'http://192.168.1.103:8000/';
 // final String url_start = 'http://192.168.1.10:8000/';
 // final String url_start = 'http://localhost:8000/';
-// final String url_start = 'http://192.168.1.2:8000/';
-final String url_start = 'http://192.168.225.117:8000/';
+final String url_start = 'http://192.168.1.2:8000/';
+// final String url_start = 'http://192.168.225.117:8000/';
 
 // final String url_start = 'http://192.168.29.70:8000/';
 main() {

@@ -1,6 +1,8 @@
 import 'package:http/http.dart' as http;
 import 'package:flutter_complete_guide/main.dart'as main;
 import 'dart:convert';
+
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 // ignore: missing_return
 Future<List> getWallet()async{
   final Map body = {
@@ -19,13 +21,13 @@ Future<List> getWallet()async{
     }
   }
 }
-openRazorpay(razorpay,amt) async{
+openRazorpay( razorpay,amt) async{
     final url = Uri.parse(main.url_start +
         'mobileApp/razorPayordercreate/'+amt +'/'+main.storage.getItem('phone')+'/');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       var data = json.decode(response.body) as Map;
-      
+    
       razorpay.open({
         'key': main.Razorpay_key_id,
         'amount': int.parse(data['amt']), //in the smallest currency sub-unit.

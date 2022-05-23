@@ -22,7 +22,7 @@ class _SplashState extends State<Splash> with TickerProviderStateMixin{
     setState(() {
       change = !change;
     });
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 3));
     dispose();
     Navigator.pushReplacement(context, CustomPageRoute(child: Splash2()));
   }

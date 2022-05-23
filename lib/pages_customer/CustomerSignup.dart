@@ -51,6 +51,7 @@ class _SignUppagestate extends State<SignUppage> {
       var data = json.decode(response.body) as Map;
       ScaffoldMessenger.of(context).clearSnackBars();
       if (data['message'] == 'Success') {
+        Navigator.of(context).pop();
         print('success');
 
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('SuccessFully done'),backgroundColor: Colors.green,));
@@ -61,6 +62,7 @@ class _SignUppagestate extends State<SignUppage> {
               builder: (context) => CustomerLoginpage()),
         );
       } else {
+        Navigator.of(context).pop();
         ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('User with this Name is aldready there'),backgroundColor: Colors.green,));
       }

@@ -16,7 +16,7 @@ class Wallet extends StatefulWidget {
 
 class _WalletState extends State<Wallet> {
   final _razorpay = Razorpay();
-  List Rechargeamounts = ['1','50','100','200','500','1000'];
+  List Rechargeamounts = ['1','10','50','100','200','500','1000'];
   @override
   void dispose() {
         // TODO: implement dispose
@@ -37,10 +37,12 @@ class _WalletState extends State<Wallet> {
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
+    Navigator.pop(context);
       // Do something when payment fails
   }
   void _handleExternalWallet(ExternalWalletResponse response) {
       // Do something when an external wallet is selected
+      Navigator.pop(context);
     }
 @override
   void initState() {
