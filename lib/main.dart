@@ -10,10 +10,9 @@ final localstorage.LocalStorage storage =
     localstorage.LocalStorage('RaithannaDairy_local');
 
 // -- Razorpay Settings
-final Razorpay_key_id = 'rzp_live_BSjztnNbDRfvxe';
+// final Razorpay_key_id = 'rzp_live_BSjztnNbDRfvxe';
 final Razorpay_timeout = 240;
-// final Razorpay_key_id = 'rzp_test_mgKxKCgU8H0pwv';
-// final Razorpay_key_secret = 'wT9omdKRRTDcqqs9HXKGlXIX';
+final Razorpay_key_id = 'rzp_test_mgKxKCgU8H0pwv';
 
 // Razorpay Settings --
 

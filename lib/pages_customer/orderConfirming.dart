@@ -28,6 +28,7 @@ class OrderConfirm extends StatefulWidget {
   StateSetter setModalState;
   int walletBalance;
   String paymentMethod;
+  String orderNo;
   TextEditingController Address1 = TextEditingController()..text = '';
   TextEditingController Address2 = TextEditingController()..text = '';
   TextEditingController Address3 = TextEditingController()..text = '';
@@ -89,6 +90,7 @@ class _OrderConfirm extends State<OrderConfirm> {
       'pincode':widget.pincode.text,
       'ifPaid':widget.Paid.toString(),
       'paymentMethod':widget.paymentMethod.toString(),
+      'orderno': widget.orderNo
                     };
       final url = Uri.parse(main.url_start+'mobileApp/placeorder/');
       final response =  await http.post(url, body: body);
@@ -315,11 +317,14 @@ class _OrderConfirm extends State<OrderConfirm> {
     if (widget.walletBalance >= widget.ttlamt){
       final walletPay = PaywithWallet(widget.ttlamt);
       walletPay.then((value){
+        print(value);
         setState(() {
         widget.Paid=true;
+        widget.orderNo = value[3].toString();
         });
         submit();
       });
+
     }else{
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Insuffcient Balance... try after recharging'),backgroundColor: Colors.red,));
     }
