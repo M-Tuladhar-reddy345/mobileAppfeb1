@@ -6,7 +6,8 @@ import 'package:razorpay_flutter/razorpay_flutter.dart';
 // ignore: missing_return
 Future<List> getWallet()async{
   final Map body = {
-    'phone':main.storage.getItem('phone')
+    'phone':main.storage.getItem('phone'),
+    'branch':main.storage.getItem('branch'),
   };
   final response = await http.post(Uri.parse(main.url_start+'mobileApp/getWallet/'), body: body);
   if (response.statusCode==200){
@@ -23,7 +24,7 @@ Future<List> getWallet()async{
 }
 openRazorpay( razorpay,amt) async{
     final url = Uri.parse(main.url_start +
-        'mobileApp/razorPayordercreate/'+amt +'/'+main.storage.getItem('phone')+'/');
+        'mobileApp/razorPayordercreate/'+amt +'/'+main.storage.getItem('phone')+'/'+main.storage.getItem('branch')+'/');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       var data = json.decode(response.body) as Map;
@@ -43,7 +44,7 @@ openRazorpay( razorpay,amt) async{
   }
 Future rechargeWallet(amt)async{
 
-  final response = await http.get(Uri.parse(main.url_start+'mobileApp/rechargeWallet/'+amt.toString() +'/'+main.storage.getItem('phone')+'/'));
+  final response = await http.get(Uri.parse(main.url_start+'mobileApp/rechargeWallet/'+amt.toString() +'/'+main.storage.getItem('phone')+'/'+main.storage.getItem('branch')+'/'));
   if (response.statusCode==200){
     final data= json.decode(response.body) as Map;
     if (data['message'] == 'success'){
@@ -58,7 +59,7 @@ Future rechargeWallet(amt)async{
 }
 Future PaywithWallet(amt)async{
 
-  final response = await http.get(Uri.parse(main.url_start+'mobileApp/paymentWallet/'+amt.toString() +'/'+main.storage.getItem('phone')+'/'));
+  final response = await http.get(Uri.parse(main.url_start+'mobileApp/paymentWallet/'+amt.toString() +'/'+main.storage.getItem('phone')+'/'+main.storage.getItem('branch')+'/'));
   if (response.statusCode==200){
     final data= json.decode(response.body) as Map;
     if (data['message'] == 'success'){
@@ -67,7 +68,7 @@ Future PaywithWallet(amt)async{
       //   widget.balance = data['balance'];
       //   widget.wallet_id = data['wallet_id'];
       // });
-      return [data['balance'],data['wallet_id'],data['message'],data['orderno']];
+      return [data['balance'],data['wallet_id'],data['message'],data['orderno'],data['transaction_id']];
     }
   }
 }

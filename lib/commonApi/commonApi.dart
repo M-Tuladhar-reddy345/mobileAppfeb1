@@ -29,7 +29,7 @@ getTransactions(type) async {
         'mobileApp/getTransactions/' +
         main.storage.getItem('branch') +
         '/');
-    final response = await http.post(url, body: {'phone':main.storage.getItem('phone'), 'type':type});
+    final response = await http.post(url, body: {'phone':main.storage.getItem('phone'), 'type':type,'branch':main.storage.getItem('branch')});
     // print(url);
 
 

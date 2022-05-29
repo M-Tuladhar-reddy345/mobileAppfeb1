@@ -34,6 +34,8 @@ class OrderConfirm extends StatefulWidget {
   TextEditingController Address3 = TextEditingController()..text = '';
   TextEditingController Address4 = TextEditingController()..text = '';
   TextEditingController pincode = TextEditingController()..text = '';
+  
+  var transaction_id;
   @override
   State<OrderConfirm> createState() => _OrderConfirm();
 }
@@ -59,11 +61,13 @@ class _OrderConfirm extends State<OrderConfirm> {
       }
       void _handlePaymentSuccess(PaymentSuccessResponse response) {
       // Do something when payment succeeds
-      submit();
+      Navigator.pop(context);
       setState(() {
         widget.Paid=true;  
+        widget.transaction_id = response.paymentId;
       });
-      
+      submit();
+
       }
 
   void _handlePaymentError(PaymentFailureResponse response) {
@@ -75,11 +79,12 @@ class _OrderConfirm extends State<OrderConfirm> {
   
   Future getAddresses;
   submit() async{
-    print(widget.Address1.text == '' ||widget.Address2.text == ''||widget.Address3.text == ''||widget.Address4.text == ''|| widget.pincode.text == '');
+    // print(widget.Address1.text == '' ||widget.Address2.text == ''||widget.Address3.text == ''||widget.Address4.text == ''|| widget.pincode.text == '');
     if (widget.Address1.text == '' ||widget.Address2.text == ''||widget.Address3.text == ''||widget.Address4.text == ''|| widget.pincode.text == ''){
       ScaffoldMessenger.of(context).showSnackBar(
                      SnackBar(content: Text('Every Field need to be filled'), backgroundColor: Colors.red,));
     }else{
+      print('87 '+widget.transaction_id);
     final body = {
       'branch':main.storage.getItem('branch'),
       'phone':main.storage.getItem('phone'),
@@ -90,7 +95,8 @@ class _OrderConfirm extends State<OrderConfirm> {
       'pincode':widget.pincode.text,
       'ifPaid':widget.Paid.toString(),
       'paymentMethod':widget.paymentMethod.toString(),
-      'orderno': widget.orderNo
+      'orderno': widget.orderNo.toString(),
+      'transaction_id':widget.transaction_id
                     };
       final url = Uri.parse(main.url_start+'mobileApp/placeorder/');
       final response =  await http.post(url, body: body);
@@ -271,7 +277,7 @@ class _OrderConfirm extends State<OrderConfirm> {
     });
     LoaderDialogbox(context);
     final url = Uri.parse(main.url_start +
-        'mobileApp/razorPayordercreate/'+main.storage.getItem('ttl').toString() +'/'+main.storage.getItem('phone')+'/');
+        'mobileApp/razorPayordercreate/'+main.storage.getItem('ttl').toString() +'/'+main.storage.getItem('phone')+'/'+main.storage.getItem('branch')+'/');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       var data = json.decode(response.body) as Map;
@@ -321,6 +327,7 @@ class _OrderConfirm extends State<OrderConfirm> {
         setState(() {
         widget.Paid=true;
         widget.orderNo = value[3].toString();
+        widget.transaction_id = value[4].toString();
         });
         submit();
       });
