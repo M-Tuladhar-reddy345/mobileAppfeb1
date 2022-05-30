@@ -35,7 +35,7 @@ class OrderConfirm extends StatefulWidget {
   TextEditingController Address4 = TextEditingController()..text = '';
   TextEditingController pincode = TextEditingController()..text = '';
   
-  var transaction_id;
+  var transaction_id = 'cash on delivery ';
   @override
   State<OrderConfirm> createState() => _OrderConfirm();
 }
@@ -84,7 +84,7 @@ class _OrderConfirm extends State<OrderConfirm> {
       ScaffoldMessenger.of(context).showSnackBar(
                      SnackBar(content: Text('Every Field need to be filled'), backgroundColor: Colors.red,));
     }else{
-      print('87 '+widget.transaction_id);
+      
     final body = {
       'branch':main.storage.getItem('branch'),
       'phone':main.storage.getItem('phone'),
@@ -96,7 +96,7 @@ class _OrderConfirm extends State<OrderConfirm> {
       'ifPaid':widget.Paid.toString(),
       'paymentMethod':widget.paymentMethod.toString(),
       'orderno': widget.orderNo.toString(),
-      'transaction_id':widget.transaction_id
+      'transaction_id':widget.transaction_id.toString(),
                     };
       final url = Uri.parse(main.url_start+'mobileApp/placeorder/');
       final response =  await http.post(url, body: body);
