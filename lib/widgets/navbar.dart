@@ -527,8 +527,7 @@ class Navbar extends StatelessWidget {
                     alignment: Alignment.bottomLeft,
                     child: Expanded(
                       child: Container(
-                        color: Theme.of(context).primaryColor,
-                        child: Wrap(
+                        child: Row(
                           
                           children: [
                             Image(image: AssetImage("assets/images/jnjlogo.png"),
@@ -536,7 +535,10 @@ class Navbar extends StatelessWidget {
                             width: 50,
                     // color: Color(0xFF3A5A98),
                ),
-                            Text('Copyright©2022 - All rights reserved to Jack n Jill Solutions Pvt Ltd',style:TextStyle(color: Theme.of(context).primaryColor.computeLuminance() > 0.5 ? Colors.black : Colors.white,fontWeight: FontWeight.bold))
+                            Flexible(child: Padding(
+                              padding: const EdgeInsets.only(left:3.0),
+                              child: Text('Copyright©2022 - All rights reserved to Jack n Jill Solutions Pvt Ltd',style:TextStyle(color: Colors.green,fontWeight: FontWeight.bold, fontSize: 10)),
+                            ))
                           ],
                         ),
                       ),
