@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_complete_guide/pages_customer/showTransactions.dart';
 import 'package:flutter_complete_guide/widgets/Appbar.dart';
 import 'package:flutter_complete_guide/widgets/loader.dart';
@@ -61,6 +62,58 @@ class _WalletState extends State<Wallet> {
       });
     });
   }
+  userWalletAmountRecharge(context){
+  int amount;
+  showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return new AlertDialog(
+          title: Text('Enter your amount'),
+          content: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9]'))],
+                decoration: InputDecoration(
+                  border: new OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(
+                      const Radius.circular(30),
+                    ),
+                  ),
+                ),
+                onChanged: (value) {
+                  amount = int.parse(value);
+                },
+              ),
+            ),
+          ),
+          contentPadding: EdgeInsets.all(10.0),
+          actions: <Widget>[
+            FlatButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                setState(() {
+                    widget.rechargeAmount = amount;
+                    LoaderDialogbox(context);
+                    openRazorpay(_razorpay,amount );
+                    getWallet().then((value) {
+                      setState(() {
+                        widget.balance = value[0];
+                      });
+                    });
+                });
+              },
+              child: Text(
+                'Submit',
+              ),
+            ),
+          ],
+        );
+      });
+      }
   @override
   Widget build(BuildContext context) {
     
@@ -123,7 +176,23 @@ class _WalletState extends State<Wallet> {
                       ),
                     ),
                   ),
-                );}).toList()),)
+                );}).toList()+[Padding(
+                  padding: const EdgeInsets.only(left: 0, right: 0),
+                  child: Container(
+                    height: 50,
+                    width: 110,
+                    child: GestureDetector(
+                      onTap:() {
+                        userWalletAmountRecharge(context);
+                      },
+                      child: Card(
+                        shape: RoundedRectangleBorder(borderRadius:  BorderRadius.all(Radius.circular(25))),
+                        color: Colors.red,
+                        child: Align(alignment: Alignment.center,child: Text('Custom Amount', style: Theme.of(context).primaryTextTheme.titleSmall.copyWith(fontSize: 12),)),
+                      ),
+                    ),
+                  ),
+                )]),)
               ]),
           ),
           Container(

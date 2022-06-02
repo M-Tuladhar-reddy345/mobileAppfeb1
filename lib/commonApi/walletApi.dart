@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_complete_guide/main.dart'as main;
 import 'dart:convert';
@@ -24,7 +26,7 @@ Future<List> getWallet()async{
 }
 openRazorpay( razorpay,amt) async{
     final url = Uri.parse(main.url_start +
-        'mobileApp/razorPayordercreate/'+amt +'/'+main.storage.getItem('phone')+'/'+main.storage.getItem('branch')+'/');
+        'mobileApp/razorPayordercreate/'+amt.toString() +'/'+main.storage.getItem('phone')+'/'+main.storage.getItem('branch')+'/');
     final response = await http.get(url);
     if (response.statusCode == 200) {
       var data = json.decode(response.body) as Map;
@@ -72,3 +74,4 @@ Future PaywithWallet(amt)async{
     }
   }
 }
+

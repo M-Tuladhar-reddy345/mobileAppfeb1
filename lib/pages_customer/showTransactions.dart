@@ -36,20 +36,23 @@ class _TransactionsState extends State<Transactions> {
               if (snapshot.data == null){
                 return Center(child: Text('No transactions found'),);
               }else{
-                return ListView(
-                  shrinkWrap: true,
-                  
-                  children: snapshot.data.map<Widget>((e)=>
-                  Card(color: Colors.red,child:Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(mainAxisAlignment: MainAxisAlignment.start,crossAxisAlignment: CrossAxisAlignment.start,children: [
-                    Text.rich(TextSpan(children : [TextSpan(text: 'Transaction_id: ', style: Theme.of(context).primaryTextTheme.titleSmall),TextSpan(text: e['transaction_id'], style: Theme.of(context).primaryTextTheme.titleMedium.copyWith(fontWeight: FontWeight.w900)),])),
-                    Text.rich(TextSpan(children : [TextSpan(text: 'Date: ', style: Theme.of(context).primaryTextTheme.titleSmall),TextSpan(text: e['date'], style: Theme.of(context).primaryTextTheme.titleMedium.copyWith(fontWeight: FontWeight.w900)),])),
-                    Text.rich(TextSpan(children : [TextSpan(text: 'Amount: ', style: Theme.of(context).primaryTextTheme.titleSmall),TextSpan(text: e['amount'].toString(), style: Theme.of(context).primaryTextTheme.titleMedium.copyWith(fontWeight: FontWeight.w900)),])),
-                    Text.rich(TextSpan(children : [TextSpan(text: 'Type: ', style: Theme.of(context).primaryTextTheme.titleSmall),TextSpan(text: e['type'], style: Theme.of(context).primaryTextTheme.titleMedium.copyWith(fontWeight: FontWeight.w900)),])),
-                    ],),
-                  ) )
-                  ).toList(),
+                return Container(
+                  height: MediaQuery.of(context).size.longestSide-115,
+                  child: ListView(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    children: snapshot.data.map<Widget>((e)=>
+                    Card(color: Colors.red,child:Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(mainAxisAlignment: MainAxisAlignment.start,crossAxisAlignment: CrossAxisAlignment.start,children: [
+                      Text.rich(TextSpan(children : [TextSpan(text: 'Transaction_id: ', style: Theme.of(context).primaryTextTheme.titleSmall),TextSpan(text: e['transaction_id'], style: Theme.of(context).primaryTextTheme.titleMedium.copyWith(fontWeight: FontWeight.w900)),])),
+                      Text.rich(TextSpan(children : [TextSpan(text: 'Date: ', style: Theme.of(context).primaryTextTheme.titleSmall),TextSpan(text: e['date'], style: Theme.of(context).primaryTextTheme.titleMedium.copyWith(fontWeight: FontWeight.w900)),])),
+                      Text.rich(TextSpan(children : [TextSpan(text: 'Amount: ', style: Theme.of(context).primaryTextTheme.titleSmall),TextSpan(text: e['amount'].toString(), style: Theme.of(context).primaryTextTheme.titleMedium.copyWith(fontWeight: FontWeight.w900)),])),
+                      Text.rich(TextSpan(children : [TextSpan(text: 'Type: ', style: Theme.of(context).primaryTextTheme.titleSmall),TextSpan(text: e['type'], style: Theme.of(context).primaryTextTheme.titleMedium.copyWith(fontWeight: FontWeight.w900)),])),
+                      ],),
+                    ) )
+                    ).toList(),
+                  ),
                 );}
                 break;
             }

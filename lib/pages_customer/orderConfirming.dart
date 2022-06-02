@@ -1,6 +1,7 @@
 
 import 'package:flutter/services.dart';
 import 'package:flutter_complete_guide/commonApi/walletApi.dart';
+import 'package:flutter_complete_guide/pages_customer/wallet.dart';
 import 'package:flutter_complete_guide/widgets/Appbar.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:flutter/material.dart';
@@ -97,6 +98,7 @@ class _OrderConfirm extends State<OrderConfirm> {
       'paymentMethod':widget.paymentMethod.toString(),
       'orderno': widget.orderNo.toString(),
       'transaction_id':widget.transaction_id.toString(),
+      'ttlamt':widget.ttlamt.toString()
                     };
       final url = Uri.parse(main.url_start+'mobileApp/placeorder/');
       final response =  await http.post(url, body: body);
@@ -297,6 +299,49 @@ class _OrderConfirm extends State<OrderConfirm> {
       });
       }
   }
+  userWalletAmountRecharge(context){
+  String amount;
+  return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return new AlertDialog(
+          title: Text('Enter your amount'),
+          content: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFormField(
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9]'))],
+                decoration: InputDecoration(
+                  border: new OutlineInputBorder(
+                    borderRadius: const BorderRadius.all(
+                      const Radius.circular(30),
+                    ),
+                  ),
+                ),
+                onChanged: (value) {
+                  amount = value;
+                },
+              ),
+            ),
+          ),
+          contentPadding: EdgeInsets.all(10.0),
+          actions: <Widget>[
+            FlatButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                return amount;
+              },
+              child: Text(
+                'Submit',
+              ),
+            ),
+          ],
+        );
+      });
+      }
   void WalletPayment(context){
     setState(() {
       widget.paymentMethod='Wallet';
@@ -313,7 +358,22 @@ class _OrderConfirm extends State<OrderConfirm> {
       Text('Wallet Payment', style: Theme.of(context).primaryTextTheme.titleLarge,),
       Text('Balance:'+value[0].toString(),style: TextStyle(color:Colors.white,fontSize:24 ),),
       
-      Expanded(child: Align(alignment: Alignment.bottomCenter,child: ElevatedButton(onPressed: ()=>PayWallet(), child: Text('Pay  '+widget.ttlamt.toString()))))
+      Expanded(child: Align(alignment: Alignment.bottomCenter,child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+         crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(onPressed: ()=>PayWallet(), child: Text('Pay  '+widget.ttlamt.toString())),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>Wallet()));
+              }, child: Text('To wallet')),
+          ),
+        ],
+      )))
       
       ],
 
@@ -333,7 +393,7 @@ class _OrderConfirm extends State<OrderConfirm> {
       });
 
     }else{
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Insuffcient Balance... try after recharging'),backgroundColor: Colors.red,));
+      return showDialog(context: context, builder: (context)=>Dialog(shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(25))),child: Container(width: 200,height: 50,color: Theme.of(context).primaryColorDark, child: Align(alignment: Alignment.center,child: Text('Insuffeceint balance... Retry',style: Theme.of(context).primaryTextTheme.titleMedium.copyWith(color: Colors.white),)),),));
     }
   }
   void selectPaymentMethod(context){
