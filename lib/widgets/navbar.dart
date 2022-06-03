@@ -11,6 +11,7 @@ import 'package:flutter_complete_guide/pages_Operators/edit_dailySalesEntry.dart
 import 'package:flutter_complete_guide/pages_customer/CustomerLogin.dart';
 import 'package:flutter_complete_guide/pages_customer/CustomerSignup.dart';
 import 'package:flutter_complete_guide/pages_customer/DownloadSoa.dart';
+import 'package:flutter_complete_guide/pages_customer/addingtoCart.dart';
 import 'package:flutter_complete_guide/pages_customer/cart.dart';
 import 'package:flutter_complete_guide/pages_customer/wallet.dart';
 import '../main.dart' as main;
@@ -413,6 +414,18 @@ class Navbar extends StatelessWidget {
                                                                 context,
                                                                 MaterialPageRoute(
                                                                     builder: (context) => Wallet()),
+                                                              );
+                                                            },
+                                                          ),
+                                                          ListTile(
+                                                            title: const Text('Products'),
+                                                            onTap: () {
+                                                              // Update the state of the app.
+                                                              // ...
+                                                              Navigator.pushReplacement(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                    builder: (context) => AddingToCartpage('All',['All'])),
                                                               );
                                                             },
                                                           ),
