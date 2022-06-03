@@ -463,8 +463,9 @@ class Navbar extends StatelessWidget {
                                                               }
                                                             },
                                                           ),
-                                                        ]: <Widget>[
-                                                          const DrawerHeader(
+                                                        ] 
+                                                        :main.storage.getItem('role') =='Delivery Staff' ||main.storage.getItem('phone') !=null  ?<Widget>[
+                                                           const DrawerHeader(
                                                               decoration: BoxDecoration(
                                                                 color:Colors.white,
                                                               ),
@@ -473,6 +474,9 @@ class Navbar extends StatelessWidget {
                                                                   height: 180,
                                                                   image:
                                       AssetImage('assets/images/RaithannaOLogo.png'))),
+                                                        ]:
+                                                         <Widget>[
+                                                         
                                                           //  Image(
                                                 
                                                           //     image:
@@ -537,7 +541,8 @@ class Navbar extends StatelessWidget {
                ),
                             Flexible(child: Padding(
                               padding: const EdgeInsets.only(left:3.0),
-                              child: Text('Copyright©2022 - All rights reserved to Jack n Jill Solutions Pvt Ltd',style:TextStyle(color: Colors.green,fontWeight: FontWeight.bold, fontSize: 10)),
+                              child:Text.rich(TextSpan(children: [TextSpan(text:'Copyright©2022-All rights reserved\n',style:TextStyle(color: Colors.green,fontWeight: FontWeight.bold, fontSize: 11)),TextSpan(text:'Jack n Jill Solutions Pvt Ltd',style:TextStyle(color: Colors.green,fontWeight: FontWeight.bold, fontSize: 12)  )]))
+                              //  Text('Copyright©2022 - All rights reserved to Jack n Jill Solutions Pvt Ltd',style:TextStyle(color: Colors.green,fontWeight: FontWeight.bold, fontSize: 10)),
                             ))
                           ],
                         ),
