@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '../widgets/Appbar.dart';
 import '../widgets/navbar.dart' as navbar;
 
 import 'package:file_picker/file_picker.dart';
@@ -91,9 +92,7 @@ class _ExtractdailyIndentpages_Operatorstate extends State<ExtractdailyIndentpag
   Widget build(BuildContext context) {
     return Scaffold(
         drawer: navbar.Navbar(),
-        appBar: AppBar(
-          title: Text('Extract daily Indent'),
-        ),
+        appBar: AppBarCustom('Extract Daily Indent', Size(MediaQuery.of(context).size.width,56)),
         body: SingleChildScrollView(
           child: Column(children: [
             

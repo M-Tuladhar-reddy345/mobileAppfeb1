@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/Appbar.dart';
 import '../widgets/navbar.dart' as navbar;
 import '../main.dart' as main;
 import 'dart:convert';
@@ -100,9 +101,7 @@ class _Orderpages_Operatorstate extends State<Orderpage> {
   Widget build(BuildContext context) {
     return Scaffold(
         drawer: navbar.Navbar(),
-        appBar: AppBar(
-          title: Text('Order'),
-        ),
+        appBar: AppBarCustom('Order', Size(MediaQuery.of(context).size.width,56)),
         body: SingleChildScrollView(
           child: Column(children: [
             FutureBuilder(

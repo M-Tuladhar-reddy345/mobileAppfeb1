@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/main.dart' as main;
 import 'package:flutter_complete_guide/models.dart' as models;
+import '../widgets/Appbar.dart';
 import '../widgets/navbar.dart' as navbar;
 import 'package:intl/intl.dart';
 import 'dart:convert';
@@ -186,14 +187,7 @@ class _UpdatePaymentsState extends State<UpdatePayments>
   Widget build(BuildContext context) {
     return    Scaffold(       
         drawer: navbar.Navbar(),
-        appBar: AppBar(
-          actions: [Image(image: AssetImage("assets/images/RaithannaOLogo.png"),
-                            height: 100,
-                            width: 100,
-                    // color: Color(0xFF3A5A98),
-               ),],
-          title: Text('Update payments'),
-        ),
+        appBar: AppBarCustom('Update Payments', Size(MediaQuery.of(context).size.width,56)),
         body: Align(
           alignment: Alignment.topCenter,
           child: SingleChildScrollView(

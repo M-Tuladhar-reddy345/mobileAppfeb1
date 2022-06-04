@@ -47,3 +47,26 @@ getTransactions(type) async {
       return data['transactions'];
     }
   }
+getOrders_list() async {
+    final url = Uri.parse(main.url_start +
+        'mobileApp/getOrder_deliveryBoy/' +
+        main.storage.getItem('branch') +
+        '/');
+    final response = await http.get(url);//, body: {'phone':main.storage.getItem('phone'), 'type':type,'branch':main.storage.getItem('branch')});
+    // print(url);
+
+
+    if (response.statusCode == 200) {
+      // print(response.body);
+      var data = json.decode(response.body) as Map;
+      
+
+      // List Products =
+      //     data['results'].map((json) => models.product.fromjson(json)).toList();
+      
+    
+         
+         
+      return data['data'];
+    }
+  }

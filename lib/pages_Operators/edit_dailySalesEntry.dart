@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/main.dart' as main;
 import 'package:flutter_complete_guide/models.dart' as models;
 import 'package:flutter_complete_guide/pages_Operators/Order.dart';
+import '../widgets/Appbar.dart';
 import '../widgets/navbar.dart' as navbar;
 import 'package:intl/intl.dart';
 import 'dart:convert';
@@ -310,9 +311,7 @@ class _EDitDailySalesEntrypages_Operatorstate extends State<EditDailySalesEntryp
   Widget build(BuildContext context) {
     return Scaffold(
         drawer: navbar.Navbar(),
-        appBar: AppBar(
-          title: Text('Edit Daily Sales Entry'),
-        ),
+        appBar: AppBarCustom('Edit Daily Sales Entry', Size(MediaQuery.of(context).size.width,56)),
         body: SingleChildScrollView(
             child: Column(
               children: [

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/main.dart' as main;
+import '../widgets/Appbar.dart';
 import '../widgets/navbar.dart' as navbar;
 import 'package:intl/intl.dart';
 import 'dart:convert';
@@ -172,9 +173,7 @@ class _editUpdatePayementsState extends State<editUpdatePayements> {
   Widget build(BuildContext context) {
     return Scaffold(
         drawer: navbar.Navbar(),
-        appBar: AppBar(
-          title: Text('Edit Update Payments'),
-        ),
+        appBar: AppBarCustom('Edit Update Payments', Size(MediaQuery.of(context).size.width,56)),
         body: SingleChildScrollView(
           child: Column(children: [
             Container(

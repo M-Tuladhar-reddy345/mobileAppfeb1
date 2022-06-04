@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/commonApi/cartApi.dart';
 import 'package:flutter_complete_guide/pages_Operators/DownloadPdfIndent.dart';
 import 'package:flutter_complete_guide/pages_Operators/Edit_updatePayements.dart';
+import 'package:flutter_complete_guide/pages_Operators/Orders.dart';
 import 'package:flutter_complete_guide/pages_Operators/dailySalesEntry.dart';
 
 import 'package:flutter_complete_guide/pages_Operators/ExtractdailyIndent.dart';
@@ -14,6 +15,7 @@ import 'package:flutter_complete_guide/pages_customer/DownloadSoa.dart';
 import 'package:flutter_complete_guide/pages_customer/addingtoCart.dart';
 import 'package:flutter_complete_guide/pages_customer/cart.dart';
 import 'package:flutter_complete_guide/pages_customer/wallet.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../main.dart' as main;
 import '../pages_common/home.dart' as home;
 import '../pages_Operators/UpdatePayments.dart' as UpdatePayments;
@@ -507,6 +509,18 @@ class Navbar extends StatelessWidget {
                                                             },
                                                           ),
                                                           ListTile(
+                                                            title: const Text('Orders List'),
+                                                            onTap: () {
+                                                              // Update the state of the app.
+                                                              // ...
+                                                              Navigator.pushReplacement(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                    builder: (context) => Orders_base()),
+                                                              );
+                                                            },
+                                                          ),
+                                                          ListTile(
                                                             title: const Text('Logout'),
                                                             onTap: () async {
                                                               // Update the state of the app.
@@ -554,8 +568,8 @@ class Navbar extends StatelessWidget {
                ),
                             Flexible(child: Padding(
                               padding: const EdgeInsets.only(left:3.0),
-                              child:Text.rich(TextSpan(children: [TextSpan(text:'Copyright©2022-All rights reserved\n',style:TextStyle(color: Colors.green,fontWeight: FontWeight.bold, fontSize: 11)),TextSpan(text:'Jack n Jill Solutions Pvt Ltd',style:TextStyle(color: Colors.green,fontWeight: FontWeight.bold, fontSize: 12)  )]))
-                              //  Text('Copyright©2022 - All rights reserved to Jack n Jill Solutions Pvt Ltd',style:TextStyle(color: Colors.green,fontWeight: FontWeight.bold, fontSize: 10)),
+                              // child:Text.rich(TextSpan(children: [TextSpan(text:'Copyright©2022-All rights reserved\n',style:TextStyle(color: Colors.green,fontWeight: FontWeight.bold, fontSize: 11)),TextSpan(text:'Jack n Jill Solutions Pvt Ltd',style:TextStyle(color: Colors.green,fontWeight: FontWeight.bold, fontSize: 12)  )]))
+                              child: Text('Copyright©2022 - All rights reserved \nJack n Jill Solutions Pvt Ltd',style:TextStyle(color: Colors.green,fontWeight: FontWeight.bold, fontSize: 15, fontFamily: GoogleFonts.oldStandardTt().fontFamily,))
                             ))
                           ],
                         ),
