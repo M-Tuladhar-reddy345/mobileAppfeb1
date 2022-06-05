@@ -187,6 +187,18 @@ class Navbar extends StatelessWidget {
                                                             },
                                                           ),
                                                           ListTile(
+                                                            title: const Text('Orders List'),
+                                                            onTap: () {
+                                                              // Update the state of the app.
+                                                              // ...
+                                                              Navigator.pushReplacement(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                    builder: (context) => Orders_base()),
+                                                              );
+                                                            },
+                                                          ),
+                                                          ListTile(
                                                             title: const Text('Logout'),
                                                             onTap: () async {
                                                               // Update the state of the app.
@@ -566,11 +578,16 @@ class Navbar extends StatelessWidget {
                             width: 50,
                     // color: Color(0xFF3A5A98),
                ),
-                            Flexible(child: Padding(
+               Flexible(child: Padding(
                               padding: const EdgeInsets.only(left:3.0),
-                              // child:Text.rich(TextSpan(children: [TextSpan(text:'Copyright©2022-All rights reserved\n',style:TextStyle(color: Colors.green,fontWeight: FontWeight.bold, fontSize: 11)),TextSpan(text:'Jack n Jill Solutions Pvt Ltd',style:TextStyle(color: Colors.green,fontWeight: FontWeight.bold, fontSize: 12)  )]))
-                              child: Text('Copyright©2022 - All rights reserved \nJack n Jill Solutions Pvt Ltd',style:TextStyle(color: Colors.green,fontWeight: FontWeight.bold, fontSize: 15, fontFamily: GoogleFonts.oldStandardTt().fontFamily,))
+                              child: Center(child: Text.rich(TextSpan(children: [TextSpan(text:' Copyright©2022-All rights reserved\n',style:TextStyle(color: Colors.green,fontWeight: FontWeight.bold, fontSize: 11)),TextSpan(text:' Jack n Jill Solutions Pvt Ltd',style:TextStyle(color: Colors.green,fontWeight: FontWeight.bold, fontSize: 13)  )])))
+                              //  Text('Copyright©2022 - All rights reserved to Jack n Jill Solutions Pvt Ltd..',style:TextStyle(color: Colors.green,fontWeight: FontWeight.bold, fontSize: 10)),
                             ))
+                            // Flexible(child: Padding(
+                            //   padding: const EdgeInsets.only(left:3.0),
+                            //   // child:Text.rich(TextSpan(children: [TextSpan(text:'Copyright©2022-All rights reserved\n',style:TextStyle(color: Colors.green,fontWeight: FontWeight.bold, fontSize: 11)),TextSpan(text:'Jack n Jill Solutions Pvt Ltd',style:TextStyle(color: Colors.green,fontWeight: FontWeight.bold, fontSize: 12)  )]))
+                            //   child: Text('Copyright©2022 - All rights reserved \nJack n Jill Solutions Pvt Ltd',style:TextStyle(color: Colors.green,fontWeight: FontWeight.bold, fontSize: 15, fontFamily: GoogleFonts.oldStandardTt().fontFamily,))
+                            // ))
                           ],
                         ),
                       ),

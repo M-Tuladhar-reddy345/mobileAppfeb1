@@ -11,7 +11,10 @@ import '../models.dart' as models;
 class Orderpage extends StatefulWidget {
   String orderNo;
   List<models.order_product_indent> listofProduct = [];
-
+  bool paid = false;
+  bool delivered = false;
+  bool ppaid = false;
+  bool pdelivered = false;
   Orderpage(this.orderNo);
 
   @override
@@ -35,6 +38,12 @@ class _Orderpages_Operatorstate extends State<Orderpage> {
       if (response.statusCode == 200) {
         //  print(response.body);
         var data = json.decode(response.body) as Map;
+        setState(() {
+          widget.paid = data['paid'].toString() == 'true';
+          widget.delivered = data['delv'].toString() == 'true';
+          widget.ppaid = data['paid'].toString() == 'true';
+          widget.pdelivered = data['delv'].toString() == 'true';
+        });
         return data;
       }
     } else {
@@ -45,7 +54,6 @@ class _Orderpages_Operatorstate extends State<Orderpage> {
   List<TableRow> productList() {
     List<TableRow> list = [];
     if (widget.listofProduct != null) {
-      print('@55 ' + widget.listofProduct.toString());
       list = widget.listofProduct.map<TableRow>((e) {
         return TableRow(children: [
           Column(children: [
@@ -129,8 +137,153 @@ class _Orderpages_Operatorstate extends State<Orderpage> {
                             .map<models.order_product_indent>((json) =>
                                 models.order_product_indent.fromjson(json))
                             .toList();
-                        print('@153 ' + widget.listofProduct.toString());
-                        return Column(children: [
+                        
+                        return Column(children:snapshot.data['source'].toString() == 'CustBook' ? <Widget>[
+                          Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(children: [
+                                Text(
+                                  'Customer: ',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  snapshot.data['custName'].toString(),
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                              ])),
+                          Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(children: [
+                                Text(
+                                  'Date: ',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  snapshot.data['Date'].toString(),
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                              ])),
+                          Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(children: [
+                                Text(
+                                  'Custcode: ',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  snapshot.data['custCode'].toString(),
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                              ])),
+                          Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(children: [
+                                Text(
+                                  'Order No: ',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  widget.orderNo.toString(),
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                              ])),
+                          Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(children: [
+                                Text(
+                                  'Total Amount: ',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  snapshot.data['Amount'].toString(),
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                              ])),
+                          Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(children: [
+                                Text(
+                                  'Total Discount: ',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  snapshot.data['Discount'].toString(),
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                              ])),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(children: [
+                                Text(
+                                  'Paid: ',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Checkbox(value: widget.paid , onChanged: (value){setState(() {
+                                  widget.paid = value;
+                                });})
+                              ])),
+                               Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(children: [
+                                Text(
+                                  'Delivered: ',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Checkbox(value: widget.delivered , onChanged: (value){setState(() {
+                                  widget.delivered = value;
+                                });})
+                              ])),
+                          Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Center(
+                                  child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                height: 300,
+                                child: SingleChildScrollView(
+                                  child: Table(
+                                    defaultColumnWidth: FixedColumnWidth(60.0),
+                                    border: TableBorder.all(
+                                        color: Colors.black,
+                                        style: BorderStyle.solid,
+                                        width: 2),
+                                    children: [
+                                          TableRow(children: [
+                                            Column(children: [
+                                              Center(
+                                                  child: Text('Prod',
+                                                      style: TextStyle(
+                                                          fontSize: 15.0)))
+                                            ]),
+                                            Column(children: [
+                                              Center(
+                                                  child: Text('Qty-Rate',
+                                                      style: TextStyle(
+                                                          fontSize: 15.0)))
+                                            ]),
+                                            Column(children: [
+                                              Text('Disc',
+                                                  style:
+                                                      TextStyle(fontSize: 15.0))
+                                            ]),
+                                            Column(children: [
+                                              Text('Amt',
+                                                  style:
+                                                      TextStyle(fontSize: 15.0))
+                                            ]),
+
+                                            // Column(children: [
+                                            //   Text('Amt', style: TextStyle(fontSize: 15.0))
+                                            // ]),
+                                          ]),
+                                        ] +
+                                        productList(),
+                                  ),
+                                ),
+                              )),
+                            ),
+                          ),
+                        ]: <Widget>[
                           Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(children: [
@@ -260,6 +413,38 @@ class _Orderpages_Operatorstate extends State<Orderpage> {
                   }
                 })
           ]),
-        ));
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: widget.paid != widget.ppaid || widget.delivered != widget.pdelivered ? 
+        FlatButton(onPressed: ()=>updateStatus(), child: Container(height: 50,width: 100,child: Center(child: Text('Update',style: Theme.of(context).primaryTextTheme.titleLarge,))),color: Theme.of(context).primaryColor,)
+        :Container(),
+        );
   }
+void updateStatus()async{
+  final url = Uri.parse(main.url_start +
+          'mobileApp/statusupdate/' +
+          widget.paid.toString() +
+          '/' +
+          widget.delivered.toString() +
+          '/' +
+          widget.orderNo.toString() +
+          '/' +
+          main.storage.getItem('branch') +
+          '/');
+      print(url.toString());
+      final response = await http.get(url);
+      //  print(response.statusCode);
+
+      if (response.statusCode == 200) {
+        //  print(response.body);
+        var data = json.decode(response.body) as Map;
+        if( data['message'] == 'Success'){
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('SuccessFully updated'),backgroundColor: Colors.green,));
+          getOrder =get_Order(widget.orderNo);
+        }else{
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to update'),backgroundColor: Colors.red,));
+        }
+        
+      }
+}
 }
