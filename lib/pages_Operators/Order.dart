@@ -233,6 +233,7 @@ class _Orderpages_Operatorstate extends State<Orderpage> {
                                   widget.delivered = value;
                                 });})
                               ])),
+                              RaisedButton(onPressed: widget.ppaid == true ? (){}:null , child: Text('Refund', style: Theme.of(context).primaryTextTheme.titleMedium), color: Theme.of(context).primaryColor,),
                           Center(
                             child: Padding(
                               padding: const EdgeInsets.all(5.0),
