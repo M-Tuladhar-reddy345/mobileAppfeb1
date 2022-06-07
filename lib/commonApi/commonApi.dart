@@ -47,11 +47,11 @@ getTransactions(type) async {
       return data['transactions'];
     }
   }
-getOrders_list() async {
+getOrders_list(date) async {
     final url = Uri.parse(main.url_start +
         'mobileApp/getOrder_deliveryBoy/' +
         main.storage.getItem('branch') +
-        '/');
+        '/'+date.toString()+'/');
     final response = await http.get(url);//, body: {'phone':main.storage.getItem('phone'), 'type':type,'branch':main.storage.getItem('branch')});
     // print(url);
 

@@ -215,6 +215,18 @@ class _Orderpages_Operatorstate extends State<Orderpage> {
                               padding: const EdgeInsets.all(8.0),
                               child: Row(children: [
                                 Text(
+                                  'Status: ',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  snapshot.data['Discount'].toString(),
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                              ])),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(children: [
+                                Text(
                                   'Paid: ',
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
@@ -233,7 +245,25 @@ class _Orderpages_Operatorstate extends State<Orderpage> {
                                   widget.delivered = value;
                                 });})
                               ])),
-                              RaisedButton(onPressed: widget.ppaid == true ? (){}:null , child: Text('Refund', style: Theme.of(context).primaryTextTheme.titleMedium), color: Theme.of(context).primaryColor,),
+                              RaisedButton(onPressed: widget.ppaid == true ? () async{
+                                final url = Uri.parse(main.url_start +
+                                    'mobileApp/refund_order_request/' +
+                                    widget.orderNo +
+                                    '/' +
+                                    main.storage.getItem('branch') +
+                                    '/');
+                                print(url.toString());
+                                final response = await http.get(url);
+                                if (response.statusCode == 200){
+                                 final data = json.decode(response.body) as Map;
+                                  if( data['message'] == 'Success'){
+                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('SuccessFully requested refund'),backgroundColor: Colors.green,));
+                                    getOrder =get_Order(widget.orderNo);
+                                  }else{
+                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to update'),backgroundColor: Colors.red,));
+                                  }
+                                }
+                              }:null , child: Text('Refund', style: Theme.of(context).primaryTextTheme.titleMedium), color: Theme.of(context).primaryColor,),
                           Center(
                             child: Padding(
                               padding: const EdgeInsets.all(5.0),
