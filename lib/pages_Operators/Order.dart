@@ -219,7 +219,7 @@ class _Orderpages_Operatorstate extends State<Orderpage> {
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                                 Text(
-                                  snapshot.data['Discount'].toString(),
+                                  snapshot.data['status'].toString(),
                                   style: TextStyle(fontSize: 15),
                                 ),
                               ])),
@@ -231,7 +231,8 @@ class _Orderpages_Operatorstate extends State<Orderpage> {
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                                 Checkbox(value: widget.paid , onChanged: (value){setState(() {
-                                  widget.paid = value;
+                                  if (widget.ppaid != true){
+                                  widget.paid = value;}
                                 });})
                               ])),
                                Padding(
@@ -242,10 +243,11 @@ class _Orderpages_Operatorstate extends State<Orderpage> {
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                                 Checkbox(value: widget.delivered , onChanged: (value){setState(() {
-                                  widget.delivered = value;
+                                  if (widget.pdelivered != true){
+                                  widget.delivered = value;}
                                 });})
                               ])),
-                              RaisedButton(onPressed: widget.ppaid == true ? () async{
+                              RaisedButton(onPressed: widget.ppaid == true&& widget.delivered!= true && snapshot.data['status'].toString() =='Paid'? () async{
                                 final url = Uri.parse(main.url_start +
                                     'mobileApp/refund_order_request/' +
                                     widget.orderNo +
@@ -264,6 +266,26 @@ class _Orderpages_Operatorstate extends State<Orderpage> {
                                   }
                                 }
                               }:null , child: Text('Refund', style: Theme.of(context).primaryTextTheme.titleMedium), color: Theme.of(context).primaryColor,),
+                              RaisedButton(onPressed: (main.storage.getItem('role')=='Admin' || main.storage.getItem('role') =='Manager')&& snapshot.data['status'].toString() == 'PRefund' ? () async{
+                                final url = Uri.parse(main.url_start +
+                                    'mobileApp/refund_order_accept/' +
+                                    widget.orderNo +
+                                    '/' +
+                                    main.storage.getItem('branch') +
+                                    '/');
+                                print(url.toString());
+                                final response = await http.get(url);
+                                if (response.statusCode == 200){
+                                 final data = json.decode(response.body) as Map;
+                                 print(data);
+                                  if( data['message'].toString() == 'Success'){
+                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(data['message2'].toString()),backgroundColor: Colors.green,));
+                                    getOrder =get_Order(widget.orderNo);
+                                  }else{
+                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to update'),backgroundColor: Colors.red,));
+                                  }
+                                }
+                              }:null , child: Text('Accept Refund', style: Theme.of(context).primaryTextTheme.titleMedium), color: Theme.of(context).primaryColor,),
                           Center(
                             child: Padding(
                               padding: const EdgeInsets.all(5.0),

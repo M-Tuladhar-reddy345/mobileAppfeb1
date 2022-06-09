@@ -240,6 +240,25 @@ class _WalletState extends State<Wallet> {
               ),
             ),
           ), 
+          Container(
+            padding: EdgeInsets.all(10),           
+            height: 120,
+            // decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(25))),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => Transactions('Refund'),));
+              },
+              child: Card(  
+                shape: RoundedRectangleBorder(borderRadius:  BorderRadius.all(Radius.circular(25))),
+                elevation: 10,
+                color: Colors.red,
+                child: Row(children: [                
+                    Container(padding: EdgeInsets.only(left: 20),child:Image(image:AssetImage('assets/icons/transaction.png'))),
+                    Container(padding: EdgeInsets.only(left: 10),child:Text('Refund Transactions', style: Theme.of(context).primaryTextTheme.titleMedium,)),
+                ]),
+              ),
+            ),
+          ), 
                 ],
         ),
       )]))
