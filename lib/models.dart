@@ -72,6 +72,13 @@ class order_product_indent {
   String Remarks;
   String custcode;
   String Id;
+  bool Paid;
+  bool Refunded;
+  bool Delivered;
+  bool PPaid;
+  bool PRefunded;
+  bool PDelivered;
+  String status;
   order_product_indent(
       this.date,
       this.product,
@@ -82,9 +89,19 @@ class order_product_indent {
       this.Amount,
       this.Remarks,
       this.custcode,
-      this.Id);
+      this.Id,
+      this.Paid,
+      this.Delivered,
+      this.Refunded,
+      this.PPaid,
+      this.PDelivered,
+      this.PRefunded,
+      this.status);
 // ignore: missing_return
   factory order_product_indent.fromjson(Map<String, dynamic> e) {
+    bool paid = e['paid'] == 'true';
+    bool delivered = e['delivered'] == 'true';
+    bool refunded = e['refunded'] == 'true';
     return order_product_indent(
         DateTime.now(),
         e['product'].toString(),
@@ -95,7 +112,14 @@ class order_product_indent {
         e['amt'].toString(),
         e['remarks'].toString(),
         e['custcode'].toString(),
-        e['id'].toString());
+        e['id'].toString(),
+        paid,
+        delivered,
+        refunded,
+        paid,
+        delivered,
+        refunded,
+        e['status'].toString());
   }
   get_dict() {
     final returnn = {

@@ -111,7 +111,7 @@ class _Orders_baseState extends State<Orders_base> {
                                                   crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
                                                     Text(valueDict['orderNo'].toString()+'           ', style: Theme.of(context).primaryTextTheme.titleMedium,),
-                                                    Text('Status: '+valueDict['status'].toString(), style: Theme.of(context).primaryTextTheme.titleSmall,),
+                                                    
                                         
                                                   ],
                                                 ),

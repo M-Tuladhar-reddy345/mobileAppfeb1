@@ -175,7 +175,7 @@ class _EDitDailySalesEntrypages_Operatorstate extends State<EditDailySalesEntryp
             widget.pamt,
             widget.listofProduct[int.parse(widget.product)].Remarks,
             widget.listofProduct[int.parse(widget.product)].custcode,
-            widget.listofProduct[int.parse(widget.product)].Id);
+            widget.listofProduct[int.parse(widget.product)].Id,false,false,false,false,false,false,'');
         });
         print(widget.listofProduct[int.parse(widget.product)].get_dict());
       

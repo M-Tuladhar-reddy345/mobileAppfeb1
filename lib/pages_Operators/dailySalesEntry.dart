@@ -162,7 +162,8 @@ class _DailySalesEntrypages_Operatorstate extends State<DailySalesEntrypage> {
             widget.pamt,
             widget.remarks_controller.text + '-Upd Thru App',
             widget.dropdownValue,
-            widget.prodNo.toString()));
+            widget.prodNo.toString(),false,false,false,false,false,false,'')
+            );
         widget.prodNo = widget.prodNo + 1;
         setState(() {
           widget.customerIgnore = true;
