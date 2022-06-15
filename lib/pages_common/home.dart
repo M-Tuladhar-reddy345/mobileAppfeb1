@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/commonApi/walletApi.dart';
 import 'package:flutter_complete_guide/main.dart';
 import 'package:flutter_complete_guide/pages_customer/addingtoCart.dart';
 import 'package:flutter_complete_guide/pages_customer/cart.dart';
+import 'package:flutter_complete_guide/pages_customer/wallet.dart';
 import 'package:flutter_complete_guide/widgets/Appbar.dart';
 import 'package:flutter_complete_guide/widgets/Pageroute.dart';
 import '../widgets/navbar.dart' as navbar;
@@ -26,6 +28,7 @@ class Homepage extends StatefulWidget {
 
 
 class _HomepageState extends State<Homepage> {
+  Future _getWalet;
   List homeImages = [
     'bg_11.jpeg',
     'bg_12.jpeg',
@@ -93,11 +96,59 @@ class _HomepageState extends State<Homepage> {
       storage.setItem('cart',  cart);
       }}
   }
+  Widget minimumWallet(){
+    // ignore: missing_return
+    return FutureBuilder(future: _getWalet,builder: (context,snapshot){
+          switch (snapshot.connectionState){
+
+            case ConnectionState.none:
+              // TODO: Handle this case.
+              break;
+            case ConnectionState.waiting:
+              // TODO: Handle this case.
+              break;
+            case ConnectionState.active:
+              // TODO: Handle this case.
+              break;
+            case ConnectionState.done:
+            print(223);
+            print(snapshot.data);
+             if (snapshot.data[0] < 500){
+              return Padding(
+                padding: const EdgeInsets.only(left:30, right: 30),
+                child: Card(child: Row(children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Icon(Icons.warning, size: 30,color: Color.fromARGB(255, 121, 2, 14),),
+                    
+                  ),
+                  Flexible(child: Text('Your wallet balance is low!!! \nRecharge it', style: Theme.of(context).primaryTextTheme.titleSmall.copyWith(color:Color.fromARGB(255, 121, 2, 14) ),))
+                ],),),
+              ) ;
+             }else{return GestureDetector(
+              onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> Wallet()));
+              },
+               child: Center(child: Container(
+                width: MediaQuery.of(context).size.width - 60,
+                 child: Card(shape: RoundedRectangleBorder(borderRadius:BorderRadius.all( Radius.circular(40))),color: Theme.of(context).primaryColor,child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                      Image(image:AssetImage('assets/icons/Balanceruppe2.png')),
+                      Text(snapshot.data[0].toString()+'/-', style: Theme.of(context).primaryTextTheme.titleMedium,),
+                      Text('View Wallet', style: Theme.of(context).primaryTextTheme.titleMedium,)])),
+               ),),
+             );}
+
+          }
+        },);
+  }
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    
+
+    _getWalet = getWallet(); 
     getprodtypes = get_produtypes();
   }
   @override
@@ -113,7 +164,7 @@ class _HomepageState extends State<Homepage> {
         drawer: navbar.Navbar(),
         appBar: AppBarCustom('Home', Size(MediaQuery.of(context).size.width, 56)),
         body: SingleChildScrollView(
-          child: Column(children: main.storage.getItem('role') != 'Customer'?[
+          child: Column(children: main.storage.getItem('role') != 'Customer'? <Widget>[
              ImageSlideshow(
           width: double.infinity ,
           height: 200,
@@ -128,7 +179,7 @@ class _HomepageState extends State<Homepage> {
           children: homeImages.map((e) {
             return Image(image: AssetImage('assets/images/$e'));
           }).toList()
-        )] : widget.cartProds == 0 ? [
+        )] : widget.cartProds == 0 ? <Widget>[
              ImageSlideshow(
           width: double.infinity ,
           height: 200,
@@ -145,7 +196,7 @@ class _HomepageState extends State<Homepage> {
           }).toList()
         ),      
         
-         
+         minimumWallet(),
        
         FutureBuilder(
           future: getprodtypes,
@@ -202,7 +253,9 @@ class _HomepageState extends State<Homepage> {
             return Image(image: AssetImage('assets/images/$e'));
           }).toList()
         ),      
-        
+
+        // ignore: missing_return
+        minimumWallet(),
          Padding(
           padding: const EdgeInsets.only(left: 30, right: 30),
           child: GestureDetector(

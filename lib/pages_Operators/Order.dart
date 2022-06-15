@@ -109,11 +109,11 @@ class _Orderpages_Operatorstate extends State<Orderpage> {
           });}),),
           DataCell(Checkbox(value: e.Delivered , onChanged: (value){setState(() {
             
-            if (e.PDelivered != true && e.PRefunded != true ){
+            if (e.PDelivered != true && e.PRefunded != true&& e.Refunded != true ){
             widget.listofProduct[widget.listofProduct.indexOf(e)].Delivered = value;}
           });}),),
           DataCell(Checkbox(value: e.Refunded , onChanged: (value){setState(() {
-             if (e.PRefunded != true && e.PDelivered != true ){
+             if (e.PRefunded != true && e.PDelivered != true && e.Delivered != true){
             
             widget.listofProduct[widget.listofProduct.indexOf(e)].Refunded = value;}
           });}),),
