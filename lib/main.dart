@@ -105,6 +105,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       print('resumed');
     }
   }
+  
 
   @override
   void dispose() {

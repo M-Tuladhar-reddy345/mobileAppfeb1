@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/main.dart' as main;
+import 'package:flutter_complete_guide/pages_customer/product.dart';
 import 'package:flutter_complete_guide/widgets/Appbar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../commonApi/cartApi.dart';
@@ -281,34 +282,42 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
                       var image = e['pimage'];
                    
                      if(widget.prodtype == 'All'){ 
-                     return Card(child: Row(children: [
-                       Padding(
-                         padding: const EdgeInsets.all(8.0),
-                         child:  Container(height: 100,width: 100,decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/prodtypes/$image'),fit:BoxFit.fill ))),
-                       ),
-                       Column(children: [Text(e['pname'], style: TextStyle( fontWeight: FontWeight.bold), ), Text('Rs.'+e['unitRate'].toString()),Row(children: [IconButton(onPressed: () => subtract(e['pcode'],e['unitRate']), icon:Icon( Icons.remove_circle, color: Theme.of(context).primaryColor,)),Padding(
-                         padding: const EdgeInsets.all(8.0),
-                         child: Container(child: Center(child: Text(widget.cart[e['pcode']].Quantity.toString())), color: Colors.white, width: 50,),
-                       ),IconButton(onPressed: () => add(e['pcode'],e['unitRate']), icon:Icon( Icons.add_circle, color: Theme.of(context).primaryColor,))],),Padding(
-                         padding: const EdgeInsets.all(2.0),
-                         child: Row(children: [Text('Total: Rs.'),Container(child: Center(child: Text(widget.cart[e['pcode']].Amount.toString())), color: Colors.white, width: 100,), ]),
-                       ),])
-                     ],),color: Theme.of(context).primaryColorLight,);}
+                     return GestureDetector(
+                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=> Product(e['pcode'].toString()))),
+                       child: Card(child: Row(children: [
+                         Padding(
+                           padding: const EdgeInsets.all(8.0),
+                           child:  Container(height: 100,width: 100,decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/prodtypes/$image'),fit:BoxFit.fill ))),
+                         ),
+                         Column(children: [Text(e['pname'], style: TextStyle( fontWeight: FontWeight.bold), ), Text('Rs.'+e['unitRate'].toString()),Row(children: [IconButton(onPressed: () => subtract(e['pcode'],e['unitRate']), icon:Icon( Icons.remove_circle, color: Theme.of(context).primaryColor,)),Padding(
+                           padding: const EdgeInsets.all(8.0),
+                           child: Container(child: Center(child: Text(widget.cart[e['pcode']].Quantity.toString())), color: Colors.white, width: 50,),
+                         ),IconButton(onPressed: () => add(e['pcode'],e['unitRate']), icon:Icon( Icons.add_circle, color: Theme.of(context).primaryColor,))],),Padding(
+                           padding: const EdgeInsets.all(2.0),
+                           child: Row(children: [Text('Total: Rs.'),Container(child: Center(child: Text(widget.cart[e['pcode']].Amount.toString())), color: Colors.white, width: 100,), ]),
+                         ),]),
+                         Expanded(child: Icon(Icons.arrow_right,size: 60,color: Theme.of(context).primaryColorDark,))
+                       ],),color: Theme.of(context).primaryColorLight,),
+                     );}
                      else if (widget.prodtype == e['ptype']){
-                       return Card(child: Row(children: [
-                       Padding(
-                         padding: const EdgeInsets.all(8.0),
-                         child:  Container(height: 100,width: 100,decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/prodtypes/$image'),fit:BoxFit.fill ))),
-                       ),
-                       Column(children: [Text(e['pname'], style: TextStyle(fontFamily: GoogleFonts.roboto().fontFamily, fontWeight: FontWeight.bold), ), Text('Rs.'+e['unitRate'].toString()),Row(children: [IconButton(onPressed: () => subtract(e['pcode'],e['unitRate']), icon:Icon( Icons.remove_circle, color: Theme.of(context).primaryColor,)),Padding(
-                         padding: const EdgeInsets.all(8.0),
-                         child: Container(child: Center(child: Text(widget.cart[e['pcode']].Quantity.toString())), color: Colors.white, width: 50,),
-                       ),IconButton(onPressed: () => add(e['pcode'],e['unitRate']), icon:Icon( Icons.add_circle, color: Theme.of(context).primaryColor,))
-                        ],),Padding(
-                         padding: const EdgeInsets.all(2.0),
-                         child: Row(children: [Text('Total: Rs.'),Container(child: Center(child: Text(widget.cart[e['pcode']].Amount.toString())), color: Colors.white, width: 100,), ]),
-                       ),])
-                     ],),color: Theme.of(context).primaryColorLight,);
+                       return GestureDetector(
+                        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=> Product(e['pcode'].toString()))),
+                         child: Card(child: Row(children: [
+                         Padding(
+                           padding: const EdgeInsets.all(8.0),
+                           child:  Container(height: 100,width: 100,decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/prodtypes/$image'),fit:BoxFit.fill ))),
+                         ),
+                         Column(children: [Text(e['pname'], style: TextStyle(fontFamily: GoogleFonts.roboto().fontFamily, fontWeight: FontWeight.bold), ), Text('Rs.'+e['unitRate'].toString()),Row(children: [IconButton(onPressed: () => subtract(e['pcode'],e['unitRate']), icon:Icon( Icons.remove_circle, color: Theme.of(context).primaryColor,)),Padding(
+                           padding: const EdgeInsets.all(8.0),
+                           child: Container(child: Center(child: Text(widget.cart[e['pcode']].Quantity.toString())), color: Colors.white, width: 50,),
+                         ),IconButton(onPressed: () => add(e['pcode'],e['unitRate']), icon:Icon( Icons.add_circle, color: Theme.of(context).primaryColor,))
+                          ],),Padding(
+                           padding: const EdgeInsets.all(2.0),
+                           child: Row(children: [Text('Total: Rs.'),Container(child: Center(child: Text(widget.cart[e['pcode']].Amount.toString())), color: Colors.white, width: 100,), ]),
+                         ),]),
+                         Expanded(child: Icon(Icons.arrow_right,size: 60,color: Theme.of(context).primaryColorDark,))
+                                            ],),color: Theme.of(context).primaryColorLight,),
+                       );
                      }else{
                        return Container();
                      }

@@ -11,6 +11,7 @@ import 'package:flutter_complete_guide/pages_Operators/ExtractdailyIndent.dart';
 import 'package:flutter_complete_guide/pages_Operators/edit_dailySalesEntry.dart';
 import 'package:flutter_complete_guide/pages_customer/CustomerLogin.dart';
 import 'package:flutter_complete_guide/pages_customer/CustomerSignup.dart';
+import 'package:flutter_complete_guide/pages_customer/Customer_profile.dart';
 import 'package:flutter_complete_guide/pages_customer/DownloadSoa.dart';
 import 'package:flutter_complete_guide/pages_customer/addingtoCart.dart';
 import 'package:flutter_complete_guide/pages_customer/cart.dart';
@@ -416,6 +417,18 @@ class Navbar extends StatelessWidget {
                                                                 context,
                                                                 MaterialPageRoute(
                                                                     builder: (context) => home.Homepage()),
+                                                              );
+                                                            },
+                                                          ),
+                                                           ListTile(
+                                                            title: const Text('Profile'),
+                                                            onTap: () {
+                                                              // Update the state of the app.
+                                                              // ...
+                                                              Navigator.pushReplacement(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                    builder: (context) => Customer_profile()),
                                                               );
                                                             },
                                                           ),
