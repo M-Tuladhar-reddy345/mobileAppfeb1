@@ -206,7 +206,11 @@ class Navbar extends StatelessWidget {
                                                               // ...
                                                               final url =
                                                                   Uri.parse(main.url_start + 'mobileApp/logout/');
-                                                              final response = await http.get(url);
+                                                              Map body = {
+                                                                'branch':main.storage.getItem('branch'),
+                                                                'phone':main.storage.getItem('phone'),
+                                                              };
+                                                              final response = await http.post(url,body:body);
                                                               //  print(response.statusCode);
                                                 
                                                               if (response.statusCode == 200) {
@@ -303,7 +307,11 @@ class Navbar extends StatelessWidget {
                                                               // ...
                                                               final url =
                                                                   Uri.parse(main.url_start + 'mobileApp/logout/');
-                                                              final response = await http.get(url);
+                                                              Map body = {
+                                                                'branch':main.storage.getItem('branch'),
+                                                                'phone':main.storage.getItem('phone'),
+                                                              };
+                                                              final response = await http.post(url,body:body);
                                                               //  print(response.statusCode);
                                                 
                                                               if (response.statusCode == 200) {
@@ -376,7 +384,11 @@ class Navbar extends StatelessWidget {
                                                               // ...
                                                               final url =
                                                                   Uri.parse(main.url_start + 'mobileApp/logout/');
-                                                              final response = await http.get(url);
+                                                              Map body = {
+                                                                'branch':main.storage.getItem('branch'),
+                                                                'phone':main.storage.getItem('phone'),
+                                                              };
+                                                              final response = await http.post(url,body:body);
                                                               //  print(response.statusCode);
                                                 
                                                               if (response.statusCode == 200) {
@@ -485,7 +497,11 @@ class Navbar extends StatelessWidget {
                                                             onTap: () async {
                                                               updatecart();
                                                               final url =    Uri.parse(main.url_start + 'mobileApp/logout/');
-                                                              final response = await http.get(url);
+                                                              Map body = {
+                                                                'branch':main.storage.getItem('branch'),
+                                                                'phone':main.storage.getItem('phone'),
+                                                              };
+                                                              final response = await http.post(url,body:body);
                                                               //  print(response.statusCode);
                                                 
                                                               if (response.statusCode == 200) {
@@ -552,7 +568,11 @@ class Navbar extends StatelessWidget {
                                                               // ...
                                                               final url =
                                                                   Uri.parse(main.url_start + 'mobileApp/logout/');
-                                                              final response = await http.get(url);
+                                                              Map body = {
+                                                                'branch':main.storage.getItem('branch'),
+                                                                'phone':main.storage.getItem('phone'),
+                                                              };
+                                                              final response = await http.post(url,body:body);
                                                               //  print(response.statusCode);
                                                 
                                                               if (response.statusCode == 200) {

@@ -107,6 +107,91 @@ class _ProductState extends State<Product> {
       );
     });
   }
+  AlternateDialogBox(){
+    Color buttonColor = Theme.of(context).primaryColorDark;
+    TextEditingController quantity = TextEditingController();
+    showDialog(context: context, builder: (context){
+      return SimpleDialog(
+        insetPadding: EdgeInsets.all(10),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+        children: [
+          Row(
+            children: [
+              Align(alignment: Alignment.centerLeft,child: IconButton(onPressed: () => Navigator.pop(context), icon: Icon(Icons.close))),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Container(
+                    color: Colors.red,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text('Alternate Days', style: Theme.of(context).primaryTextTheme.titleMedium,),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+              width: 60,
+              child: TextFormField(
+                decoration: InputDecoration(labelText: 'Quantity'),
+              controller: quantity,
+              keyboardType: TextInputType.number,
+              inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9]'))],
+        ),
+            ),
+          ),
+          Container(
+            width: 100,
+            child: Column(
+              children: [
+                Text('Select Start Date'),
+                CalendarDatePicker(
+                firstDate: DateTime.now(),
+                lastDate: DateTime(2023, 12, 12),
+                initialDate: widget.selectedDate,
+                
+                onDateChanged: (date) {
+                  setState(() {
+                    widget.selectedDate = date;
+                  });
+                },
+        ),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(style: ButtonStyle(backgroundColor: MaterialStateProperty.all(buttonColor)),onPressed: () async{
+              Map body = {
+                'phone': main.storage.getItem('phone'),
+                'branch':main.storage.getItem('branch'),
+                'prodcode':widget.pcode,
+                'quantity':quantity.text,
+                'subtype':'Alternate Days',
+                'date':DateFormat('d-M-y').format(widget.selectedDate)
+                };
+                print(body);
+              final response = await http.post(Uri.parse(main.url_start+'mobileApp/createSubscription_provided/'), body: body);
+              if (response.statusCode == 200){
+                Navigator.pop(context);
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Successfully placed subscription'),backgroundColor: Colors.green,));
+              }else if (response.statusCode == 104){
+                Navigator.pop(context);
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed try again... sorry for inconvinience'),backgroundColor: Colors.red,));
+              }else if (response.statusCode == 101){
+                Navigator.pop(context);
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Not enough money in wallet'),backgroundColor: Colors.red,));
+              }
+            }, child: Text('Confirm')),
+          )
+        ],
+      );
+    });
+  }
   void add(pcode, unitrate){
       if (widget.cart[pcode] != null){
         setState(() {
@@ -236,9 +321,7 @@ class _ProductState extends State<Product> {
                       height: 50,
                       width: 150,
                       child: GestureDetector(
-                        onTap:() {
-                          
-                        },
+                        onTap:()=> AlternateDialogBox(),
                       
                         child: Card(
                           shape: RoundedRectangleBorder(borderRadius:  BorderRadius.all(Radius.circular(25))),
