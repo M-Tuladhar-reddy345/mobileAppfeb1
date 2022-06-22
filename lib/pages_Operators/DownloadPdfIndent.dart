@@ -156,7 +156,12 @@ class _PdfIndentpages_Operatorstate extends State<PdfIndentpage> {
       return null;
     }
   }
-
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (main.storage.getItem('module_accessed').toString().contains('Downloadpdfindent')==false){main.storage.setItem('module_accessed', main.storage.getItem('module_accessed').toString()+' Downloadpdfindent');}
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

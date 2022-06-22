@@ -46,6 +46,7 @@ class _Loginpagestate extends State<Loginpage> {
         main.storage.setItem('ttl', '0.0');
         main.storage.setItem('products', '0');
         main.storage.setItem('cart', {});
+        main.storage.setItem('module_accessed', '');
         // print(main.storage.getItem('branch'));
         ScaffoldMessenger.of(context).showSnackBar(
                      SnackBar(content: Text(data['message']), backgroundColor: Colors.green,));

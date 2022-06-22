@@ -6,6 +6,7 @@ import 'package:flutter_complete_guide/widgets/Appbar.dart';
 import 'package:flutter_complete_guide/widgets/loader.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import '../commonApi/walletApi.dart';
+import '../main.dart' as main;
 import '../widgets/navbar.dart' as navbar;
 class Wallet extends StatefulWidget {
   int balance;
@@ -61,6 +62,7 @@ class _WalletState extends State<Wallet> {
        widget.wallet_id = value[1]; 
       });
     });
+    if (main.storage.getItem('module_accessed').toString().contains('Wallet')==false){main.storage.setItem('module_accessed', main.storage.getItem('module_accessed').toString()+' Wallet');}
   }
   userWalletAmountRecharge(context){
   int amount;

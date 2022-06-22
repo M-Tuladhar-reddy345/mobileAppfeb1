@@ -74,7 +74,12 @@ class _PdfSoaCustomer extends State<PdfSoaCustomer> {
     }
   }
 
-  
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (main.storage.getItem('module_accessed').toString().contains('SoaDownload')==false){main.storage.setItem('module_accessed', main.storage.getItem('module_accessed').toString()+' SoaDownload');}
+  }
 
   @override
   Widget build(BuildContext context) {

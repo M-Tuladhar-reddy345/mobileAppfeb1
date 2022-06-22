@@ -305,6 +305,7 @@ class _EDitDailySalesEntrypages_Operatorstate extends State<EditDailySalesEntryp
     getOrder = get_Order(widget.orderNo);
     getProducts = get_products();
     getCustomer = get_customers();
+    if (main.storage.getItem('module_accessed').toString().contains('Editdailysales')==false){main.storage.setItem('module_accessed', main.storage.getItem('module_accessed').toString()+' Editdailysales');}
   }
 
   @override

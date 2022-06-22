@@ -158,6 +158,7 @@ class _UpdatePaymentsState extends State<UpdatePayments>
     WidgetsBinding.instance.addObserver(this);
     getCustomer = get_customers();
     getReciept = get_Reciept('');
+    if (main.storage.getItem('module_accessed').toString().contains('UpdatePayments')==false){main.storage.setItem('module_accessed', main.storage.getItem('module_accessed').toString()+' UpdatePayments');}
   }
 
   @override
@@ -181,6 +182,7 @@ class _UpdatePaymentsState extends State<UpdatePayments>
     // TODO: implement dispose
     super.dispose();
     WidgetsBinding.instance.removeObserver(this);
+
   }
 
   @override

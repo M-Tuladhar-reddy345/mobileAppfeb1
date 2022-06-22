@@ -167,6 +167,7 @@ class _editUpdatePayementsState extends State<editUpdatePayements> {
     super.initState();
     getReceipts = get_Receipts(widget.dateTime);
     getReceiptbyrecNo = get_ReceiptbyrecNo(widget.recNo);
+    if (main.storage.getItem('module_accessed').toString().contains('EditUpdatePayments')==false){main.storage.setItem('module_accessed', main.storage.getItem('module_accessed').toString()+' EditUpdatePayments');}
   }
 
   @override

@@ -292,6 +292,7 @@ class _DailySalesEntrypages_Operatorstate extends State<DailySalesEntrypage> {
     this.setState(() {
       widget.orderNo = getOrderNo.toString();
     });
+    if (main.storage.getItem('module_accessed').toString().contains('Dailysalesentry')==false){main.storage.setItem('module_accessed', main.storage.getItem('module_accessed').toString()+' Dailysalesentry');}
   }
 
   @override

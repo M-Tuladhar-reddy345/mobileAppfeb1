@@ -87,7 +87,12 @@ class _ExtractdailyIndentpages_Operatorstate extends State<ExtractdailyIndentpag
     }
     
   } 
-
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if (main.storage.getItem('module_accessed').toString().contains('ExtractdailyIndent')==false){main.storage.setItem('module_accessed', main.storage.getItem('module_accessed').toString()+' ExtractdailyIndent');}
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

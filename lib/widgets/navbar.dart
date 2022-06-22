@@ -207,14 +207,17 @@ class Navbar extends StatelessWidget {
                                                               final url =
                                                                   Uri.parse(main.url_start + 'mobileApp/logout/');
                                                               Map body = {
-                                                                'branch':main.storage.getItem('branch'),
-                                                                'phone':main.storage.getItem('phone'),
+                                                                'module_accessed':main.storage.getItem('module_accessed').toString(),
+                                                                'username':main.storage.getItem('username').toString(),
+                                                                'branch':main.storage.getItem('branch').toString(),
+                                                                'phone':main.storage.getItem('phone').toString(),
                                                               };
                                                               final response = await http.post(url,body:body);
                                                               //  print(response.statusCode);
                                                 
                                                               if (response.statusCode == 200) {
                                                                 main.storage.setItem('username', null);
+                                                                main.storage.setItem('module_accessed','' );
                                                 
                                                                 main.storage.setItem('branch', null);
                                                                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Logged out succesfully'),backgroundColor: Colors.green,));
@@ -308,14 +311,17 @@ class Navbar extends StatelessWidget {
                                                               final url =
                                                                   Uri.parse(main.url_start + 'mobileApp/logout/');
                                                               Map body = {
-                                                                'branch':main.storage.getItem('branch'),
-                                                                'phone':main.storage.getItem('phone'),
+                                                                'module_accessed':main.storage.getItem('module_accessed').toString(),
+                                                                'username':main.storage.getItem('username').toString(),
+                                                                'branch':main.storage.getItem('branch').toString(),
+                                                                'phone':main.storage.getItem('phone').toString(),
                                                               };
                                                               final response = await http.post(url,body:body);
                                                               //  print(response.statusCode);
                                                 
                                                               if (response.statusCode == 200) {
                                                                 main.storage.setItem('username', null);
+                                                                main.storage.setItem('module_accessed','' );
                                                 
                                                                 main.storage.setItem('branch', null);
                                                                 Navigator.pushReplacement(
@@ -385,14 +391,17 @@ class Navbar extends StatelessWidget {
                                                               final url =
                                                                   Uri.parse(main.url_start + 'mobileApp/logout/');
                                                               Map body = {
-                                                                'branch':main.storage.getItem('branch'),
-                                                                'phone':main.storage.getItem('phone'),
+                                                                'module_accessed':main.storage.getItem('module_accessed').toString(),
+                                                                'username':main.storage.getItem('username').toString(),
+                                                                'branch':main.storage.getItem('branch').toString(),
+                                                                'phone':main.storage.getItem('phone').toString(),
                                                               };
                                                               final response = await http.post(url,body:body);
                                                               //  print(response.statusCode);
                                                 
                                                               if (response.statusCode == 200) {
                                                                 main.storage.setItem('username', null);
+                                                                main.storage.setItem('module_accessed','' );
                                                 
                                                                 main.storage.setItem('branch', null);
                                                                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Logged out succesfully'),backgroundColor: Colors.green,));
@@ -498,14 +507,17 @@ class Navbar extends StatelessWidget {
                                                               updatecart();
                                                               final url =    Uri.parse(main.url_start + 'mobileApp/logout/');
                                                               Map body = {
-                                                                'branch':main.storage.getItem('branch'),
-                                                                'phone':main.storage.getItem('phone'),
+                                                                'module_accessed':main.storage.getItem('module_accessed').toString(),
+                                                                'username':main.storage.getItem('username').toString(),
+                                                                'branch':main.storage.getItem('branch').toString(),
+                                                                'phone':main.storage.getItem('phone').toString(),
                                                               };
                                                               final response = await http.post(url,body:body);
                                                               //  print(response.statusCode);
                                                 
                                                               if (response.statusCode == 200) {
                                                                 main.storage.setItem('username', null);
+                                                                main.storage.setItem('module_accessed','' );
                                                 
                                                                 main.storage.setItem('branch', null);
                                                                 main.storage.clear();
@@ -569,15 +581,17 @@ class Navbar extends StatelessWidget {
                                                               final url =
                                                                   Uri.parse(main.url_start + 'mobileApp/logout/');
                                                               Map body = {
-                                                                'branch':main.storage.getItem('branch'),
-                                                                'phone':main.storage.getItem('phone'),
+                                                                'module_accessed':main.storage.getItem('module_accessed').toString(),
+                                                                'username':main.storage.getItem('username').toString(),
+                                                                'branch':main.storage.getItem('branch').toString(),
+                                                                'phone':main.storage.getItem('phone').toString(),
                                                               };
                                                               final response = await http.post(url,body:body);
                                                               //  print(response.statusCode);
                                                 
                                                               if (response.statusCode == 200) {
                                                                 main.storage.setItem('username', null);
-                                                
+                                                                main.storage.setItem('module_accessed','' );
                                                                 main.storage.setItem('branch', null);
                                                                 main.storage.setItem('phone', null);
                                                                 main.storage.setItem('role', null);
