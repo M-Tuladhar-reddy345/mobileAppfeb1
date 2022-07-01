@@ -122,7 +122,7 @@ class _HomepageState extends State<Homepage> {
                     child: Icon(Icons.warning, size: 30,color: Color.fromARGB(255, 121, 2, 14),),
                     
                   ),
-                  Flexible(child: Text('Your wallet balance is low!!! \nRecharge it', style: Theme.of(context).primaryTextTheme.titleSmall.copyWith(color:Color.fromARGB(255, 121, 2, 14) ),))
+                  GestureDetector(onTap: () => Navigator.push(context, MaterialPageRoute(builder: ((context) => Wallet()))),child: Flexible(child: Text('Your wallet balance is low!!! \nRecharge it', style: Theme.of(context).primaryTextTheme.titleSmall.copyWith(color:Color.fromARGB(255, 121, 2, 14) ),)))
                 ],),),
               ) ;
              }else{return GestureDetector(

@@ -91,7 +91,7 @@ class _ProductState extends State<Product> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(style: ButtonStyle(backgroundColor: MaterialStateProperty.all(buttonColor)),onPressed: () async{
+              child: ElevatedButton(style: ButtonStyle(backgroundColor: MaterialStateProperty.all(buttonColor)),onPressed: quantity.text == '' || quantity.text == '0'? null: () async{
                 print(widget.selectedDate);
                 Map body = {
                   'phone': main.storage.getItem('phone'),
@@ -204,7 +204,7 @@ class _ProductState extends State<Product> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(style: ButtonStyle(backgroundColor: MaterialStateProperty.all(buttonColor)),onPressed: () async{
+              child: ElevatedButton(style: ButtonStyle(backgroundColor: MaterialStateProperty.all(buttonColor)),onPressed: quantity.text == '' || quantity.text == '0'? null: () async{
                 Map body = {
                   'phone': main.storage.getItem('phone'),
                   'branch':main.storage.getItem('branch'),
