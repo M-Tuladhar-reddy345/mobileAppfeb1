@@ -23,9 +23,32 @@ class Product extends StatefulWidget {
 }
 
 class _ProductState extends State<Product> {
-  DailyDialogBox(){
+  void delete(pcode, unitrate){
+       setState(() {
+         widget.ttlamt = widget.ttlamt - (double.parse(widget.cart[pcode].Quantity) * double.parse(widget.cart[pcode].UnitRate));
+        widget.ttlqty = widget.ttlqty - (int.parse(widget.cart[pcode].Quantity.toString().replaceAll('.0', '')));
+        widget.cartProds = widget.cartProds - 1;
+        widget.cart[pcode].Quantity = '0.0';
+        
+        
+        widget.cart[pcode].Amount = '0.0';
+       
+        
+      });
+      print(widget.cart[pcode].Amount);
+      main.storage.setItem('cart', widget.cart);
+        main.storage.setItem('ttl', widget.ttlamt.toString());
+        main.storage.setItem('products', widget.cartProds.toString());
+        main.storage.setItem('ttlqty',widget.ttlqty.toString());
+     }
+  DailyDialogBox(qty){
     Color buttonColor = Theme.of(context).primaryColorDark;
     TextEditingController quantity = TextEditingController();
+    quantity.text = qty;
+     setState(() {
+                        widget.TTlamt = double.parse(qty) * double.parse(widget.cart[widget.pcode].UnitRate);
+                       
+                      });
     showDialog(context: context, builder: (context){
       return StatefulBuilder(
         builder:(context, setState)=> SimpleDialog(
@@ -108,6 +131,8 @@ class _ProductState extends State<Product> {
                   widget.TTlamt =0;
                 });
                 if (response.statusCode == 200){
+                  delete(widget.pcode
+                  , widget.cart[widget.pcode].UnitRate.toString());
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Successfully placed subscription'),backgroundColor: Colors.green,));
                 }else if (response.statusCode == 104){
@@ -125,10 +150,16 @@ class _ProductState extends State<Product> {
       );
     });
   }
-  AlternateDialogBox(){
+  AlternateDialogBox(qty){
     Color buttonColor = Theme.of(context).primaryColorDark;
     TextEditingController quantity = TextEditingController();
     TextEditingController Alternative = TextEditingController();
+    Alternative.text ='1';
+    quantity.text = qty;
+     setState(() {
+                        widget.TTlamt = double.parse(qty) * double.parse(widget.cart[widget.pcode].UnitRate);
+                       
+                      });
     showDialog(context: context, builder: (context){
       return StatefulBuilder(
         builder:(contex,setState)=> SimpleDialog(
@@ -170,18 +201,18 @@ class _ProductState extends State<Product> {
           ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SizedBox(
-                width: 60,
-                child: TextFormField(
-                  decoration: InputDecoration(labelText: 'Alternative days'),
-                controller: Alternative,
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9]'))],
-          ),
-              ),
-            ),
+          //   Padding(
+          //     padding: const EdgeInsets.all(8.0),
+          //     child: SizedBox(
+          //       width: 60,
+          //       child: TextFormField(
+          //         decoration: InputDecoration(labelText: 'Alternative days'),
+          //       controller: Alternative,
+          //       keyboardType: TextInputType.number,
+          //       inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9]'))],
+          // ),
+          //     ),
+          //   ),
             Row(children: [Text('Total per day: Rs.'),Container(child: Center(child: Text(widget.TTlamt.toString())), color: Colors.white, width: 100,), ]),
             Container(
               width: 100,
@@ -348,7 +379,7 @@ class _ProductState extends State<Product> {
                       width: 110,
                       child: GestureDetector(
                         onTap:() {
-                          DailyDialogBox();
+                          DailyDialogBox(widget.cart[widget.pcode].Quantity.toString());
                         },
                       
                         child: Card(
@@ -366,7 +397,7 @@ class _ProductState extends State<Product> {
                       height: 50,
                       width: 150,
                       child: GestureDetector(
-                        onTap:()=> AlternateDialogBox(),
+                        onTap:()=> AlternateDialogBox(widget.cart[widget.pcode].Quantity.toString()),
                       
                         child: Card(
                           shape: RoundedRectangleBorder(borderRadius:  BorderRadius.all(Radius.circular(25))),
