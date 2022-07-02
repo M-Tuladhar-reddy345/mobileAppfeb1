@@ -393,7 +393,7 @@ class _OrderConfirm extends State<OrderConfirm> {
       });
 
     }else{
-      return showDialog(context: context, builder: (context)=>Dialog(shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(25))),child: Container(width: 200,height: 50,color: Theme.of(context).primaryColorDark, child: Align(alignment: Alignment.center,child: Text('Insuffeceint balance... Retry',style: Theme.of(context).primaryTextTheme.titleMedium.copyWith(color: Colors.white),)),),));
+      return showDialog(context: context, builder: (context)=>Dialog(shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(25))),child: Container(width: 200,height: 50,color: Theme.of(context).primaryColorDark, child: Align(alignment: Alignment.center,child: Text('Insuffeceint balance... Retry ',style: Theme.of(context).primaryTextTheme.titleMedium.copyWith(color: Colors.white),)),),));
     }
   }
   void selectPaymentMethod(context){
@@ -442,6 +442,50 @@ class _OrderConfirm extends State<OrderConfirm> {
                      SnackBar(content: Text('Every Field need to be filled'), backgroundColor: Colors.red,));
     }else{selectPaymentMethod(context);}
               }),child: Text('Place order', style: TextStyle(fontSize: 15),))),
+              // ignore: missing_return
+              FutureBuilder(future: getAddresses,builder: (context, snapshot) {
+                switch (snapshot.connectionState) {
+                  
+                 
+                  case ConnectionState.none:
+                    // TODO: Handle this case.
+                    break;
+                  case ConnectionState.waiting:
+                    return CircularProgressIndicator();
+                    break;
+                  case ConnectionState.active:
+                    // TODO: Handle this case.
+                    break;
+                  case ConnectionState.done:
+                    if (snapshot.data == null){
+                      return Container();
+
+                    }else{
+                      
+                          return Padding(
+                            padding: const EdgeInsets.all(10.0),
+                            child:    Column(children: snapshot.data.map <Widget>((e){
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ElevatedButton(onPressed: (){
+                                  setState(() {
+                                    widget.Address1.text = e[0].toString();
+                                    widget.Address2.text = e[1].toString();
+                                    widget.Address3.text = e[2].toString();
+                                    widget.Address4.text = e[3].toString();
+                                    widget.pincode.text = e[5].toString();
+                                  });
+                                }, child: Text(e[4].toString())),
+                              );
+                            }).toList(),)                  
+                            
+                          );
+                        
+                      
+                    }
+                    break;
+                }
+              })   ,
               Align(alignment: Alignment.centerLeft,child: Text('Address', style: TextStyle(fontSize: 15),)),
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -516,49 +560,7 @@ class _OrderConfirm extends State<OrderConfirm> {
                 ),
               ),     
               // ignore: missing_return
-              FutureBuilder(future: getAddresses,builder: (context, snapshot) {
-                switch (snapshot.connectionState) {
-                  
-                 
-                  case ConnectionState.none:
-                    // TODO: Handle this case.
-                    break;
-                  case ConnectionState.waiting:
-                    return CircularProgressIndicator();
-                    break;
-                  case ConnectionState.active:
-                    // TODO: Handle this case.
-                    break;
-                  case ConnectionState.done:
-                    if (snapshot.data == null){
-                      return Container();
-
-                    }else{
-                      
-                          return Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child:    Column(children: snapshot.data.map <Widget>((e){
-                              return Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: ElevatedButton(onPressed: (){
-                                  setState(() {
-                                    widget.Address1.text = e[0].toString();
-                                    widget.Address2.text = e[1].toString();
-                                    widget.Address3.text = e[2].toString();
-                                    widget.Address4.text = e[3].toString();
-                                    widget.pincode.text = e[5].toString();
-                                  });
-                                }, child: Text(e[4].toString())),
-                              );
-                            }).toList(),)                  
-                            
-                          );
-                        
-                      
-                    }
-                    break;
-                }
-              })   
+              
               ]
           ),
         )));

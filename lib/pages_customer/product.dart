@@ -81,7 +81,6 @@ class _ProductState extends State<Product> {
                   onChanged: (value) {
                     setState(() {
                       widget.TTlamt = double.parse(value) * double.parse(widget.cart[widget.pcode].UnitRate);
-                     
                     });
                   },
                   decoration: InputDecoration(labelText: 'Quantity'),
@@ -114,7 +113,7 @@ class _ProductState extends State<Product> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(style: ButtonStyle(backgroundColor: MaterialStateProperty.all(buttonColor)),onPressed: quantity.text == '' || quantity.text == '0'? null: () async{
+              child: ElevatedButton(style: ButtonStyle(backgroundColor: MaterialStateProperty.all(buttonColor)),onPressed: quantity.text == '' || quantity.text == '0'||quantity.text == '0.0'? null: () async{
                 print(widget.selectedDate);
                 Map body = {
                   'phone': main.storage.getItem('phone'),
@@ -131,8 +130,6 @@ class _ProductState extends State<Product> {
                   widget.TTlamt =0;
                 });
                 if (response.statusCode == 200){
-                  delete(widget.pcode
-                  , widget.cart[widget.pcode].UnitRate.toString());
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Successfully placed subscription'),backgroundColor: Colors.green,));
                 }else if (response.statusCode == 104){
@@ -235,7 +232,7 @@ class _ProductState extends State<Product> {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(style: ButtonStyle(backgroundColor: MaterialStateProperty.all(buttonColor)),onPressed: quantity.text == '' || quantity.text == '0'? null: () async{
+              child: ElevatedButton(style: ButtonStyle(backgroundColor: MaterialStateProperty.all(buttonColor)),onPressed:  quantity.text == '' || quantity.text == '0'||quantity.text == '0.0'? null: () async{
                 Map body = {
                   'phone': main.storage.getItem('phone'),
                   'branch':main.storage.getItem('branch'),

@@ -113,7 +113,7 @@ class _HomepageState extends State<Homepage> {
             case ConnectionState.done:
             print(223);
             print(snapshot.data);
-             if (snapshot.data[0] < 500){
+             if (snapshot.data[0] < 200){
               return Padding(
                 padding: const EdgeInsets.only(left:30, right: 30),
                 child: Card(child: Row(children: [
