@@ -6,14 +6,23 @@ import 'package:flutter_complete_guide/widgets/Appbar.dart';
 import 'package:http/http.dart' as http;
 
 import '../widgets/navbar.dart' as navbar;
+// ignore: must_be_immutable
 class Customer_profile extends StatefulWidget {
-
+  String addressController;
   @override
   State<Customer_profile> createState() => _Customer_profileState();
 }
 
 class _Customer_profileState extends State<Customer_profile> {
   Future _getCustomer;
+  updateAddress(address) async{
+    Uri url = Uri.parse(url_start + 'mobileApp/updateAddress/');
+    final response = await http.post(url,body:{'phone': storage.getItem('phone'),'address':address,'branch':storage.getItem('branch')});
+    if ( response.statusCode == 200){
+      _getCustomer = getCustomer();
+      
+    }
+  }
   Future getCustomer() async{
     Uri url = Uri.parse(url_start+'mobileApp/getCustomerDetails_user/'+storage.getItem('phone').toString()+'/'+storage.getItem('branch').toString()+'/'); 
     final  response = await http.get(url);
@@ -88,8 +97,31 @@ class _Customer_profileState extends State<Customer_profile> {
                 ),
             ],),
           ),
+        ),
+        Padding(
+          padding: EdgeInsets.all(20),
+          child: Container(
+            child: Column(
+              children: snapshot.data['address']!= null ?[
+                 Align(alignment: Alignment.centerLeft,child: Text('Address: ',style: Theme.of(context).primaryTextTheme.titleMedium.copyWith(color: Colors.black),)),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(onChanged: (value){setState((){widget.addressController = value;});},decoration: InputDecoration(labelText: 'Address',border:OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(20)),borderSide: BorderSide(color: Colors.white)))),
+                ),
+                ElevatedButton(onPressed: ()=> updateAddress(widget.addressController.toString()), child: Text('Update or add address'))
+              ]:[
+                Align(alignment: Alignment.centerLeft,child: Text('Address: ',style: Theme.of(context).primaryTextTheme.titleMedium.copyWith(color: Colors.black),)),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField( onChanged: (value){setState((){widget.addressController = value;});},decoration: InputDecoration(labelText: 'Address',border:OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(20)),borderSide: BorderSide(color: Colors.white)))),
+                ),
+                ElevatedButton(onPressed: ()=> updateAddress(widget.addressController.toString()), child: Text('Update or add address'))
+              ],
+            ),
+          ),
         )
       ],
+      
       ),);
           }
         }
