@@ -105,15 +105,14 @@ class _HomepageState extends State<Homepage> {
               // TODO: Handle this case.
               break;
             case ConnectionState.waiting:
-              // TODO: Handle this case.
+            return CircularProgressIndicator();
               break;
+            
             case ConnectionState.active:
               // TODO: Handle this case.
               break;
             case ConnectionState.done:
-            print(223);
-            print(snapshot.data);
-             if (snapshot.data[0] < 200){
+             try{if (snapshot.data[0] < 200){
               return Padding(
                 padding: const EdgeInsets.only(left:30, right: 30),
                 child: Card(child: Row(children: [
@@ -138,7 +137,10 @@ class _HomepageState extends State<Homepage> {
                       Text(snapshot.data[0].toString()+'/-', style: Theme.of(context).primaryTextTheme.titleMedium,),
                       Text('View Wallet', style: Theme.of(context).primaryTextTheme.titleMedium,)])),
                ),),
-             );}
+             );}}catch(exception){
+              return Text('Some server error... sorry for inconvenience');
+             }
+             break;
 
           }
         },);

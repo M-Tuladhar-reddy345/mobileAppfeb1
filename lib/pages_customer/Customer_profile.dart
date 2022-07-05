@@ -142,7 +142,7 @@ class _Customer_profileState extends State<Customer_profile> {
               // TODO: Handle this case.
               break;
             case ConnectionState.waiting:
-              // TODO: Handle this case.
+            return Center(child: CircularProgressIndicator());
               break;
             case ConnectionState.active:
               // TODO: Handle this case.
