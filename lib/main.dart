@@ -16,11 +16,11 @@ final Razorpay_key_id = 'rzp_test_mgKxKCgU8H0pwv';
 
 // Razorpay Settings --
 
-// final String url_start = 'http://www.jacknjill.solutions/'; 
+final String url_start = 'http://www.jacknjill.solutions/'; 
 // final String url_start = 'http://192.168.1.103:8000/';
 // final String url_start = 'http://192.168.1.10:8000/';
 // final String url_start = 'http://localhost:8000/';
-final String url_start = 'http://192.168.1.2:8000/';
+// final String url_start = 'http://192.168.1.2:8000/';
 // final String url_start = 'http://192.168.225.117:8000/';
 
 // final String url_start = 'http://192.168.29.70:8000/';
