@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_complete_guide/pages_customer/addingtoCart.dart';
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
+import 'package:flutter_complete_guide/pages_customer/cart.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_complete_guide/widgets/Appbar.dart';
 import 'package:flutter_complete_guide/models.dart';
@@ -18,6 +20,7 @@ class Product extends StatefulWidget {
   DateTime selectedDate = DateTime.now();
   Product(this.pcode);
   double TTlamt = 0;
+  List selectedDates = [];
   @override
   State<Product> createState() => _ProductState();
 }
@@ -123,11 +126,127 @@ class _ProductState extends State<Product> {
                   'subtype':'Daily',
                   'ttlAmount': widget.TTlamt.toString(),
                   'date':DateFormat('d-M-y').format(widget.selectedDate)
+
                   };
                   print(body);
                 final response = await http.post(Uri.parse(main.url_start+'mobileApp/createSubscription_provided/'), body: body);
                 setState(() {
                   widget.TTlamt =0;
+                });
+                if (response.statusCode == 200){
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Successfully placed subscription'),backgroundColor: Colors.green,));
+                }else if (response.statusCode == 104){
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed try again... sorry for inconvinience'),backgroundColor: Colors.red,));
+                }else if (response.statusCode == 101){
+                  
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Not enough money in wallet'),backgroundColor: Colors.red,));
+                }
+              }, child: Text('Confirm')),
+            )
+          ],
+        ),
+      );
+    });
+  }
+  void _onSelectionChanged(DateRangePickerSelectionChangedArgs args) {
+   if ( widget.selectedDates.length <= 4){
+  setState(() {
+     widget.selectedDates = args.value;
+   });
+   }
+   
+   
+  }
+  CustomDialogBox(qty){
+    Color buttonColor = Theme.of(context).primaryColorDark;
+    TextEditingController quantity = TextEditingController();
+    quantity.text = qty;
+     setState(() {
+                        widget.TTlamt = double.parse(qty) * double.parse(widget.cart[widget.pcode].UnitRate);
+                       
+                      });
+    showDialog(context: context, builder: (context){
+      return StatefulBuilder(
+        builder:(context, setState)=> SimpleDialog(
+          
+          insetPadding: EdgeInsets.all(10),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+          children: [
+            Row(
+              children: [
+                Align(alignment: Alignment.centerLeft,child: IconButton(onPressed: () => Navigator.pop(context), icon: Icon(Icons.close))),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Container(
+                      color: Colors.red,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text('Custom', style: Theme.of(context).primaryTextTheme.titleMedium,),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                width: 60,
+                child: TextFormField(
+                  onChanged: (value) {
+                    setState(() {
+                      widget.TTlamt = double.parse(value) * double.parse(widget.cart[widget.pcode].UnitRate);
+                    });
+                  },
+                  decoration: InputDecoration(labelText: 'Quantity'),
+                controller: quantity,
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9]'))],
+          ),
+          
+              ),
+            ),
+            Row(children: [Text('Total per day: Rs.'),Container(child: Center(child: Text(widget.TTlamt.toString())), color: Colors.white, width: 100,), ]),
+            Container(
+              width: 100,
+              child: Column(
+                children: [
+                  Text('Select 5 Dates max', style: TextStyle(fontWeight: FontWeight.w900),),
+                  SfDateRangePicker(
+                    onSelectionChanged: widget.selectedDates.length <= 5? _onSelectionChanged:null,
+                    selectionMode: DateRangePickerSelectionMode.multiple,
+                    minDate: DateTime.now(),                    
+                    maxDate: DateTime.now().add(Duration(days: 30 )),
+                    
+
+                  ),
+                  
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(style: ButtonStyle(backgroundColor: MaterialStateProperty.all(buttonColor)),onPressed: quantity.text == '' || quantity.text == '0'||quantity.text == '0.0'? null: () async{
+                print(widget.selectedDate);
+                Map body = {
+                  'phone': main.storage.getItem('phone'),
+                  'branch':main.storage.getItem('branch'),
+                  'prodcode':widget.pcode,
+                  'quantity':quantity.text,
+                  'subtype':'custom',
+                  'ttlAmount': widget.TTlamt.toString(),
+                  'date':DateFormat('d-M-y').format(widget.selectedDate),
+                  'selectedDates': widget.selectedDates.toString(),
+                  };
+                  print(body);
+                final response = await http.post(Uri.parse(main.url_start+'mobileApp/createSubscription_provided/'), body: body);
+                setState(() {
+                  widget.TTlamt =0;
+                  widget.selectedDates = [] ;
                 });
                 if (response.statusCode == 200){
                   Navigator.pop(context);
@@ -411,10 +530,7 @@ class _ProductState extends State<Product> {
                       height: 50,
                       width: 110,
                       child: GestureDetector(
-                        onTap:() {
-                          
-                        },
-                      
+                        onTap:widget.cart[widget.pcode].Quantity != '0.0' && widget.cart[widget.pcode].Quantity != '0'? (){Navigator.push(context, MaterialPageRoute(builder: ((context) => Cartpage())));}:()=> null,                      
                         child: Card(
                           shape: RoundedRectangleBorder(borderRadius:  BorderRadius.all(Radius.circular(25))),
                           color: Colors.red,
@@ -430,9 +546,7 @@ class _ProductState extends State<Product> {
                       height: 50,
                       width: 110,
                       child: GestureDetector(
-                        onTap:() {
-                          
-                        },
+                        onTap:(){CustomDialogBox(widget.cart[widget.pcode].Quantity.toString());} ,
                       
                         child: Card(
                           shape: RoundedRectangleBorder(borderRadius:  BorderRadius.all(Radius.circular(25))),

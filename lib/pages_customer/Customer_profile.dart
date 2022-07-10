@@ -21,10 +21,12 @@ class Customer_profile extends StatefulWidget {
 
 class _Customer_profileState extends State<Customer_profile> {
   Future _getCustomer;
-  updateAddress(address) async{
+  updateAddress(addressNo) async{
+    print(addressNo);
     Uri url = Uri.parse(url_start + 'mobileApp/updateAddress/');
     final response = await http.post(url,body:{
       'phone': storage.getItem('phone'),
+      'addressNo': addressNo.toString(),
       'address1':widget.Address1.text,
       'address2':widget.Address2.text,
       'address3':widget.Address3.text,
@@ -51,73 +53,85 @@ class _Customer_profileState extends State<Customer_profile> {
       return data;
     }
   }
-  Future AddressDialogBox()async{
+  Future AddressDialogBox(addressNo, address1, address2,address3,address4,pincode)async{
+    setState(() {
+      widget.Address1.text = address1.toString();
+        widget.Address2.text = address2.toString();
+        widget.Address3.text = address3.toString();
+        widget.Address4.text = address4.toString();
+        widget.pincode.text = pincode.toString();
+    });
     showDialog(context: context, builder: (context){
-      return AlertDialog(content: Column(children: [
-        Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                  decoration: InputDecoration(labelText: 'Flatno/ apartment/floor',border:OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(20)))),
-                  controller: widget.Address1,
-                  // onChanged:(value){
-                  //   setState(() {
-                  //   widget.Address1.text = value;  
-                  //   });                  
-                  // },
+      return AlertDialog(
+        scrollable: true,
+        content: Container(
+          width: 400,
+          child: Column(children: [
+          Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    decoration: InputDecoration(labelText: 'Flatno/ apartment/floor',border:OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(20)))),
+                    controller: widget.Address1,
+                    // onChanged:(value){
+                    //   setState(() {
+                    //   widget.Address1.text = value;  
+                    //   });                  
+                    // },
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                  decoration: InputDecoration(labelText: 'Street',border:OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(20)))),
-                  controller: widget.Address2
-                  // onChanged:(value){
-                  //   setState(() {
-                  //   widget.Address2.text = value;  
-                  //   });                  
-                  // },
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    decoration: InputDecoration(labelText: 'Street',border:OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(20)))),
+                    controller: widget.Address2
+                    // onChanged:(value){
+                    //   setState(() {
+                    //   widget.Address2.text = value;  
+                    //   });                  
+                    // },
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                  decoration: InputDecoration(labelText: 'Colony/City',border:OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(20)))),
-                  controller: widget.Address3,
-                  // onChanged:(value){
-                  //   setState(() {
-                  //   widget.Address3.text = value;  
-                  //   });                  
-                  // },
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    decoration: InputDecoration(labelText: 'Colony/City',border:OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(20)))),
+                    controller: widget.Address3,
+                    // onChanged:(value){
+                    //   setState(() {
+                    //   widget.Address3.text = value;  
+                    //   });                  
+                    // },
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                  decoration: InputDecoration(labelText: 'District/state',border:OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(20)))),
-                  controller: widget.Address4,
-                  // onChanged:(value){
-                  //   setState(() {
-                  //   widget.Address4.text = value;  
-                  //   });                  
-                  // },
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    decoration: InputDecoration(labelText: 'District/state',border:OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(20)))),
+                    controller: widget.Address4,
+                    // onChanged:(value){
+                    //   setState(() {
+                    //   widget.Address4.text = value;  
+                    //   });                  
+                    // },
+                  ),
+                ),   
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    decoration: InputDecoration(labelText: 'Pincode',border:OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(20)))),
+                    inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9]'))],
+                    controller: widget.pincode,
+                    maxLength: 6,
+                    // onChanged:(value){
+                    //   setState(() {
+                    //   widget.Address4.text = value;  
+                    //   });                  
+                    // },
+                  ),
                 ),
-              ),   
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                  decoration: InputDecoration(labelText: 'Pincode',border:OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(20)))),
-                  inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[0-9]'))],
-                  controller: widget.pincode,
-                  maxLength: 6,
-                  // onChanged:(value){
-                  //   setState(() {
-                  //   widget.Address4.text = value;  
-                  //   });                  
-                  // },
-                ),
-              ),
-                ElevatedButton(onPressed: ()=> updateAddress(widget.addressController.text.toString()), child: Text('Update or add address'))
-      ],),);
+                  ElevatedButton(onPressed: (){ Navigator.pop(context);updateAddress(addressNo.toString());}, child: Text('Update or add address'))
+      ],),
+        ),);
     });
   }
   @override
@@ -191,30 +205,34 @@ class _Customer_profileState extends State<Customer_profile> {
           padding: EdgeInsets.all(20),
           child: Container(
             child: Column(
-              children:snapshot.data['address1']== null?[
+              children:snapshot.data['address1'][4]== null && snapshot.data['address2'][4] == null?[
                 Align(alignment: Alignment.centerLeft,child: Text('Address 1: ',style: Theme.of(context).primaryTextTheme.titleMedium.copyWith(color: Colors.black),)),
-                ElevatedButton(onPressed: ()=> updateAddress(widget.addressController.text.toString()), child: Text('Update or add address 1')),
+                ElevatedButton(onPressed: ()=> {AddressDialogBox(1,'','','','','')}, child: Text('Update or add address 1')),
+                
                 Align(alignment: Alignment.centerLeft,child: Text('Address 2: ',style: Theme.of(context).primaryTextTheme.titleMedium.copyWith(color: Colors.black),)),
-                ElevatedButton(onPressed: ()=> updateAddress(widget.addressController.text.toString()), child: Text('Update or add address 2'))
-              ]: snapshot.data['address1']== null ?[
+                ElevatedButton(onPressed: ()=> {AddressDialogBox(2,'','','','','')}, child: Text('Update or add address 2'))
+              ]: snapshot.data['address1'][4]== null ?[
                  Align(alignment: Alignment.centerLeft,child: Text('Address 1: ',style: Theme.of(context).primaryTextTheme.titleMedium.copyWith(color: Colors.black),)),
-                ElevatedButton(onPressed: ()=> updateAddress(widget.addressController.text.toString()), child: Text('Update or add address 1')),
+                ElevatedButton(onPressed: ()=> {AddressDialogBox(1,'','','','','')}, child: Text('Update or add address 1')),
+                
                 Align(alignment: Alignment.centerLeft,child: Text('Address 2: ',style: Theme.of(context).primaryTextTheme.titleMedium.copyWith(color: Colors.black),)),
-                Align(alignment: Alignment.centerLeft,child: Wrap(children:[ Text(snapshot.data['address2'].toString())])),
-                ElevatedButton(onPressed: ()=> updateAddress(widget.addressController.text.toString()), child: Text('Update or add address 2'))
-              ]:snapshot.data['address2'] == null ? [
+                Align(alignment: Alignment.centerLeft,child: Wrap(children:[ Text(snapshot.data['address2'][4].toString())])),
+                ElevatedButton(onPressed: ()=> {AddressDialogBox(2,snapshot.data['address2'][0].toString(),snapshot.data['address2'][1].toString(),snapshot.data['address2'][2],snapshot.data['address2'][3],snapshot.data['address2'][5])}, child: Text('Update or add address 2'))
+              ]:snapshot.data['address2'][4] == null ? [
                 Align(alignment: Alignment.centerLeft,child: Text('Address 1: ',style: Theme.of(context).primaryTextTheme.titleMedium.copyWith(color: Colors.black),)),
-                Align(alignment: Alignment.centerLeft,child: Wrap(children:[ Text(snapshot.data['address1'].toString())])),
-                ElevatedButton(onPressed: ()=> updateAddress(widget.addressController.text.toString()), child: Text('Update or add address 1')),
+                Align(alignment: Alignment.centerLeft,child: Wrap(children:[ Text(snapshot.data['address1'][4].toString())])),
+                ElevatedButton(onPressed: ()=> {AddressDialogBox(1,snapshot.data['address1'][0].toString(),snapshot.data['address1'][1].toString(),snapshot.data['address1'][2],snapshot.data['address1'][3],snapshot.data['address1'][5])}, child: Text('Update or add address 1')),
+                
                 Align(alignment: Alignment.centerLeft,child: Text('Address 2: ',style: Theme.of(context).primaryTextTheme.titleMedium.copyWith(color: Colors.black),)),
-                 ElevatedButton(onPressed: ()=> updateAddress(widget.addressController.text.toString()), child: Text('Update or add address 2'))
+                 ElevatedButton(onPressed: ()=> {AddressDialogBox(2,'','','','','')}, child: Text('Update or add address 2'))
               ]:[                
                 Align(alignment: Alignment.centerLeft,child: Text('Address 1: ',style: Theme.of(context).primaryTextTheme.titleMedium.copyWith(color: Colors.black),)),
-                Align(alignment: Alignment.centerLeft,child: Wrap(children:[ Text(snapshot.data['address1'].toString())])),
-                ElevatedButton(onPressed: ()=> updateAddress(widget.addressController.text.toString()), child: Text('Update or add address 1')),
+                Align(alignment: Alignment.centerLeft,child: Wrap(children:[ Text(snapshot.data['address1'][4].toString())])),
+                ElevatedButton(onPressed: ()=> {AddressDialogBox(1,snapshot.data['address1'][0].toString(),snapshot.data['address1'][1].toString(),snapshot.data['address1'][2],snapshot.data['address1'][3],snapshot.data['address1'][5])}, child: Text('Update or add address 1')),
+                
                 Align(alignment: Alignment.centerLeft,child: Text('Address 2: ',style: Theme.of(context).primaryTextTheme.titleMedium.copyWith(color: Colors.black),)),
-                Align(alignment: Alignment.centerLeft,child: Wrap(children:[ Text(snapshot.data['address2'].toString())])),
-                ElevatedButton(onPressed: ()=> {updateAddress(widget.addressController.text.toString())}, child: Text('Update or add address 2'))
+                Align(alignment: Alignment.centerLeft,child: Wrap(children:[ Text(snapshot.data['address2'][4].toString())])),
+                ElevatedButton(onPressed: ()=> {AddressDialogBox(2,snapshot.data['address2'][0].toString(),snapshot.data['address2'][1].toString(),snapshot.data['address2'][2],snapshot.data['address2'][3],snapshot.data['address2'][5])}, child: Text('Update or add address 2'))
               ],
             ),
           ),
