@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_complete_guide/pages_customer/addingtoCart.dart';
+import 'package:flutter_complete_guide/pages_customer/subscriptions.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:flutter_complete_guide/pages_customer/cart.dart';
 import 'package:http/http.dart' as http;
@@ -135,6 +136,7 @@ class _ProductState extends State<Product> {
                 });
                 if (response.statusCode == 200){
                   Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> Subscriptions()));
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Successfully placed subscription'),backgroundColor: Colors.green,));
                 }else if (response.statusCode == 104){
                   Navigator.pop(context);
@@ -250,6 +252,7 @@ class _ProductState extends State<Product> {
                 });
                 if (response.statusCode == 200){
                   Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> Subscriptions()));
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Successfully placed subscription'),backgroundColor: Colors.green,));
                 }else if (response.statusCode == 104){
                   Navigator.pop(context);
@@ -366,6 +369,7 @@ class _ProductState extends State<Product> {
                 setState(() {
                     widget.TTlamt =0;
                   });
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> Subscriptions()));
                 final response = await http.post(Uri.parse(main.url_start+'mobileApp/createSubscription_provided/'), body: body);
                 if (response.statusCode == 200){
                   Navigator.pop(context);

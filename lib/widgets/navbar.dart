@@ -57,7 +57,7 @@ class Navbar extends StatelessWidget {
                                                             onTap: () {
                                                               // Update the state of the app.
                                                               // ...
-                                                              Navigator.pushReplacement(
+                                                              Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
                                                                     builder: (context) => home.Homepage()),
@@ -69,7 +69,7 @@ class Navbar extends StatelessWidget {
                                                             onTap: () {
                                                               // Update the state of the app.
                                                               // ...
-                                                              Navigator.pushReplacement(
+                                                              Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
                                                                     builder: (context) => CustomerLoginpage()),
@@ -82,7 +82,7 @@ class Navbar extends StatelessWidget {
                                                             onTap: () {
                                                               // Update the state of the app.
                                                               // ...
-                                                              Navigator.pushReplacement(
+                                                              Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
                                                                     builder: (context) => SignUppage()),
@@ -106,7 +106,7 @@ class Navbar extends StatelessWidget {
                                                             onTap: () {
                                                               // Update the state of the app.
                                                               // ...
-                                                              Navigator.pushReplacement(
+                                                              Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
                                                                     builder: (context) => home.Homepage()),
@@ -119,7 +119,7 @@ class Navbar extends StatelessWidget {
                                                             onTap: () {
                                                               // Update the state of the app.
                                                               // ...
-                                                              Navigator.pushReplacement(
+                                                              Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
                                                                     builder: (context) => DailySalesEntrypage()),
@@ -131,7 +131,7 @@ class Navbar extends StatelessWidget {
                                                             onTap: () {
                                                               // Update the state of the app.
                                                               // ...
-                                                              Navigator.pushReplacement(
+                                                              Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
                                                                     builder: (context) => EditDailySalesEntrypages_Operatorstate()),
@@ -143,7 +143,7 @@ class Navbar extends StatelessWidget {
                                                             onTap: () {
                                                               // Update the state of the app.
                                                               // ...
-                                                              Navigator.pushReplacement(
+                                                              Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
                                                                     builder: (context) => PdfIndentpage()),
@@ -155,7 +155,7 @@ class Navbar extends StatelessWidget {
                                                             onTap: () {
                                                               // Update the state of the app.
                                                               // ...
-                                                              Navigator.pushReplacement(
+                                                              Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
                                                                     builder: (context) => ExtractdailyIndentpage()),
@@ -167,7 +167,7 @@ class Navbar extends StatelessWidget {
                                                             onTap: () {
                                                               // Update the state of the app.
                                                               // ...
-                                                              Navigator.pushReplacement(
+                                                              Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
                                                                     builder: (context) =>
@@ -180,7 +180,7 @@ class Navbar extends StatelessWidget {
                                                             onTap: () {
                                                               // Update the state of the app.
                                                               // ...
-                                                              Navigator.pushReplacement(
+                                                              Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
                                                                     builder: (context) => editUpdatePayements()),
@@ -192,7 +192,7 @@ class Navbar extends StatelessWidget {
                                                             onTap: () {
                                                               // Update the state of the app.
                                                               // ...
-                                                              Navigator.pushReplacement(
+                                                              Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
                                                                     builder: (context) => Orders_base()),
@@ -247,7 +247,7 @@ class Navbar extends StatelessWidget {
                                                             onTap: () {
                                                               // Update the state of the app.
                                                               // ...
-                                                              Navigator.pushReplacement(
+                                                              Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
                                                                     builder: (context) => home.Homepage()),
@@ -260,7 +260,7 @@ class Navbar extends StatelessWidget {
                                                             onTap: () {
                                                               // Update the state of the app.
                                                               // ...
-                                                              Navigator.pushReplacement(
+                                                              Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
                                                                     builder: (context) => DailySalesEntrypage()),
@@ -271,7 +271,7 @@ class Navbar extends StatelessWidget {
                                                             onTap: () {
                                                               // Update the state of the app.
                                                               // ...
-                                                              Navigator.pushReplacement(
+                                                              Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
                                                                     builder: (context) => EditDailySalesEntrypages_Operatorstate()),
@@ -283,7 +283,7 @@ class Navbar extends StatelessWidget {
                                                             onTap: () {
                                                               // Update the state of the app.
                                                               // ...
-                                                              Navigator.pushReplacement(
+                                                              Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
                                                                     builder: (context) => PdfIndentpage()),
@@ -295,7 +295,7 @@ class Navbar extends StatelessWidget {
                                                             onTap: () {
                                                               // Update the state of the app.
                                                               // ...
-                                                              Navigator.pushReplacement(
+                                                              Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
                                                                     builder: (context) => ExtractdailyIndentpage()),
@@ -349,7 +349,7 @@ class Navbar extends StatelessWidget {
                                                             onTap: () {
                                                               // Update the state of the app.
                                                               // ...
-                                                              Navigator.pushReplacement(
+                                                              Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
                                                                     builder: (context) => home.Homepage()),
@@ -361,7 +361,7 @@ class Navbar extends StatelessWidget {
                                                             onTap: () {
                                                               // Update the state of the app.
                                                               // ...
-                                                              Navigator.pushReplacement(
+                                                              Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
                                                                     builder: (context) =>
@@ -374,7 +374,7 @@ class Navbar extends StatelessWidget {
                                                             onTap: () {
                                                               // Update the state of the app.
                                                               // ...
-                                                              Navigator.pushReplacement(
+                                                              Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
                                                                     builder: (context) => editUpdatePayements()),
@@ -434,7 +434,7 @@ class Navbar extends StatelessWidget {
                                                             onTap: () {
                                                               // Update the state of the app.
                                                               // ...
-                                                              Navigator.pushReplacement(
+                                                              Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
                                                                     builder: (context) => home.Homepage()),
@@ -446,7 +446,7 @@ class Navbar extends StatelessWidget {
                                                             onTap: () {
                                                               // Update the state of the app.
                                                               // ...
-                                                              Navigator.pushReplacement(
+                                                              Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
                                                                     builder: (context) => Customer_profile()),
@@ -458,7 +458,7 @@ class Navbar extends StatelessWidget {
                                                             onTap: () {
                                                               // Update the state of the app.
                                                               // ...
-                                                              Navigator.pushReplacement(
+                                                              Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
                                                                     builder: (context) => Wallet()),
@@ -470,7 +470,7 @@ class Navbar extends StatelessWidget {
                                                             onTap: () {
                                                               // Update the state of the app.
                                                               // ...
-                                                              Navigator.pushReplacement(
+                                                              Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
                                                                     builder: (context) => AddingToCartpage('All',['All'])),
@@ -482,7 +482,7 @@ class Navbar extends StatelessWidget {
                                                             onTap: () {
                                                               // Update the state of the app.
                                                               // ...
-                                                              Navigator.pushReplacement(
+                                                              Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
                                                                     builder: (context) => Cartpage()),
@@ -494,7 +494,7 @@ class Navbar extends StatelessWidget {
                                                             onTap: () {
                                                               // Update the state of the app.
                                                               // ...
-                                                              Navigator.pushReplacement(
+                                                              Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
                                                                     builder: (context) => PdfSoaCustomer()),
@@ -554,7 +554,7 @@ class Navbar extends StatelessWidget {
                                                             onTap: () {
                                                               // Update the state of the app.
                                                               // ...
-                                                              Navigator.pushReplacement(
+                                                              Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
                                                                     builder: (context) => home.Homepage()),
@@ -566,7 +566,7 @@ class Navbar extends StatelessWidget {
                                                             onTap: () {
                                                               // Update the state of the app.
                                                               // ...
-                                                              Navigator.pushReplacement(
+                                                              Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
                                                                     builder: (context) => Orders_base()),

@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_complete_guide/main.dart';
+import 'package:flutter_complete_guide/pages_customer/subscriptions.dart';
 import 'package:flutter_complete_guide/widgets/Appbar.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 
 import '../widgets/navbar.dart' as navbar;
@@ -236,7 +238,22 @@ class _Customer_profileState extends State<Customer_profile> {
               ],
             ),
           ),
-        )
+        ),
+        GestureDetector(
+          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=> Subscriptions())),
+          child: Card(
+            color: Theme.of(context).primaryColorLight,
+            child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Subscriptions ',style: Theme.of(context).primaryTextTheme.titleLarge.copyWith(color: Colors.black,fontFamily:GoogleFonts.robotoMono().fontFamily,),),
+                Icon(Icons.arrow_right, size: 40,),
+              ],
+            ),
+          ),elevation: 50,),
+        ),
       ],
       
       ),);

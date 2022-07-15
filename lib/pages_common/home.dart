@@ -220,7 +220,7 @@ class _HomepageState extends State<Homepage> {
                        padding: const EdgeInsets.all(8.0),
                        child: ElevatedButton(
                          style: ElevatedButton.styleFrom(primary: Colors.redAccent),
-                         onPressed: (){Navigator.pushReplacement(context, CustomPageRoute(child: AddingToCartpage(e['ptype'],['All',e['ptype']])));},
+                         onPressed: (){Navigator.push(context, CustomPageRoute(child: AddingToCartpage(e['ptype'],['All',e['ptype']])));},
                          child: Column(children: [
                            Padding(
                            padding: const EdgeInsets.all(8.0),
@@ -261,7 +261,7 @@ class _HomepageState extends State<Homepage> {
          Padding(
           padding: const EdgeInsets.only(left: 30, right: 30),
           child: GestureDetector(
-            onTap: () { Navigator.pushReplacement(context, MaterialPageRoute(builder: ((context) => Cartpage())));},
+            onTap: () { Navigator.push(context, MaterialPageRoute(builder: ((context) => Cartpage())));},
             child: Container(
               height: 90,
               child: Card(
@@ -311,7 +311,7 @@ class _HomepageState extends State<Homepage> {
                        padding: const EdgeInsets.all(8.0),
                        child: GestureDetector(
                          
-                         onTap: (){Navigator.pushReplacement(context, CustomPageRoute(child: AddingToCartpage(e['ptype'],['All',e['ptype']])));},
+                         onTap: (){Navigator.push(context, CustomPageRoute(child: AddingToCartpage(e['ptype'],['All',e['ptype']])));},
                          child: Container(
                            height:160,
                            width:150,
