@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/widgets/Appbar.dart';
 import 'package:flutter_complete_guide/main.dart' as main;
 import 'package:http/http.dart' as http;
+import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'dart:convert';
 import '../widgets/navbar.dart' as navbar;
 class Subscriptions extends StatefulWidget {
@@ -36,6 +37,26 @@ class _SubscriptionsState extends State<Subscriptions> {
       return data['subscriptionsCusomter'];
     }
   }
+  showDates(dates){
+    print(dates);
+    showDialog(context: context, builder: (context)=> AlertDialog(
+      content: Container(
+        width: MediaQuery.of(context).size.width-20,
+      
+        child: Column(
+          children: [
+            SfDateRangePicker(
+                                                  // onSelectionChanged: widget.selectedDates.length <= 5? _onSelectionChanged:null,
+                  selectionMode: DateRangePickerSelectionMode.multiple,
+                  initialSelectedDates: dates,             
+                  showTodayButton: false,                             
+                              
+                                                ),
+          ],
+        ),
+      ),
+    ));
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,10 +78,17 @@ class _SubscriptionsState extends State<Subscriptions> {
                   print(snapshot.data == []);
                                     if(snapshot.data != null || snapshot.data != [] ){
                                       final data = snapshot.data as List;
+                                                 
                                       return Column(
                                         children: data.reversed.map<Widget>((valueDict){ 
-                                          
-
+                                          List<DateTime> dates = [];
+                                          List Ddates = valueDict['DelDay'] as List;   
+                                          Ddates.forEach((e) {
+                                            print('67');
+                                            print(e);
+                                            dates.add(DateTime.parse(e.toString()));
+                                          },);
+                                          print(dates);
                                           return GestureDetector(
                                           //onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=>Orderpage(valueDict['orderNo'].toString()))),
                                           child: Card(
@@ -70,7 +98,7 @@ class _SubscriptionsState extends State<Subscriptions> {
                                             padding: EdgeInsets.all(10),
                                             child: Container(
                                               width: MediaQuery.of(context).size.width,
-                                              height: 300,
+                                              height: 400,
                                               decoration:BoxDecoration(),
                                               child: Column(
                                                 children: [
@@ -84,8 +112,11 @@ class _SubscriptionsState extends State<Subscriptions> {
                         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [Text('subscription type :', style: Theme.of(context).primaryTextTheme.titleSmall,), Text(valueDict['subType'], style: Theme.of(context).primaryTextTheme.titleSmall)],),                          
                         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [Text('quantity :', style: Theme.of(context).primaryTextTheme.titleSmall), Text(valueDict['quantity'].toString(), style: Theme.of(context).primaryTextTheme.titleSmall)],),
                         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [Text('Amount per day :', style: Theme.of(context).primaryTextTheme.titleSmall), Text(valueDict['ttlamtperDay'].toString(), style: Theme.of(context).primaryTextTheme.titleSmall) ],),
-                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [Text('Status :', style: Theme.of(context).primaryTextTheme.titleSmall), Text(valueDict['status'].toString(), style: Theme.of(context).primaryTextTheme.titleSmall) ],),  
-                        ElevatedButton(style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.redAccent)),onPressed: (){}, child: Text('Dates ',style: Theme.of(context).primaryTextTheme.titleSmall,)),
+                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [Text('Status :', style: Theme.of(context).primaryTextTheme.titleSmall), Text(valueDict['status'].toString(), style: Theme.of(context).primaryTextTheme.titleSmall) ],),
+                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [Text('Start Date :', style: Theme.of(context).primaryTextTheme.titleSmall), Text(valueDict['startDate'].toString(), style: Theme.of(context).primaryTextTheme.titleSmall) ],),
+                        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [Text('End Date :', style: Theme.of(context).primaryTextTheme.titleSmall), Text(valueDict['endDate'].toString(), style: Theme.of(context).primaryTextTheme.titleSmall) ],),  
+                        ElevatedButton(style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.redAccent)),
+                        onPressed: ()=>showDates(dates), child: Text('Dates ',style: Theme.of(context).primaryTextTheme.titleSmall,)),
                         Expanded(child: Align(
                                                     alignment: Alignment.bottomCenter,
                                                     child: Container(

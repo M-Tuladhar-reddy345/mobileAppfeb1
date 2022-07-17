@@ -272,6 +272,13 @@ class _editUpdatePayementsState extends State<editUpdatePayements> {
                             } else {
                               return Text('Some error fetching pls try later');
                             }
+                            break;
+                          case ConnectionState.none:
+                            // TODO: Handle this case.
+                            break;
+                          case ConnectionState.active:
+                            // TODO: Handle this case.
+                            break;
                         }
                       },
                     ),
