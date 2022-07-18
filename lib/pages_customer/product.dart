@@ -19,6 +19,7 @@ class Product extends StatefulWidget {
   int ttlqty = 0;
   double ttlamt = 0;
   DateTime selectedDate = DateTime.now();
+  DateTime EndDate = DateTime.now().add(Duration(days: 30));
   Product(this.pcode);
   double TTlamt = 0;
   List selectedDates = [];
@@ -102,13 +103,32 @@ class _ProductState extends State<Product> {
                 children: [
                   Text('Select Start Date'),
                   CalendarDatePicker(
-                  firstDate: DateTime.now(),
-                  lastDate: DateTime(2023, 12, 12),
+                    firstDate: DateTime.now(),                    
+                    lastDate: DateTime.now().add(Duration(days: 30 )),
                   initialDate: widget.selectedDate,
                   
                   onDateChanged: (date) {
                     setState(() {
                       widget.selectedDate = date;
+                    });
+                  },
+          ),
+                ],
+              ),
+            ),
+            Container(
+              width: 100,
+              child: Column(
+                children: [
+                  Text('Select End Date'),
+                  CalendarDatePicker(
+                    firstDate: DateTime.now(),                    
+                    lastDate: DateTime.now().add(Duration(days: 30 )),
+                  initialDate: widget.EndDate,
+                  
+                  onDateChanged: (date) {
+                    setState(() {
+                      widget.EndDate = date;
                     });
                   },
           ),
@@ -126,7 +146,8 @@ class _ProductState extends State<Product> {
                   'quantity':quantity.text,
                   'subtype':'Daily',
                   'ttlAmount': widget.TTlamt.toString(),
-                  'date':DateFormat('d-M-y').format(widget.selectedDate)
+                  'date':DateFormat('d-M-y').format(widget.selectedDate),
+                  'enddate':DateFormat('d-M-y').format(widget.EndDate),
 
                   };
                   print(body);
@@ -352,6 +373,26 @@ class _ProductState extends State<Product> {
                 ],
               ),
             ),
+            
+            Container(
+              width: 100,
+              child: Column(
+                children: [
+                  Text('Select End Date'),
+                  CalendarDatePicker(
+                  firstDate: DateTime.now(),
+                  lastDate: DateTime(2023, 12, 12),
+                  initialDate: widget.EndDate,
+                  
+                  onDateChanged: (date) {
+                    setState(() {
+                      widget.EndDate = date;
+                    });
+                  },
+          ),
+                ],
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ElevatedButton(style: ButtonStyle(backgroundColor: MaterialStateProperty.all(buttonColor)),onPressed:  quantity.text == '' || quantity.text == '0'||quantity.text == '0.0'? null: () async{
@@ -362,6 +403,7 @@ class _ProductState extends State<Product> {
                   'quantity':quantity.text,
                   'subtype':'Alternate Days',
                   'date':DateFormat('d-M-y').format(widget.selectedDate),
+                  'enddate':DateFormat('d-M-y').format(widget.EndDate),
                   'ttlAmount':widget.TTlamt.toString(),
                   'AlternativeDays':Alternative.text
                   };
@@ -369,10 +411,11 @@ class _ProductState extends State<Product> {
                 setState(() {
                     widget.TTlamt =0;
                   });
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> Subscriptions()));
+                  
                 final response = await http.post(Uri.parse(main.url_start+'mobileApp/createSubscription_provided/'), body: body);
                 if (response.statusCode == 200){
                   Navigator.pop(context);
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> Subscriptions()));
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Successfully placed subscription'),backgroundColor: Colors.green,));
                 }else if (response.statusCode == 104){
                   Navigator.pop(context);
