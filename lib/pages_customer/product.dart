@@ -101,37 +101,22 @@ class _ProductState extends State<Product> {
               width: 100,
               child: Column(
                 children: [
-                  Text('Select Start Date'),
-                  CalendarDatePicker(
-                    firstDate: DateTime.now(),                    
-                    lastDate: DateTime.now().add(Duration(days: 30 )),
-                  initialDate: widget.selectedDate,
+                  Text('Select start date and end date ', style: TextStyle(fontWeight: FontWeight.w900),),
+                  SfDateRangePicker(
+                    onSelectionChanged: ( DateRangePickerSelectionChangedArgs args ){
+                      setState((){
+                        widget.selectedDate = args.value.startDate;
+                        widget.EndDate = args.value.endDate;
+                      });
+                      print(args.value.startDate);
+                      },
+                    selectionMode: DateRangePickerSelectionMode.range,
+                    minDate: DateTime.now(),                    
+                    maxDate: DateTime.now().add(Duration(days: 30 )),
+                    initialSelectedRange: PickerDateRange(DateTime.now(),DateTime.now().add(Duration(days: 30 ))),
+
+                  ),
                   
-                  onDateChanged: (date) {
-                    setState(() {
-                      widget.selectedDate = date;
-                    });
-                  },
-          ),
-                ],
-              ),
-            ),
-            Container(
-              width: 100,
-              child: Column(
-                children: [
-                  Text('Select End Date'),
-                  CalendarDatePicker(
-                    firstDate: DateTime.now(),                    
-                    lastDate: DateTime.now().add(Duration(days: 30 )),
-                  initialDate: widget.EndDate,
-                  
-                  onDateChanged: (date) {
-                    setState(() {
-                      widget.EndDate = date;
-                    });
-                  },
-          ),
                 ],
               ),
             ),
@@ -151,10 +136,7 @@ class _ProductState extends State<Product> {
 
                   };
                   print(body);
-                final response = await http.post(Uri.parse(main.url_start+'mobileApp/createSubscription_provided/'), body: body);
-                setState(() {
-                  widget.TTlamt =0;
-                });
+                final response = await http.post(Uri.parse(main.url_start+'mobileApp/editSubscriptions/'), body: body);
                 if (response.statusCode == 200){
                   Navigator.pop(context);
                   Navigator.push(context, MaterialPageRoute(builder: (context)=> Subscriptions()));
@@ -354,42 +336,26 @@ class _ProductState extends State<Product> {
           //     ),
           //   ),
             Row(children: [Text('Total per day: Rs.'),Container(child: Center(child: Text(widget.TTlamt.toString())), color: Colors.white, width: 100,), ]),
-            Container(
+          Container(
               width: 100,
               child: Column(
                 children: [
-                  Text('Select Start Date'),
-                  CalendarDatePicker(
-                  firstDate: DateTime.now(),
-                  lastDate: DateTime(2023, 12, 12),
-                  initialDate: widget.selectedDate,
+                  Text('Select start date and end date ', style: TextStyle(fontWeight: FontWeight.w900),),
+                  SfDateRangePicker(
+                    onSelectionChanged: ( DateRangePickerSelectionChangedArgs args ){
+                      setState((){
+                        widget.selectedDate = args.value.startDate;
+                        widget.EndDate = args.value.endDate;
+                      });
+                      print(args.value.startDate);
+                      },
+                    selectionMode: DateRangePickerSelectionMode.range,
+                    minDate: DateTime.now(),                    
+                    maxDate: DateTime.now().add(Duration(days: 30 )),
+                    initialSelectedRange: PickerDateRange(DateTime.now(),DateTime.now().add(Duration(days: 30 ))),
+
+                  ),
                   
-                  onDateChanged: (date) {
-                    setState(() {
-                      widget.selectedDate = date;
-                    });
-                  },
-          ),
-                ],
-              ),
-            ),
-            
-            Container(
-              width: 100,
-              child: Column(
-                children: [
-                  Text('Select End Date'),
-                  CalendarDatePicker(
-                  firstDate: DateTime.now(),
-                  lastDate: DateTime(2023, 12, 12),
-                  initialDate: widget.EndDate,
-                  
-                  onDateChanged: (date) {
-                    setState(() {
-                      widget.EndDate = date;
-                    });
-                  },
-          ),
                 ],
               ),
             ),
