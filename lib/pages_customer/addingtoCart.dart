@@ -307,7 +307,7 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
                            padding: const EdgeInsets.all(8.0),
                            child:  Container(height: 100,width: 100,decoration: BoxDecoration(image: DecorationImage(image: AssetImage('assets/images/prodtypes/$image'),fit:BoxFit.fill ))),
                          ),
-                         Column(children: [Text(e['pname'], style: TextStyle(fontFamily: GoogleFonts.roboto().fontFamily, fontWeight: FontWeight.bold), ), Text('Rs.'+e['unitRate'].toString()),Row(children: [IconButton(onPressed: () => subtract(e['pcode'],e['unitRate']), icon:Icon( Icons.remove_circle, color: Theme.of(context).primaryColor,)),Padding(
+                         Column(children: [Text(e['pname'], style: TextStyle(fontFamily: GoogleFonts.notoSans().fontFamily, fontWeight: FontWeight.bold), ), Text('Rs.'+e['unitRate'].toString()),Row(children: [IconButton(onPressed: () => subtract(e['pcode'],e['unitRate']), icon:Icon( Icons.remove_circle, color: Theme.of(context).primaryColor,)),Padding(
                            padding: const EdgeInsets.all(8.0),
                            child: Container(child: Center(child: Text(widget.cart[e['pcode']].Quantity.toString())), color: Colors.white, width: 50,),
                          ),IconButton(onPressed: () => add(e['pcode'],e['unitRate']), icon:Icon( Icons.add_circle, color: Theme.of(context).primaryColor,))

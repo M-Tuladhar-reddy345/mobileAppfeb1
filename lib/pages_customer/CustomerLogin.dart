@@ -222,7 +222,7 @@ class _SignUppagestate extends State<CustomerLoginpage> {
                 child: 
               Column(
                 children: [
-                  Text('Customer Login in', style: TextStyle(fontSize: 35, fontFamily: GoogleFonts.robotoMono().fontFamily,color: Colors.white)),
+                  Text('Customer Login in', style: TextStyle(fontSize: 35, fontFamily: GoogleFonts.notoSans().fontFamily,color: Colors.white)),
                   Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(

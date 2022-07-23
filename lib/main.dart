@@ -130,16 +130,16 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           titleMedium: TextStyle(color: Colors.white,fontSize: 20,fontFamily: GoogleFonts.aBeeZee().fontFamily),
           ),
         primarySwatch: Colors.red,
-        fontFamily: GoogleFonts.robotoMono().fontFamily,
+        fontFamily: GoogleFonts.notoSans().fontFamily,
         appBarTheme: AppBarTheme(toolbarTextStyle: ThemeData.light().textTheme.copyWith(
           titleLarge: TextStyle(
-            fontFamily: GoogleFonts.robotoMono().fontFamily,
+            fontFamily: GoogleFonts.notoSans().fontFamily,
             fontSize: 30,
             fontWeight: FontWeight.bold
           )
         ).bodyText2, titleTextStyle: ThemeData.light().textTheme.copyWith(
           titleLarge: TextStyle(
-            fontFamily: GoogleFonts.robotoMono().fontFamily,
+            fontFamily: GoogleFonts.notoSans().fontFamily,
             fontSize: 30,
             fontWeight: FontWeight.bold
           )

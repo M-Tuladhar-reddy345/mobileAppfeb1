@@ -94,7 +94,7 @@ class _Loginpagestate extends State<Loginpage> {
           child: Center(
             child: SingleChildScrollView(
               child: Column(children: 
-                [Text('Staff Login', style: TextStyle(fontSize: 40, fontFamily: GoogleFonts.robotoMono().fontFamily,color: Colors.white)),
+                [Text('Staff Login', style: TextStyle(fontSize: 40, fontFamily: GoogleFonts.notoSans().fontFamily,color: Colors.white)),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(

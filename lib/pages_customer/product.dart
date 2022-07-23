@@ -136,7 +136,7 @@ class _ProductState extends State<Product> {
 
                   };
                   print(body);
-                final response = await http.post(Uri.parse(main.url_start+'mobileApp/editSubscriptions/'), body: body);
+                final response = await http.post(Uri.parse(main.url_start+'mobileApp/createSubscription_provided/'), body: body);
                 if (response.statusCode == 200){
                   Navigator.pop(context);
                   Navigator.push(context, MaterialPageRoute(builder: (context)=> Subscriptions()));

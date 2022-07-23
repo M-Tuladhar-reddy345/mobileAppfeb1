@@ -97,7 +97,7 @@ class _SubscriptionsState extends State<Subscriptions> {
                         },
                       selectionMode: DateRangePickerSelectionMode.single,
                       minDate: DateTime.now(),                    
-                      maxDate: DateTime.now().add(Duration(days: 30 )),
+                      maxDate: enddate,
                       //initialSelectedRange: PickerDateRange(DateTime.now(),DateTime.now().add(Duration(days: 30 ))),
                       initialSelectedDate: enddate,
                     ),
@@ -107,7 +107,8 @@ class _SubscriptionsState extends State<Subscriptions> {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: ElevatedButton(style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.red)),onPressed: quantity.text == '' || quantity.text == '0'||quantity.text == '0.0'|| quantity.text == qty ||DateFormat('d-M-y').format(enddate) == endDate? null: () async{
+                // ignore: dead_code
+                child: ElevatedButton(style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.red)),onPressed:false? null: () async{
                   
                   Map body = {
                     'branch':main.storage.getItem('branch'),

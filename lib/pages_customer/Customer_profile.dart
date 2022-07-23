@@ -168,77 +168,79 @@ class _Customer_profileState extends State<Customer_profile> {
               return SingleChildScrollView(child: Column(
       children: [
         Align(alignment: Alignment.center,child: Text('Profile',style: Theme.of(context).primaryTextTheme.titleLarge.copyWith(color: Colors.black,))),
-        Container(
-          width: MediaQuery.of(context).size.width,
-          child: Align(
-            alignment: Alignment.center,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                Text('Customer Name',style:TextStyle(fontSize: 16,fontWeight: FontWeight.w400),),
-                Text('Customer Code',style:TextStyle(fontSize: 16,fontWeight: FontWeight.w400)),
-                Text('Mobile Number',style:TextStyle(fontSize: 16,fontWeight: FontWeight.w400)),
-                Text('Email',style:TextStyle(fontSize: 16,fontWeight: FontWeight.w400)),]
-                ),
-                Column(
-                children: [
-                Text(':',style:TextStyle(fontSize: 16,fontWeight: FontWeight.w700)),
-                Text(':',style:TextStyle(fontSize: 16,fontWeight: FontWeight.w700)),
-                Text(':',style:TextStyle(fontSize: 16,fontWeight: FontWeight.w700)),
-                Text(':',style:TextStyle(fontSize: 16,fontWeight: FontWeight.w700)),]
-                ),
-                Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                Text(snapshot.data['custname'].toString(),style:TextStyle(fontSize: 16,fontWeight: FontWeight.w700)),
-                Text(snapshot.data['custcode'].toString(),style:TextStyle(fontSize: 16,fontWeight: FontWeight.w700)),
-                Text(storage.getItem('phone').toString(),style:TextStyle(fontSize: 16,fontWeight: FontWeight.w700)),
-                Text(snapshot.data['email'].toString(),style:TextStyle(fontSize: 16,fontWeight: FontWeight.w700)),]
-                ),
-            ],),
-          ),
-        ),
+        
         Padding(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(8.0),
           child: Container(
-            child: Column(
-              children:snapshot.data['address1'][4]== null && snapshot.data['address2'][4] == null?[
-                Align(alignment: Alignment.centerLeft,child: Text('Address 1: ',style: Theme.of(context).primaryTextTheme.titleMedium.copyWith(color: Colors.black),)),
-                ElevatedButton(onPressed: ()=> {AddressDialogBox(1,'','','','','')}, child: Text('Update or add address 1')),
-                
-                Align(alignment: Alignment.centerLeft,child: Text('Address 2: ',style: Theme.of(context).primaryTextTheme.titleMedium.copyWith(color: Colors.black),)),
-                ElevatedButton(onPressed: ()=> {AddressDialogBox(2,'','','','','')}, child: Text('Update or add address 2'))
-              ]: snapshot.data['address1'][4]== null ?[
-                 Align(alignment: Alignment.centerLeft,child: Text('Address 1: ',style: Theme.of(context).primaryTextTheme.titleMedium.copyWith(color: Colors.black),)),
-                ElevatedButton(onPressed: ()=> {AddressDialogBox(1,'','','','','')}, child: Text('Update or add address 1')),
-                
-                Align(alignment: Alignment.centerLeft,child: Text('Address 2: ',style: Theme.of(context).primaryTextTheme.titleMedium.copyWith(color: Colors.black),)),
-                Align(alignment: Alignment.centerLeft,child: Wrap(children:[ Text(snapshot.data['address2'][4].toString())])),
-                ElevatedButton(onPressed: ()=> {AddressDialogBox(2,snapshot.data['address2'][0].toString(),snapshot.data['address2'][1].toString(),snapshot.data['address2'][2],snapshot.data['address2'][3],snapshot.data['address2'][5])}, child: Text('Update or add address 2'))
-              ]:snapshot.data['address2'][4] == null ? [
-                Align(alignment: Alignment.centerLeft,child: Text('Address 1: ',style: Theme.of(context).primaryTextTheme.titleMedium.copyWith(color: Colors.black),)),
-                Align(alignment: Alignment.centerLeft,child: Wrap(children:[ Text(snapshot.data['address1'][4].toString())])),
-                ElevatedButton(onPressed: ()=> {AddressDialogBox(1,snapshot.data['address1'][0].toString(),snapshot.data['address1'][1].toString(),snapshot.data['address1'][2],snapshot.data['address1'][3],snapshot.data['address1'][5])}, child: Text('Update or add address 1')),
-                
-                Align(alignment: Alignment.centerLeft,child: Text('Address 2: ',style: Theme.of(context).primaryTextTheme.titleMedium.copyWith(color: Colors.black),)),
-                 ElevatedButton(onPressed: ()=> {AddressDialogBox(2,'','','','','')}, child: Text('Update or add address 2'))
-              ]:[                
-                Align(alignment: Alignment.centerLeft,child: Text('Address 1: ',style: Theme.of(context).primaryTextTheme.titleMedium.copyWith(color: Colors.black),)),
-                Align(alignment: Alignment.centerLeft,child: Wrap(children:[ Text(snapshot.data['address1'][4].toString())])),
-                ElevatedButton(onPressed: ()=> {AddressDialogBox(1,snapshot.data['address1'][0].toString(),snapshot.data['address1'][1].toString(),snapshot.data['address1'][2],snapshot.data['address1'][3],snapshot.data['address1'][5])}, child: Text('Update or add address 1')),
-                
-                Align(alignment: Alignment.centerLeft,child: Text('Address 2: ',style: Theme.of(context).primaryTextTheme.titleMedium.copyWith(color: Colors.black),)),
-                Align(alignment: Alignment.centerLeft,child: Wrap(children:[ Text(snapshot.data['address2'][4].toString())])),
-                ElevatedButton(onPressed: ()=> {AddressDialogBox(2,snapshot.data['address2'][0].toString(),snapshot.data['address2'][1].toString(),snapshot.data['address2'][2],snapshot.data['address2'][3],snapshot.data['address2'][5])}, child: Text('Update or add address 2'))
-              ],
+            // decoration: BoxDecoration(border: Border.all(color: Colors.black), borderRadius: BorderRadius.all(Radius.circular(10))),
+            child:  Padding(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Personal Details', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w300),),
+                  Container(height: 1, color: Colors.black,),
+                  Text(snapshot.data['custname'].toString(),style:TextStyle(fontSize: 20,fontWeight: FontWeight.w200)),
+                  Text(snapshot.data['custcode'].toString(),style:TextStyle(fontSize: 20,fontWeight: FontWeight.w200)),
+                  Text(storage.getItem('phone').toString(),style:TextStyle(fontSize: 20,fontWeight: FontWeight.w200)),
+                  Text(snapshot.data['email'].toString(),style:TextStyle(fontSize: 20,fontWeight: FontWeight.w200)),
+                ],
+              ),
             ),
           ),
         ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            // decoration: BoxDecoration(border: Border.all(color: Colors.black), borderRadius: BorderRadius.all(Radius.circular(10))),
+            child:  Padding(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Address 1', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w200), ),
+                      IconButton(onPressed: ()=>AddressDialogBox(1,snapshot.data['address1'][0].toString(),snapshot.data['address1'][1].toString(),snapshot.data['address1'][2],snapshot.data['address1'][3],snapshot.data['address1'][5]), icon: Icon(Icons.edit))
+                    ],
+                  ),
+                  Container(height: 1, color: Colors.black,),
+                  Text(snapshot.data['address1'][4], style: TextStyle(fontSize: 20,fontWeight: FontWeight.w100))
+                  
+                ],
+              ),
+            ),
+          ),
+        ),
+       Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            // decoration: BoxDecoration(border: Border.all(color: Colors.black), borderRadius: BorderRadius.all(Radius.circular(10))),
+            child:  Padding(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Address 2', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w200), ),
+                      IconButton(onPressed: ()=>AddressDialogBox(2,snapshot.data['address2'][0].toString(),snapshot.data['address2'][1].toString(),snapshot.data['address2'][2],snapshot.data['address2'][3],snapshot.data['address2'][5]), icon: Icon(Icons.edit))
+                    ],
+                  ),
+                  Container(height: 1, color: Colors.black,),
+                  Text(snapshot.data['address2'][4], style: TextStyle(fontSize: 20,fontWeight: FontWeight.w100),)
+                  
+                ],
+              ),
+            ),
+          ),
+        ),
+        
         GestureDetector(
           onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=> Subscriptions())),
           child: Card(
@@ -248,7 +250,7 @@ class _Customer_profileState extends State<Customer_profile> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Subscriptions ',style: Theme.of(context).primaryTextTheme.titleLarge.copyWith(color: Colors.black,fontFamily:GoogleFonts.robotoMono().fontFamily,),),
+                Text('Subscriptions ',style: Theme.of(context).primaryTextTheme.titleLarge.copyWith(color: Colors.black,fontFamily:GoogleFonts.notoSans().fontFamily,),),
                 Icon(Icons.arrow_right, size: 40,),
               ],
             ),
