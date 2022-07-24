@@ -39,6 +39,92 @@ class _SubscriptionsState extends State<Subscriptions> {
       return data['subscriptionsCusomter'];
     }
   }
+  cancelDay(subtype,qty,endDate,subid){
+    TextEditingController quantity =  TextEditingController();
+    DateTime enddate = DateTime.parse(endDate.toString());
+    quantity.text = qty;
+    showDialog(context: context, builder: (context)=> AlertDialog(
+      content: Container(
+        width: MediaQuery.of(context).size.width-20,
+        
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+               Row(
+                children: [
+                  Align(alignment: Alignment.centerLeft,child: IconButton(onPressed: () => Navigator.pop(context), icon: Icon(Icons.close))),
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Container(
+                        color: Colors.red,
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text(subtype, style: Theme.of(context).primaryTextTheme.titleMedium,),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+             
+              
+              // Row(children: [Text('Total per day: Rs.'),Container(child: Center(child: Text(widget.TTlamt.toString())), color: Colors.white, width: 100,), ]),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                child: Column(
+                  children: [
+                    Text('Select date to be canceled ', style: TextStyle(fontWeight: FontWeight.w900),),
+                    SfDateRangePicker(
+                      onSelectionChanged: ( DateRangePickerSelectionChangedArgs args ){
+                        enddate = args.value;
+                        },
+                      selectionMode: DateRangePickerSelectionMode.single,
+                      minDate: DateTime.now(),                    
+                      maxDate: enddate,
+                      //initialSelectedRange: PickerDateRange(DateTime.now(),DateTime.now().add(Duration(days: 30 ))),
+                      initialSelectedDate: enddate,
+                    ),
+                    
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                // ignore: dead_code
+                child: ElevatedButton(style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.red)),onPressed:false? null: () async{
+                  
+                  Map body = {
+                    'branch':main.storage.getItem('branch'),
+                    'quantity':quantity.text,
+                    
+                    'date':DateFormat('d-M-y').format(enddate),
+                    'subscrId': subid.toString(),
+        
+                    };
+                    print(body);
+                  final response = await http.post(Uri.parse(main.url_start+'mobileApp/cancelDay/'), body: body);
+                 
+                  if (response.statusCode == 200){
+                    Navigator.pop(context);
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> Subscriptions()));
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Successfully updated subscription'),backgroundColor: Colors.green,));
+                  }else if (response.statusCode == 104){
+                    Navigator.pop(context);
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed try again... sorry for inconvinience'),backgroundColor: Colors.red,));
+                  }else if (response.statusCode == 101){
+                    
+                    Navigator.pop(context);
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Not enough money in wallet'),backgroundColor: Colors.red,));
+                  }
+                }, child: Text('Confirm')),
+              )
+            ],
+          ),
+        ),
+      ),
+    ));
+  }
   editSubscriptions_dialog(subtype,qty,endDate,subid){
     TextEditingController quantity =  TextEditingController();
     DateTime enddate = DateTime.parse(endDate.toString());
@@ -92,7 +178,6 @@ class _SubscriptionsState extends State<Subscriptions> {
                     Text('Select end date ', style: TextStyle(fontWeight: FontWeight.w900),),
                     SfDateRangePicker(
                       onSelectionChanged: ( DateRangePickerSelectionChangedArgs args ){
-                        print(args.value);
                         enddate = args.value;
                         },
                       selectionMode: DateRangePickerSelectionMode.single,
@@ -244,7 +329,7 @@ class _SubscriptionsState extends State<Subscriptions> {
                                                     child: Container(
                                                       height: 50,
                                                       child: ButtonBar(
-                                                        children: [FlatButton(minWidth: (MediaQuery.of(context).size.width - 100 )/2,onPressed: (){}, child: Text('Resume',style: Theme.of(context).primaryTextTheme.titleSmall,)),VerticalDivider(thickness: 2,),FlatButton(minWidth: (MediaQuery.of(context).size.width - 100 )/2,onPressed: ()=>editSubscriptions_dialog(valueDict['subType'], valueDict['quantity'].toString(), valueDict['endDate'].toString(), valueDict['subscrid'].toString()), child: Text('Edit',style: Theme.of(context).primaryTextTheme.titleSmall,)) ],
+                                                        children: [FlatButton(minWidth: (MediaQuery.of(context).size.width - 100 )/2,onPressed: ()=>cancelDay(valueDict['subType'], valueDict['quantity'].toString(), valueDict['endDate'].toString(), valueDict['subscrid'].toString()), child: Text('Cancel a Date',style: Theme.of(context).primaryTextTheme.titleSmall,)),VerticalDivider(thickness: 2,),FlatButton(minWidth: (MediaQuery.of(context).size.width - 100 )/2,onPressed: ()=>editSubscriptions_dialog(valueDict['subType'], valueDict['quantity'].toString(), valueDict['endDate'].toString(), valueDict['subscrid'].toString()), child: Text('Edit',style: Theme.of(context).primaryTextTheme.titleSmall,)) ],
                                                       ),
                                                     ),
                                                   ))
