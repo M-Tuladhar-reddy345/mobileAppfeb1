@@ -6,7 +6,7 @@ get_products() async {
         'mobileApp/getProducts_all/' +
         main.storage.getItem('branch') +
         '/');
-    final response = await http.post(url, body: {'phone':main.storage.getItem('phone')});
+    final response = await http.post(url, body: {'phone':main.storage.getItem('phone'),'branch':main.storage.getItem('branch')});
     // print(url);
 
 

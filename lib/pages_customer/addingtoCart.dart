@@ -283,7 +283,7 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
                    
                      if(widget.prodtype == 'All'){ 
                      return GestureDetector(
-                      onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=> Product(e['pcode'].toString()))),
+                      onTap: e['ifSubscription']== '1' ? null :() => Navigator.push(context, MaterialPageRoute(builder: (context)=> Product(e['pcode'].toString()))),
                        child: Card(child: Row(children: [
                          Padding(
                            padding: const EdgeInsets.all(8.0),
@@ -296,12 +296,12 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
                            padding: const EdgeInsets.all(2.0),
                            child: Row(children: [Text('Total: Rs.'),Container(child: Center(child: Text(widget.cart[e['pcode']].Amount.toString())), color: Colors.white, width: 100,), ]),
                          ),]),
-                         Expanded(child: Icon(Icons.arrow_right,size: 60,color: Theme.of(context).primaryColorDark,))
+                         Expanded(child: Icon(e['ifSubscription']== '1' ? Icons.diamond :Icons.arrow_right,size: 60,color: Theme.of(context).primaryColorDark,))
                        ],),color: Theme.of(context).primaryColorLight,),
                      );}
                      else if (widget.prodtype == e['ptype']){
                        return GestureDetector(
-                        onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context)=> Product(e['pcode'].toString()))),
+                        onTap: e['ifSubscription']== '1' ? null :() => Navigator.push(context, MaterialPageRoute(builder: (context)=> Product(e['pcode'].toString()))),
                          child: Card(child: Row(children: [
                          Padding(
                            padding: const EdgeInsets.all(8.0),
@@ -315,7 +315,7 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
                            padding: const EdgeInsets.all(2.0),
                            child: Row(children: [Text('Total: Rs.'),Container(child: Center(child: Text(widget.cart[e['pcode']].Amount.toString())), color: Colors.white, width: 100,), ]),
                          ),]),
-                         Expanded(child: Icon(Icons.arrow_right,size: 60,color: Theme.of(context).primaryColorDark,))
+                         Expanded(child: Icon(e['ifSubscription']== '1' ? Icons.diamond :Icons.arrow_right,size: 60,color: Theme.of(context).primaryColorDark,))
                                             ],),color: Theme.of(context).primaryColorLight,),
                        );
                      }else{

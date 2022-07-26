@@ -15,6 +15,7 @@ import 'package:flutter_complete_guide/pages_customer/Customer_profile.dart';
 import 'package:flutter_complete_guide/pages_customer/DownloadSoa.dart';
 import 'package:flutter_complete_guide/pages_customer/addingtoCart.dart';
 import 'package:flutter_complete_guide/pages_customer/cart.dart';
+import 'package:flutter_complete_guide/pages_customer/subscriptions.dart';
 import 'package:flutter_complete_guide/pages_customer/wallet.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../main.dart' as main;
@@ -498,6 +499,18 @@ class Navbar extends StatelessWidget {
                                                                 context,
                                                                 MaterialPageRoute(
                                                                     builder: (context) => PdfSoaCustomer()),
+                                                              );
+                                                            },
+                                                          ),
+                                                          ListTile(
+                                                            title: const Text('Subscriptions'),
+                                                            onTap: () {
+                                                              // Update the state of the app.
+                                                              // ...
+                                                              Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                    builder: (context) => Subscriptions()),
                                                               );
                                                             },
                                                           ),
