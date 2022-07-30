@@ -270,7 +270,7 @@ class _SubscriptionsState extends State<Subscriptions> {
       body:  SingleChildScrollView(
         child: Column(
           children: [
-            
+            Text('Latest subscription at the top'),
             FutureBuilder(builder: (context, snapshot) {
                switch (snapshot.connectionState) {
                   case ConnectionState.waiting:

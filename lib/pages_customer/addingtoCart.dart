@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/main.dart' as main;
 import 'package:flutter_complete_guide/pages_customer/product.dart';
+import 'package:flutter_complete_guide/pages_customer/subscriptions.dart';
 import 'package:flutter_complete_guide/widgets/Appbar.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../commonApi/cartApi.dart';
@@ -283,7 +284,7 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
                    
                      if(widget.prodtype == 'All'){ 
                      return GestureDetector(
-                      onTap: e['ifSubscription']== '1' ? null :() => Navigator.push(context, MaterialPageRoute(builder: (context)=> Product(e['pcode'].toString()))),
+                      onTap: e['ifSubscription']== '1' ? ()=> Navigator.push(context, MaterialPageRoute(builder: (context) => Subscriptions())) :() => Navigator.push(context, MaterialPageRoute(builder: (context)=> Product(e['pcode'].toString()))),
                        child: Card(child: Row(children: [
                          Padding(
                            padding: const EdgeInsets.all(8.0),
@@ -292,7 +293,8 @@ class _AddingToCartpageState extends State<AddingToCartpage> {
                          Column(children: [Text(e['pname'], style: TextStyle( fontWeight: FontWeight.bold), ), Text('Rs.'+e['unitRate'].toString()),Row(children: [IconButton(onPressed: () => subtract(e['pcode'],e['unitRate']), icon:Icon( Icons.remove_circle, color: Theme.of(context).primaryColor,)),Padding(
                            padding: const EdgeInsets.all(8.0),
                            child: Container(child: Center(child: Text(widget.cart[e['pcode']].Quantity.toString())), color: Colors.white, width: 50,),
-                         ),IconButton(onPressed: () => add(e['pcode'],e['unitRate']), icon:Icon( Icons.add_circle, color: Theme.of(context).primaryColor,))],),Padding(
+                         ),IconButton(onPressed: () => add(e['pcode'],e['unitRate']), icon:Icon( Icons.add_circle, color: Theme.of(context).primaryColor,))],),
+                         Padding(
                            padding: const EdgeInsets.all(2.0),
                            child: Row(children: [Text('Total: Rs.'),Container(child: Center(child: Text(widget.cart[e['pcode']].Amount.toString())), color: Colors.white, width: 100,), ]),
                          ),]),
